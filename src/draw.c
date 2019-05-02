@@ -63,20 +63,26 @@ void	drawline(t_main *m, int x1, int y1, int x2, int y2)
 
 //рисуем сегмент стены 
 
-void	drawscreen(t_main *m, int x, double z)
+void	drawscreen(t_main *m, int x, double z, int y0)
 {
 	int start;
 	int endstart;
-	double he;
+	int he;
+	int	color;
+	double	tn;
 
 	// считаем высоту стены
-	he = 1000 / z;
-	endstart = HEIGHT / 2 + he; 
-	start = endstart - 2 * he;
+	he = DIST / z;
+	//SDL_Log("|%d %d|\n", m->player.ecvator, he);
+	endstart = m->player.ecvator + he;
+	start = endstart - 200 / z;
 
+	color = 0xfaafaf;
+	if (y0 == 1)
+		color = 0x000afa;
 	while (start < endstart)
 	{	
-		ft_put_pixel(m, x, start, 0xfaafaf);
+		ft_put_pixel(m, x, start, color);
 		start++;
 	}
 }
