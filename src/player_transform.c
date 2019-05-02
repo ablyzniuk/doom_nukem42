@@ -123,6 +123,7 @@ static void		ft_transform_vec_y(t_main *m)
 	if (m->eventcall.rot_up == 1)
 	{
 		m->player.angle.ver += 1;
+		m->player.ecvator += 15;
 		m->player.vec.z = VECX * ancos - VECY * ansin;
 		m->eventcall.rot_up = 0;
 		m->eventcall.rot_down = 0;
@@ -130,6 +131,7 @@ static void		ft_transform_vec_y(t_main *m)
 	else if (m->eventcall.rot_down == 1)
 	{
 		m->player.angle.ver -= 1;
+		m->player.ecvator -= 15;
 		m->player.vec.z = VECX * ancos - VECY * ansin;
 		m->eventcall.rot_up = 0;
 		m->eventcall.rot_down = 0;

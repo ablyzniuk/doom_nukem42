@@ -29,10 +29,11 @@ void	ft_init(t_main *m)
 	// позиция игрока
 	m->player.pos.x = 5;
 	m->player.pos.y = 5;
-	m->player.pos.z = 6;
+	m->player.pos.z = 5;
 	// скоость 
 	m->player.movespeed = 0;
 	m->player.rotspeed = 0;
+	m->player.p_he	= 6;
 	// обработкичи кнопок 
 	m->eventcall.move_down = 0;
 	m->eventcall.move_up = 0;
@@ -43,6 +44,7 @@ void	ft_init(t_main *m)
 	m->eventcall.strafe_left = 0;
 	m->eventcall.strafe_rigth = 0;
 	m->eventcall.jump_event = 0;
+	m->player.ecvator = HEIGHT / 2;
 
 
 	// набор точек
@@ -55,6 +57,9 @@ void	ft_init(t_main *m)
 	sector->vertex[1] = 1;
 	sector->vertex[2] = 2;
 	sector->vertex[3] = 3;
+	sector->heigth.max_he = 20;
+	sector->heigth.min_he = 0;
+	sector->heigth.z = (sector->heigth.max_he - sector->heigth.min_he) / 2;
 
 	// кординаты точек
 	vertex[0].x = 0;

@@ -38,6 +38,8 @@ void	ft_draw_cam(t_main *m, int len)
 	ray.x = m->player.pos.x + len * ray.vx;
 	ray.y = m->player.pos.y + len * ray.vy;
 	drawline(m, ray.y, ray.x, m->player.pos.y, m->player.pos.x);
+	drawline(m, 0, m->player.ecvator, WIDTH, m->player.ecvator);
+
 }
 
 
@@ -48,9 +50,12 @@ void	ft_draw_map(t_main *m)
 	int		k;	//штука
 	t_ray	ray; // разные нужные переменные
 	int		len; // длина луч. Добавить расчет длинны
+	int		he;
+	static int 	flag;
 
 	w = 0;
 	len = 200;
+	flag = 0;
 	while (w < WIDTH)
 	{
 		ray.angle = -atan((HALFWIDTH - w) / DIST); // считаем правильный угол луча
@@ -69,28 +74,35 @@ void	ft_draw_map(t_main *m)
 		ray.ray.y = ray.y;
 		//номер точки в секторе
 		ray.num_sect = 0;
-		
 		while (ray.num_sect < 4)
 		{
 			// последняя точка сзязана с первой
 			k = ray.num_sect + 1;
-			if (k == 4) 
+			if (k == 4)
 				k = 0;
-			
+			he = 0;
 			//ищем пересечение луча и стенки
 			ray.intersec = ft_intersection(m->player.pos, ray.ray, m->vertex[m->sector->vertex[ray.num_sect]], m->vertex[m->sector->vertex[k]]);
-			
+		
 			if (ray.intersec.z != -1)
 			{
 				// как далеко попадание
+				
 				ray.camdist = ray.intersec.z * len;
 
 				//фикс рыбьего глаза
+				
 				if (ray.angle != 0.0)
 					ray.camdist = ray.intersec.z * len * cos(ray.angle);
-				drawscreen(m, w, ray.camdist);
+				he = 1;
+				if (flag != ray.num_sect)
+					drawscreen(m, w, ray.camdist, 1);
+				else
+					drawscreen(m, w, ray.camdist, 0);
+				if (ray.angle == 0.0)
+					SDL_Log("|%f|", ray.camdist);
+				flag = ray.num_sect;
 			}
-			
 			ray.num_sect++;
 		}
 		w++;
