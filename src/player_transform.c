@@ -51,38 +51,72 @@ static void		ft_transform_jump(t_main *m)
 // стрейф
 static void		ft_transform_strafe(t_main *m)
 {
-	float	ancos;
-	float	ansin;
+	float		ancos;
+	float		ansin;
+	int			res;
+	t_vertex	ray;
 
-	
 	if (m->eventcall.strafe_rigth == 1)
 	{
 		ancos = cos((m->player.angle.hor + 90) * M_PI / 180);
 		ansin = sin((m->player.angle.hor + 90) * M_PI / 180);
-		m->player.pos.x += (VECX * ancos - VECY * ansin) * m->player.movespeed;
-		m->player.pos.y += (VECX * ansin + VECY * ancos) * m->player.movespeed;
+		ray.x = m->player.pos.x + (VECX * ancos - VECY * ansin) * m->player.movespeed;
+		ray.y = m->player.pos.y + (VECX * ansin + VECY * ancos) * m->player.movespeed;
+		res = ft_collision(m, m->player.pos, ray);
+		if (res != -1)
+		{
+			m->player.pos.x = ray.x;
+			m->player.pos.y = ray.y;
+		}
 	}
 	else if (m->eventcall.strafe_left == 1)
 	{
 		ancos = cos((m->player.angle.hor - 90) * M_PI / 180);
 		ansin = sin((m->player.angle.hor - 90) * M_PI / 180);
-		m->player.pos.x += (VECX * ancos - VECY * ansin) * m->player.movespeed;
-		m->player.pos.y += (VECX * ansin + VECY * ancos) * m->player.movespeed;
+		ray.x = m->player.pos.x + (VECX * ancos - VECY * ansin) * m->player.movespeed;
+		ray.y = m->player.pos.y + (VECX * ansin + VECY * ancos) * m->player.movespeed;
+		res = ft_collision(m, m->player.pos, ray);
+		if (res != -1)
+		{
+			m->player.pos.x = ray.x;
+			m->player.pos.y = ray.y;
+		}
 	}
 }
 
 //движение
 static void		ft_transform_pos(t_main *m)
 {
+	float		ancos;
+	float		ansin;
+	int			res;
+	t_vertex	ray;
+
 	if (m->eventcall.move_up == 1)
 	{
-		m->player.pos.x += m->player.vec.x * m->player.movespeed;
-		m->player.pos.y += m->player.vec.y * m->player.movespeed;
+		ancos = cos((m->player.angle.hor) * M_PI / 180);
+		ansin = sin((m->player.angle.hor) * M_PI / 180);
+		ray.x = m->player.pos.x + (VECX * ancos - VECY * ansin) * m->player.movespeed;
+		ray.y = m->player.pos.y + (VECX * ansin + VECY * ancos) * m->player.movespeed;
+		res = ft_collision(m, m->player.pos, ray);
+		if (res != -1)
+		{
+			m->player.pos.x = ray.x;
+			m->player.pos.y = ray.y;
+		}
 	}
 	else if (m->eventcall.move_down == 1)
 	{
-		m->player.pos.x -= m->player.vec.x * m->player.movespeed;
-		m->player.pos.y -= m->player.vec.y * m->player.movespeed;
+		ancos = cos((m->player.angle.hor) * M_PI / 180);
+		ansin = sin((m->player.angle.hor) * M_PI / 180);
+		ray.x = m->player.pos.x - (VECX * ancos - VECY * ansin) * m->player.movespeed;
+		ray.y = m->player.pos.y - (VECX * ansin + VECY * ancos) * m->player.movespeed;
+		res = ft_collision(m, m->player.pos, ray);
+		if (res != -1)
+		{
+			m->player.pos.x = ray.x;
+			m->player.pos.y = ray.y;
+		}
 	}
 }
 
