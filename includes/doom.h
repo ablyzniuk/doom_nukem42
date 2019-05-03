@@ -44,6 +44,13 @@ typedef struct s_vertex
 	double		z;
 }				t_vertex;
 
+typedef	struct	s_sendray
+{
+	int		num_sect;
+	double	angle;
+}				t_sendray;
+
+
 typedef struct	s_ray
 {
 	double		angle; // угол каста луча
@@ -53,10 +60,16 @@ typedef struct	s_ray
 	double		y;	
 	double		ancos;	//пре кос син
 	double		ansin;
+	double		addlen;
 	int			num_sect;	// номер стены
+	int			wall_sect;
+	int			len_ray;	
+	int			w;
 	double		camdist;	//фикс
 	t_vertex	intersec;	// результат чека пересения
 	t_vertex	ray;		//  кординаты второй точки луча
+	t_vertex	bspray;	// кординаты первой точки после портала
+	t_vertex	raystart;
 }				t_ray;
 
 typedef struct	s_fps
@@ -90,6 +103,12 @@ typedef struct	s_trplayer
 
 }               t_trpalyer;
 
+typedef	struct	s_collision 
+{
+	t_vertex	raypos;
+}				t_collision;
+
+
 typedef	struct	s_event
 {
 	int		move_up;
@@ -108,7 +127,7 @@ typedef	struct	s_heigth
 {
 	int		min_he;
 	int		max_he;
-	int		z;
+	double	z;
 }				t_heigth;
 
 
@@ -118,6 +137,7 @@ typedef	struct	s_sector
 	int			numsector;	// номер сектора
 	t_heigth	heigth;
 	int			*vertex;	// массив точек сектора
+	int			*typewall;
 }				t_sector;
 
 typedef	struct	s_intersection
@@ -140,7 +160,8 @@ typedef	struct	s_intersection
 typedef	struct	s_main
 {
 	t_vertex	*vertex; // массив структур ввсех точек карты
-	t_sector	*sector; // массив структур всех секторов
+	t_sector	**sector; // массив структур всех секторов
+	int			sum_sect;	// количество секторов
 	t_ray		ray;	// немного переменных 
 	t_fps		fps;	// фпс
 	t_sdl		sdl;	// все сдл переменные
@@ -161,7 +182,9 @@ void			ft_fps_look(t_main *m);
 void			ft_draw_map(t_main *m);
 void			drawline(t_main *m, int x1, int y1, int x2, int y2);
 t_vertex		ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex end2);
-void			drawscreen(t_main *m, int x, double z, int y0);
+void			drawscreen(t_main *m, int x, double z, int y0, int sect);
 void			ft_load_texture(t_main *m);
+void			ft_ray(t_main *m, t_ray ray);
+int				ft_collision(t_main *m, t_vertex start, t_vertex end);
 
 #endif

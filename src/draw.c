@@ -63,19 +63,18 @@ void	drawline(t_main *m, int x1, int y1, int x2, int y2)
 
 //рисуем сегмент стены 
 
-void	drawscreen(t_main *m, int x, double z, int y0)
+void	drawscreen(t_main *m, int x, double z, int y0, int sect)
 {
 	int start;
 	int endstart;
 	int he;
 	int	color;
-	double	tn;
 
 	// считаем высоту стены
 	he = DIST / z;
 	//SDL_Log("|%d %d|\n", m->player.ecvator, he);
 	endstart = m->player.ecvator + he;
-	start = endstart - 200 / z;
+	start = endstart - m->sector[sect]->heigth.z / z;
 
 	color = 0xfaafaf;
 	if (y0 == 1)
