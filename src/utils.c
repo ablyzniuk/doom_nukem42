@@ -67,7 +67,15 @@ void	ft_fps_utils(t_main *m)
 	m->fps.oldtime = m->fps.time;
 	m->fps.time = SDL_GetTicks();
 	m->fps.frametime = (m->fps.time - m->fps.oldtime) / 333.0;
-	m->player.movespeed = m->fps.frametime * 0.9;
+	m->player.movespeed = m->fps.frametime * 1.4;
 	m->player.rotspeed = m->fps.frametime * 3.0;
 	//SDL_Log("%d\n", (int) (1 / m->player.rotspeed));
+}
+
+int		ft_cmp_vertex(t_vertex one, t_vertex two)
+{
+	if (one.x != two.x || one.y != two.y || one.z != two.z)
+		return (-1);
+	else
+		return (0);
 }

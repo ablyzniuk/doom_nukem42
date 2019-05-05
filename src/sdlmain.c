@@ -37,6 +37,7 @@ void    ft_sdlloop(t_main *m)
 	while (run)
 	{
 		SDL_FillRect(m->sdl.winsurface, NULL, 0x000000);
+		ft_draw_sky(m);
 		ft_draw_map(m);
 		ft_transform(m);
 		while (SDL_PollEvent(&m->sdl.event))

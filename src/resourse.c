@@ -14,7 +14,12 @@
 
 void    ft_load_texture(t_main *m)
 {
-    m->sdl.texture = SDL_LoadBMP("resourse/wall.bmp");
-    if (m->sdl.texture == NULL)
-        exit(0);
+
+	m->sky.sky = SDL_LoadBMP("resourse/sky/sky.bmp");
+	printf("%s\n", SDL_GetError());
+	if (m->sky.sky == NULL)
+	{
+		printf("Error Load Skybox!\n");
+		exit(0);
+	}
 }

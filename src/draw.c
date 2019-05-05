@@ -70,11 +70,11 @@ void	drawscreen(t_main *m, int x, double z, int y0, int sect)
 	int he;
 	int	color;
 
-	// считаем высоту стены
+	// считаем высоту стены;
 	he = DIST / z;
 	//SDL_Log("|%d %d|\n", m->player.ecvator, he);
 	endstart = m->player.ecvator + he;
-	start = endstart - m->sector[sect]->heigth.z / z;
+	start = endstart - (double)m->sector[sect]->heigth.z / z;
 
 	color = 0xfaafaf;
 	if (y0 == 1)

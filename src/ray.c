@@ -86,12 +86,10 @@ void	ft_ray(t_main *m, t_ray ray)
 {
 		static int 	flag = 0;
 		int		k;
-		int		he;
 		int		buff;
 		double		posx;
 		double		posy;
 		t_vertex	buffray;
-		int			buffwallsect;
 
 		k = 0;
 		ray.wall_sect = 0;
@@ -102,14 +100,13 @@ void	ft_ray(t_main *m, t_ray ray)
 			k = ray.wall_sect + 1;
 			if (k == 4)
 				k = 0;
-			he = 0;
 			//ищем пересечение луча и стенки
-		
+			
 			ray.intersec = ft_intersection(ray.raystart, ray.ray, m->vertex[m->sector[ray.num_sect]->vertex[ray.wall_sect]], m->vertex[m->sector[ray.num_sect]->vertex[k]]);
 		
 				if (ray.intersec.z != -1 && m->sector[ray.num_sect]->typewall[ray.wall_sect] == -1)
-				{
-					// как далеко попадание
+				{ 
+					// как далеко попаданиеs
 					
 					ray.camdist = (ray.intersec.z + ray.addlen) * ray.len_ray;
 
@@ -117,7 +114,6 @@ void	ft_ray(t_main *m, t_ray ray)
 					
 					if (ray.angle != 0.0)
 						ray.camdist = (ray.intersec.z + ray.addlen) * ray.len_ray * cos(ray.angle);
-					he = 1;
 					if (flag != ray.num_sect)
 						drawscreen(m, ray.w, ray.camdist, 1, ray.num_sect);
 					else
@@ -129,15 +125,13 @@ void	ft_ray(t_main *m, t_ray ray)
 				else if (ray.intersec.z != -1 && m->sector[ray.num_sect]->typewall[ray.wall_sect] != -1)
 				{
 					buffray = ray.ray;
-
 					ray.intersec.x = ray.intersec.x + 0.00000001 * ray.vx;
-					ray.intersec.y = ray.intersec.y + 0.00000001 * ray.vy;	
+					ray.intersec.y = ray.intersec.y + 0.00000001 * ray.vy;
 					ray.ray.x = ray.intersec.x + ray.len_ray * ray.vx;
 					ray.ray.y = ray.intersec.y + ray.len_ray * ray.vy;
 					buff = ray.num_sect;
-					SDL_Log("%d\n", m->sector[ray.num_sect]->typewall[ray.wall_sect]);
 					ray.num_sect = m->sector[ray.num_sect]->typewall[ray.wall_sect];
-					ray.addlen = ray.intersec.z;
+					ray.addlen += ray.intersec.z;
 				
 					posx = ray.raystart.x;
 					posy = ray.raystart.y;
