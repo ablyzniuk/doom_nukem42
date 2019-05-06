@@ -194,6 +194,7 @@ void			ft_draw_map(t_main *m);
 void			drawline(t_main *m, int x1, int y1, int x2, int y2);
 t_vertex		ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex end2);
 void			drawscreen(t_main *m, int x, double z, int y0, int sect);
+void			ft_draw_floor(t_main *m, int start, int end, int x);
 void			ft_load_texture(t_main *m);
 void			ft_ray(t_main *m, t_ray ray);
 int				ft_collision(t_main *m, t_vertex start, t_vertex end);

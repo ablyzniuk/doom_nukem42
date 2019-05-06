@@ -73,10 +73,8 @@ void	drawscreen(t_main *m, int x, double z, int heigth, int sect)
 	static	int oldw = 0;
 
 	if (oldw != x)
-	{
 		drawstart = HEIGHT;
-	}
-	// считаем начало стены стены;
+	// считаем начало стены;
 	he = DIST / z;
 	endstart = m->player.ecvator + he;
 	// высота стены
@@ -85,6 +83,8 @@ void	drawscreen(t_main *m, int x, double z, int heigth, int sect)
 	if (endstart > HEIGHT)
 		endstart = HEIGHT;
 	//SDL_Log("|%d %d | %d|\n", start, endstart, drawstart);
+	if (oldw != x)
+		ft_draw_floor(m, endstart, HEIGHT, x);
 	while (start < endstart && start < drawstart)
 	{
 		ft_put_pixel(m, x, start, m->sector[sect]->color);

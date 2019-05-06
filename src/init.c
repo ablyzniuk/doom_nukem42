@@ -137,9 +137,6 @@ void	ft_init(t_main *m)
 	sector[4]->heigth.cell = 7;
 
 
-
-
-
 	// кординаты точек
 	vertex[0].x = 0;
 	vertex[0].y = 0;
