@@ -15,31 +15,7 @@
 // рисуем рагуль 
 void	ft_draw_cam(t_main *m, int len)
 {
-	t_ray ray;
-
-	ray.ancos = cos((m->player.angle.hor) * M_PI / ANG);
-	ray.ansin = sin((m->player.angle.hor) * M_PI / ANG);
-	ray.vx = VECX * ray.ancos - VECY * ray.ansin;
-	ray.vy = VECX * ray.ansin + VECY * ray.ancos;
-	ray.x = m->player.pos.x + len * ray.vx;
-	ray.y = m->player.pos.y + len * ray.vy;
-	drawline(m, ray.y, ray.x, m->player.pos.y, m->player.pos.x);
-	ray.ancos = cos((m->player.angle.hor - 30) * M_PI / ANG);
-	ray.ansin = sin((m->player.angle.hor - 30) * M_PI / ANG);
-	ray.vx = VECX * ray.ancos - VECY * ray.ansin;
-	ray.vy = VECX * ray.ansin + VECY * ray.ancos;
-	ray.x = m->player.pos.x + len * ray.vx;
-	ray.y = m->player.pos.y + len * ray.vy;
-	drawline(m, ray.y, ray.x, m->player.pos.y, m->player.pos.x);
-	ray.ancos = cos((m->player.angle.hor + 30) * M_PI / ANG);
-	ray.ansin = sin((m->player.angle.hor + 30) * M_PI / ANG);
-	ray.vx = VECX * ray.ancos - VECY * ray.ansin;
-	ray.vy = VECX * ray.ansin + VECY * ray.ancos;
-	ray.x = m->player.pos.x + len * ray.vx;
-	ray.y = m->player.pos.y + len * ray.vy;
-	drawline(m, ray.y, ray.x, m->player.pos.y, m->player.pos.x);
-	//drawline(m, 0, m->player.ecvator, WIDTH, m->player.ecvator);
-
+	drawline(m, 0, m->player.ecvator, WIDTH, m->player.ecvator);
 }
 
 
@@ -84,7 +60,6 @@ void	ft_draw_map(t_main *m)
 
 void	ft_ray(t_main *m, t_ray ray)
 {
-		static int 	flag = 0;
 		int		k;
 		int		buff;
 		double		posx;
@@ -94,6 +69,8 @@ void	ft_ray(t_main *m, t_ray ray)
 		k = 0;
 		ray.wall_sect = 0;
 
+		//if (ray.angle == 0.0)
+	//	if (ray.w >= 300 && ray.w <= 310)
 		while (ray.wall_sect < 4)
 		{
 			// последняя точка сзязана с первой
@@ -101,32 +78,33 @@ void	ft_ray(t_main *m, t_ray ray)
 			if (k == 4)
 				k = 0;
 			//ищем пересечение луча и стенки
-			
+		//	SDL_Log("%d \n", ray.num_sect);
 			ray.intersec = ft_intersection(ray.raystart, ray.ray, m->vertex[m->sector[ray.num_sect]->vertex[ray.wall_sect]], m->vertex[m->sector[ray.num_sect]->vertex[k]]);
-		
-				if (ray.intersec.z != -1 && m->sector[ray.num_sect]->typewall[ray.wall_sect] == -1)
+				if (ray.intersec.z != -1)
 				{ 
 					// как далеко попаданиеs
-					
 					ray.camdist = (ray.intersec.z + ray.addlen) * ray.len_ray;
-
 					//фикс рыбьего глаза
-					
 					if (ray.angle != 0.0)
 						ray.camdist = (ray.intersec.z + ray.addlen) * ray.len_ray * cos(ray.angle);
-					if (flag != ray.num_sect)
-						drawscreen(m, ray.w, ray.camdist, 1, ray.num_sect);
-					else
-						drawscreen(m, ray.w, ray.camdist, 0, ray.num_sect);
-					if (ray.angle == 0.0)
-						SDL_Log("|%f|", ray.camdist);
-					flag = ray.wall_sect;
+
+					if (m->sector[ray.num_sect]->typewall[ray.wall_sect] == -1)
+						drawscreen(m, ray.w,
+						ray.camdist,
+						m->sector[ray.num_sect]->heigth.cell - m->sector[ray.num_sect]->heigth.floor,
+						ray.num_sect);
+					else if (m->sector[m->sector[ray.num_sect]->typewall[ray.wall_sect]]->heigth.floor != m->sector[ray.num_sect]->heigth.floor)
+						drawscreen(m, ray.w,
+						ray.camdist,
+						m->sector[m->sector[ray.num_sect]->typewall[ray.wall_sect]]->heigth.floor - m->sector[ray.num_sect]->heigth.floor,
+						ray.num_sect);
 				}
-				else if (ray.intersec.z != -1 && m->sector[ray.num_sect]->typewall[ray.wall_sect] != -1)
+				if (ray.intersec.z != -1 && m->sector[ray.num_sect]->typewall[ray.wall_sect] != -1)
 				{
-					buffray = ray.ray;
-					ray.intersec.x = ray.intersec.x + 0.00000001 * ray.vx;
-					ray.intersec.y = ray.intersec.y + 0.00000001 * ray.vy;
+					//SDL_Log("Check\n");	
+					buffray.x = ray.ray.x;
+					buffray.y = ray.ray.y;
+
 					ray.ray.x = ray.intersec.x + ray.len_ray * ray.vx;
 					ray.ray.y = ray.intersec.y + ray.len_ray * ray.vy;
 					buff = ray.num_sect;
@@ -135,15 +113,16 @@ void	ft_ray(t_main *m, t_ray ray)
 				
 					posx = ray.raystart.x;
 					posy = ray.raystart.y;
-					ray.raystart.x = ray.intersec.x;
-					ray.raystart.y = ray.intersec.y;
-
+					ray.raystart.x = ray.intersec.x + 0.00001 * ray.vx;
+					ray.raystart.y = ray.intersec.y + 0.00001 * ray.vy;
 					ft_ray(m, ray);
-					ray.ray = buffray;
+					ray.ray.x = buffray.x;
+					ray.ray.y = buffray.y;
 					ray.num_sect = buff;
 					ray.raystart.x = posx;
 					ray.raystart.y = posy;
 				}
 			ray.wall_sect++;
 		}
+		ft_draw_cam(m, 10);
 }

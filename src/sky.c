@@ -51,5 +51,5 @@ void    ft_draw_sky(t_main *m)
 		}
 		i++;
 	}
-		printf("|%d %d\n|", x, y);
+	//	printf("|%d %d\n|", x, y);
 }

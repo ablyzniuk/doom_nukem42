@@ -30,6 +30,7 @@
 #define	VECY 0
 #define DIST (double)WIDTH * 1.3	// рассчет дальности плоскости проекци. для фова 60
 #define	ANG 180
+#define	HE_P 1150 / m->player.p_he
 
 typedef	struct	s_angle
 {
@@ -56,8 +57,6 @@ typedef struct	s_ray
 	double		angle; // угол каста луча
 	double		vx;		// вектор каста луча
 	double		vy;
-	double		x;	// кординаты второй точки луча
-	double		y;	
 	double		ancos;	//пре кос син
 	double		ansin;
 	double		addlen;
@@ -67,9 +66,8 @@ typedef struct	s_ray
 	int			w;
 	double		camdist;	//фикс
 	t_vertex	intersec;	// результат чека пересения
-	t_vertex	ray;		//  кординаты второй точки луча
-	t_vertex	bspray;	// кординаты первой точки после портала
-	t_vertex	raystart;
+	t_vertex	ray;		//  кординаты второй точки луча 
+	t_vertex	raystart;	// кординаты первой точки после портала
 	t_vertex	old1;
 	t_vertex	old2;
 }				t_ray;
@@ -98,7 +96,7 @@ typedef struct	s_trplayer
 	t_vertex	pos;	// позиция игрока
 	t_vertex	vec;	// вектор направления игрока
 	int			sector;	// номер сектора где находиться ирок
-	int			p_he;
+	int			p_he;	// высота игрока
 	float		movespeed;	//скорость
 	float		rotspeed;
 	int			ecvator;
@@ -127,9 +125,8 @@ typedef	struct	s_event
 
 typedef	struct	s_heigth
 {
-	int		min_he;
-	int		max_he;
-	double	z;
+	int		floor;
+	int		cell;
 }				t_heigth;
 
 
@@ -146,9 +143,10 @@ typedef	struct	s_sector
 {
 	int			num_vert;	//количество точек
 	int			numsector;	// номер сектора
-	t_heigth	heigth;
+	t_heigth	heigth;	
 	int			*vertex;	// массив точек сектора
 	int			*typewall;
+	int			color;
 }				t_sector;
 
 typedef	struct	s_intersection

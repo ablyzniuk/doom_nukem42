@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   drawsector.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yalytvyn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/22 13:16:38 by yalytvyn          #+#    #+#             */
-/*   Updated: 2019/03/22 13:16:39 by yalytvyn         ###   ########.fr       */
+/*   Created: 2019/05/06 12:19:09 by yalytvyn          #+#    #+#             */
+/*   Updated: 2019/05/06 12:19:11 by yalytvyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-int		main()
+void	ft_draw_floor(t_main *m, int start, int end, int x)
 {
-	t_main	*m;
+	int	color = 0x000c68;
+	while (start < end)
+	{	
+		ft_put_pixel(m, x, start, color);
+		start++;
+	}
+}
 
-	m = (t_main*)malloc(sizeof(t_main));
-	ft_sdlinit(m);
-	ft_init(m);
-	ft_sdlloop(m);
+void	ft_draw_wall()
+{
 
+}
 
-//	system("leaks doom");
-	return (0);
+void	ft_draw_cell()
+{
+
 }
