@@ -28,9 +28,9 @@ void	ft_init(t_main *m)
 	m->player.vec.y = 0;
 	m->player.vec.z = 0;
 	// позиция игрока
-	m->player.pos.x = 1.5;
+	m->player.pos.x = 1.2;
 	m->player.pos.y = 5;
-	m->player.pos.z = 5;
+	m->player.pos.z = 0;
 	// скоость 
 	m->player.movespeed = 0;
 	m->player.rotspeed = 0;
@@ -63,6 +63,7 @@ void	ft_init(t_main *m)
 	sector[0]->typewall = (int*)malloc(sizeof(int) * 4);
 	sector[0]->heigth.floor = 0;
 	sector[0]->heigth.cell = 7;
+	
 	sector[0]->typewall[0] = -1;
 	sector[0]->typewall[1] = 1;
 	sector[0]->typewall[2] = 4;
