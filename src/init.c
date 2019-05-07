@@ -36,6 +36,7 @@ void	ft_init(t_main *m)
 	m->player.rotspeed = 0;
 	m->player.p_he	= 5;
 	m->player.sector = 0;
+	m->player.sector = 0;
 	// обработкичи кнопок 
 	m->eventcall.move_down = 0;
 	m->eventcall.move_up = 0;
@@ -63,7 +64,7 @@ void	ft_init(t_main *m)
 	sector[0]->typewall = (int*)malloc(sizeof(int) * 4);
 	sector[0]->heigth.floor = 0;
 	sector[0]->heigth.cell = 7;
-	
+
 	sector[0]->typewall[0] = -1;
 	sector[0]->typewall[1] = 1;
 	sector[0]->typewall[2] = 4;
@@ -134,7 +135,7 @@ void	ft_init(t_main *m)
 	sector[4]->vertex[1] = 5;
 	sector[4]->vertex[2] = 6;
 	sector[4]->vertex[3] = 7;
-	sector[4]->heigth.floor = 3;
+	sector[4]->heigth.floor = 2;
 	sector[4]->heigth.cell = 7;
 
 

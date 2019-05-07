@@ -55,7 +55,7 @@ void	ft_draw_map(t_main *m)
 		w++;
 	}
 	//ft_draw_cam(m, len);
-	SDL_Log("-------------- %d", m->player.sector);
+	SDL_Log("-------------- %d\n", m->player.sector);
 }
 
 void	ft_ray(t_main *m, t_ray ray)
@@ -69,7 +69,6 @@ void	ft_ray(t_main *m, t_ray ray)
 		k = 0;
 		ray.wall_sect = 0;
 
-		//if (ray.angle == 0.0)
 	//	if (ray.w >= 300 && ray.w <= 310)
 		while (ray.wall_sect < 4)
 		{
@@ -82,6 +81,7 @@ void	ft_ray(t_main *m, t_ray ray)
 			ray.intersec = ft_intersection(ray.raystart, ray.ray, m->vertex[m->sector[ray.num_sect]->vertex[ray.wall_sect]], m->vertex[m->sector[ray.num_sect]->vertex[k]]);
 				if (ray.intersec.z != -1)
 				{ 
+					
 					// как далеко попаданиеs
 					ray.camdist = (ray.intersec.z + ray.addlen) * ray.len_ray;
 					//фикс рыбьего глаза
@@ -92,12 +92,14 @@ void	ft_ray(t_main *m, t_ray ray)
 						drawscreen(m, ray.w,
 						ray.camdist,
 						m->sector[ray.num_sect]->heigth.cell - m->sector[ray.num_sect]->heigth.floor,
-						ray.num_sect);
+						ray.num_sect,
+						ray.wall_sect);
 					else if (m->sector[m->sector[ray.num_sect]->typewall[ray.wall_sect]]->heigth.floor != m->sector[ray.num_sect]->heigth.floor)
 						drawscreen(m, ray.w,
 						ray.camdist,
 						abs(m->sector[m->sector[ray.num_sect]->typewall[ray.wall_sect]]->heigth.floor - m->sector[ray.num_sect]->heigth.floor),
-						ray.num_sect);
+						ray.num_sect,
+						ray.wall_sect);
 				}
 				if (ray.intersec.z != -1 && m->sector[ray.num_sect]->typewall[ray.wall_sect] != -1)
 				{

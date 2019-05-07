@@ -34,6 +34,7 @@ int		ft_collision(t_main *m, t_vertex start, t_vertex end)
 			he = m->sector[m->sector[m->player.sector]->typewall[wall_sect]]->heigth.floor;
 			if (m->player.pos.z + 2 >= he)
 				flag = 1;
+			m->player.pos.z = he;
 			break;
 		}
 		else if (res.z != -1 && m->sector[m->player.sector]->typewall[wall_sect] == -1)
@@ -44,6 +45,7 @@ int		ft_collision(t_main *m, t_vertex start, t_vertex end)
 		return (1);
 	if (flag == 1)
 	{
+		m->player.oldsector = m->player.sector;
 		m->player.sector = m->sector[m->player.sector]->typewall[wall_sect];
 		return (1);
 	}

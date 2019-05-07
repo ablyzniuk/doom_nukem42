@@ -90,12 +90,21 @@ typedef	struct	s_sdl
 
 }				t_sdl;
 
+typedef	struct	s_portal
+{
+	int			left;
+	int			rigth;
+
+}				t_portal;
+
+
 typedef struct	s_trplayer
 {
 	t_angle		angle;	// угол повота по осям
 	t_vertex	pos;	// позиция игрока
 	t_vertex	vec;	// вектор направления игрока
 	int			sector;	// номер сектора где находиться ирок
+	int			oldsector;
 	int			p_he;	// высота игрока
 	float		movespeed;	//скорость
 	float		rotspeed;
@@ -193,7 +202,7 @@ void			ft_fps_look(t_main *m);
 void			ft_draw_map(t_main *m);
 void			drawline(t_main *m, int x1, int y1, int x2, int y2);
 t_vertex		ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex end2);
-void			drawscreen(t_main *m, int x, double z, int y0, int sect);
+void			drawscreen(t_main *m, int x, double z, int y0, int sect, int wall);
 void			ft_draw_floor(t_main *m, int start, int end, int x);
 void			ft_load_texture(t_main *m);
 void			ft_ray(t_main *m, t_ray ray);

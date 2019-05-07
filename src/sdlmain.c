@@ -48,5 +48,6 @@ void    ft_sdlloop(t_main *m)
 		SDL_UpdateWindowSurface(m->sdl.window);
 		ft_fps_look(m);
 		ft_fps_utils(m);
+		SDL_Log("|%f|\n", m->player.pos.z);
 	}
 }
