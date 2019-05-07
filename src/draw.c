@@ -62,13 +62,15 @@ void	drawline(t_main *m, int x1, int y1, int x2, int y2)
 }
 
 //рисуем сегмент стены 
-
-void	drawscreen(t_main *m, int x, double z, int heigth, int sect)
+void	drawscreen(t_main *m, int x, double z, int heigth, int sect, int wall)
 {
 	int start;
 	int endstart;
 	int he;
+	double	diff;
 	int	buff;
+	double	dhe;
+	double	hesect;
 	static	int drawstart = HEIGHT;
 	static	int oldw = 0;
 
@@ -76,24 +78,35 @@ void	drawscreen(t_main *m, int x, double z, int heigth, int sect)
 		drawstart = HEIGHT;
 	// считаем начало стены;
 	he = DIST / z;
-	endstart = m->player.ecvator + he;
+	hesect = m->sector[sect]->heigth.floor + m->sector[sect]->heigth.cell;
+	diff = he / hesect;
+	dhe = m->sector[sect]->heigth.floor + m->player.pos.z;
+		endstart = m->player.ecvator + he; 
+	if (m->player.pos.z > m->sector[sect]->heigth.floor)
+		endstart += dhe * diff;
 	// высота стены
 	start = endstart - HE_P * (heigth) / z;
 	buff = start;
 	if (endstart > HEIGHT)
 		endstart = HEIGHT;
-	//SDL_Log("|%d %d | %d|\n", start, endstart, drawstart);
-	if (oldw != x)
-		ft_draw_floor(m, endstart, HEIGHT, x);
-	if (m->sector[sect]->heigth.floor != m->sector[m->player.sector]->heigth.floor)
+	if (m->sector[m->player.sector]->heigth.floor > m->sector[m->player.oldsector]->heigth.floor && sect == m->player.sector)
 	{
 		ft_draw_floor(m, start, drawstart, x);
-		drawstart = buff;
+	 	drawstart = buff;
 	}
-	if (sect != m->player.sector && m->sector[sect]->heigth.floor == m->sector[m->player.sector]->heigth.floor)
-	{
+//	else if (m->sector[m->player.sector]->heigth.floor > m->sector[m->player.oldsector]->heigth.floor)
+//		ft_draw_floor(m, endstart, drawstart, x);
+	if (m->sector[sect]->heigth.floor <= m->sector[m->player.sector]->heigth.floor)
 		ft_draw_floor(m, endstart, drawstart, x);
+	if (m->sector[sect]->heigth.floor > m->sector[m->player.sector]->heigth.floor)
+	{
+		ft_draw_floor(m, start, drawstart, x);
+	 	drawstart = buff;
 	}
+	
+//	if (m->sector[sect]->heigth.floor == m->sector[m->player.sector]->heigth.floor)
+//		ft_draw_floor(m, endstart, drawstart, x);
+
 	while (start < endstart && start < drawstart)
 	{
 		ft_put_pixel(m, x, start, m->sector[sect]->color);
