@@ -85,6 +85,15 @@ void	drawscreen(t_main *m, int x, double z, int heigth, int sect)
 	//SDL_Log("|%d %d | %d|\n", start, endstart, drawstart);
 	if (oldw != x)
 		ft_draw_floor(m, endstart, HEIGHT, x);
+	if (m->sector[sect]->heigth.floor != m->sector[m->player.sector]->heigth.floor)
+	{
+		ft_draw_floor(m, start, drawstart, x);
+		drawstart = buff;
+	}
+	if (sect != m->player.sector && m->sector[sect]->heigth.floor == m->sector[m->player.sector]->heigth.floor)
+	{
+		ft_draw_floor(m, endstart, drawstart, x);
+	}
 	while (start < endstart && start < drawstart)
 	{
 		ft_put_pixel(m, x, start, m->sector[sect]->color);
