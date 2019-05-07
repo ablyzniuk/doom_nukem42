@@ -63,25 +63,43 @@ void	drawline(t_main *m, int x1, int y1, int x2, int y2)
 
 //рисуем сегмент стены 
 
-void	drawscreen(t_main *m, int x, double z, int y0, int sect)
+void	drawscreen(t_main *m, int x, double z, int heigth, int sect)
 {
 	int start;
 	int endstart;
 	int he;
-	int	color;
+	int	buff;
+	static	int drawstart = HEIGHT;
+	static	int oldw = 0;
 
-	// считаем высоту стены
+	if (oldw != x)
+		drawstart = HEIGHT;
+	// считаем начало стены;
 	he = DIST / z;
-	//SDL_Log("|%d %d|\n", m->player.ecvator, he);
 	endstart = m->player.ecvator + he;
-	start = endstart - m->sector[sect]->heigth.z / z;
-
-	color = 0xfaafaf;
-	if (y0 == 1)
-		color = 0x000afa;
-	while (start < endstart)
-	{	
-		ft_put_pixel(m, x, start, color);
+	// высота стены
+	start = endstart - HE_P * (heigth) / z;
+	buff = start;
+	if (endstart > HEIGHT)
+		endstart = HEIGHT;
+	//SDL_Log("|%d %d | %d|\n", start, endstart, drawstart);
+	if (oldw != x)
+		ft_draw_floor(m, endstart, HEIGHT, x);
+	if (m->sector[sect]->heigth.floor != m->sector[m->player.sector]->heigth.floor)
+	{
+		ft_draw_floor(m, start, drawstart, x);
+		drawstart = buff;
+	}
+	if (sect != m->player.sector && m->sector[sect]->heigth.floor == m->sector[m->player.sector]->heigth.floor)
+	{
+		ft_draw_floor(m, endstart, drawstart, x);
+	}
+	while (start < endstart && start < drawstart)
+	{
+		ft_put_pixel(m, x, start, m->sector[sect]->color);
 		start++;
 	}
+	oldw = x;
+	if (buff < drawstart)
+		drawstart = buff;
 }

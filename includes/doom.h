@@ -30,6 +30,7 @@
 #define	VECY 0
 #define DIST (double)WIDTH * 1.3	// рассчет дальности плоскости проекци. для фова 60
 #define	ANG 180
+#define	HE_P 1150 / m->player.p_he
 
 typedef	struct	s_angle
 {
@@ -56,8 +57,6 @@ typedef struct	s_ray
 	double		angle; // угол каста луча
 	double		vx;		// вектор каста луча
 	double		vy;
-	double		x;	// кординаты второй точки луча
-	double		y;	
 	double		ancos;	//пре кос син
 	double		ansin;
 	double		addlen;
@@ -67,9 +66,10 @@ typedef struct	s_ray
 	int			w;
 	double		camdist;	//фикс
 	t_vertex	intersec;	// результат чека пересения
-	t_vertex	ray;		//  кординаты второй точки луча
-	t_vertex	bspray;	// кординаты первой точки после портала
-	t_vertex	raystart;
+	t_vertex	ray;		//  кординаты второй точки луча 
+	t_vertex	raystart;	// кординаты первой точки после портала
+	t_vertex	old1;
+	t_vertex	old2;
 }				t_ray;
 
 typedef struct	s_fps
@@ -85,7 +85,7 @@ typedef	struct	s_sdl
 {
 	SDL_Window	*window;
 	SDL_Surface *winsurface;
-	SDL_Surface	*texture;
+	SDL_Surface	*skybox;
 	SDL_Event	event;
 
 }				t_sdl;
@@ -96,7 +96,7 @@ typedef struct	s_trplayer
 	t_vertex	pos;	// позиция игрока
 	t_vertex	vec;	// вектор направления игрока
 	int			sector;	// номер сектора где находиться ирок
-	int			p_he;
+	int			p_he;	// высота игрока
 	float		movespeed;	//скорость
 	float		rotspeed;
 	int			ecvator;
@@ -125,19 +125,28 @@ typedef	struct	s_event
 
 typedef	struct	s_heigth
 {
-	int		min_he;
-	int		max_he;
-	double	z;
+	int		floor;
+	int		cell;
 }				t_heigth;
 
+
+typedef struct	s_sky
+{
+	t_vertex	start;
+	t_vertex	end;
+	int			h;
+	int			w;
+	SDL_Surface	*sky;
+}				t_sky;
 
 typedef	struct	s_sector
 {
 	int			num_vert;	//количество точек
 	int			numsector;	// номер сектора
-	t_heigth	heigth;
+	t_heigth	heigth;	
 	int			*vertex;	// массив точек сектора
 	int			*typewall;
+	int			color;
 }				t_sector;
 
 typedef	struct	s_intersection
@@ -163,6 +172,7 @@ typedef	struct	s_main
 	t_sector	**sector; // массив структур всех секторов
 	int			sum_sect;	// количество секторов
 	t_ray		ray;	// немного переменных 
+	t_sky		sky;
 	t_fps		fps;	// фпс
 	t_sdl		sdl;	// все сдл переменные
 	t_trpalyer	player;	// данные о игроке
@@ -177,14 +187,19 @@ void			ft_key(t_main *m, int *run);
 void			ft_mouse(t_main *m);
 void			ft_transform(t_main	*m);
 void			ft_put_pixel(t_main *m, int x, int y, int pixel);
+int				ft_get_pixel(SDL_Surface *texture, int x, int y);
 void			ft_fps_utils(t_main *m);
 void			ft_fps_look(t_main *m);
 void			ft_draw_map(t_main *m);
 void			drawline(t_main *m, int x1, int y1, int x2, int y2);
 t_vertex		ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex end2);
 void			drawscreen(t_main *m, int x, double z, int y0, int sect);
+void			ft_draw_floor(t_main *m, int start, int end, int x);
 void			ft_load_texture(t_main *m);
 void			ft_ray(t_main *m, t_ray ray);
 int				ft_collision(t_main *m, t_vertex start, t_vertex end);
+int				ft_cmp_vertex(t_vertex one, t_vertex two);
+void			ft_init_sky(t_main *m);
+void			ft_draw_sky(t_main *m);
 
 #endif

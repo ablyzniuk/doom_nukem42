@@ -21,5 +21,7 @@ int		main()
 	ft_init(m);
 	ft_sdlloop(m);
 
+
+//	system("leaks doom");
 	return (0);
 }
