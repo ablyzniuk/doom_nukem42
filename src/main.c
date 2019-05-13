@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yalytvyn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:16:38 by yalytvyn          #+#    #+#             */
-/*   Updated: 2019/03/22 13:16:39 by yalytvyn         ###   ########.fr       */
+/*   Updated: 2019/05/07 17:44:27 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 int		main()
 {
-	t_main	*m;
+	t_main	*main;
 
-	m = (t_main*)malloc(sizeof(t_main));
-	ft_sdlinit(m);
-	ft_init(m);
-	ft_sdlloop(m);
-
-
-//	system("leaks doom");
+	main = init_main();
+	ft_sdlinit(main);
+	ft_init(main);
+	ft_sdlloop(main);
+	int i, j;
+	i = 0;
 	return (0);
 }

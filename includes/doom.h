@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doom.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yalytvyn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:16:46 by yalytvyn          #+#    #+#             */
-/*   Updated: 2019/03/22 13:16:48 by yalytvyn         ###   ########.fr       */
+/*   Updated: 2019/05/10 14:29:19 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define DOOM_H
 
 #include <SDL.h>
+#include "errors.h"
 #include <math.h>
 #include <unistd.h>
 #include "libft.h"
@@ -32,6 +33,14 @@
 #define	ANG 180
 #define	HE_P 1150 / m->player.p_he
 
+#define DELIMITER '\t'
+
+typedef	struct	s_valid
+{
+	unsigned char	data;
+	struct s_valid	*next;
+}				t_valid;
+
 typedef	struct	s_angle
 {
 	double		hor;
@@ -43,11 +52,13 @@ typedef struct s_vertex
 	double		x;
 	double		y;
 	double		z;
+	double 		*x_arr;
+	size_t		x_arr_size;
 }				t_vertex;
 
 typedef	struct	s_sendray
 {
-	int		num_sect;
+	int32_t	num_sect;
 	double	angle;
 }				t_sendray;
 
@@ -60,17 +71,30 @@ typedef struct	s_ray
 	double		ancos;	//пре кос син
 	double		ansin;
 	double		addlen;
-	int			num_sect;	// номер стены
-	int			wall_sect;
-	int			len_ray;	
-	int			w;
+	size_t		old_num_sect;
+	size_t		num_sect;	// номер стены
+	size_t		wall_sect;
+	int32_t		len_ray;	
+	int32_t		wall_type;
+	int32_t		w;
+	size_t		ray_deep;
 	double		camdist;	//фикс
 	t_vertex	intersec;	// результат чека пересения
-	t_vertex	ray;		//  кординаты второй точки луча 
-	t_vertex	raystart;	// кординаты первой точки после портала
-	t_vertex	old1;
-	t_vertex	old2;
+	t_vertex	ray_end;		//  кординаты второй точки луча 
+	t_vertex	ray_start;	// кординаты первой точки после портала
+	t_vertex	wall_start;
+	t_vertex	wall_end;
 }				t_ray;
+
+typedef	struct	s_save_ray
+{
+	t_vertex	sv_ray_end;
+	t_vertex	sv_pos;
+	int32_t		sv_sect;
+	int32_t		sv_old_sect;
+
+}				t_save_ray;
+
 
 typedef struct	s_fps
 {
@@ -90,52 +114,37 @@ typedef	struct	s_sdl
 
 }				t_sdl;
 
-typedef	struct	s_portal
-{
-	int			left;
-	int			rigth;
-
-}				t_portal;
-
-
 typedef struct	s_trplayer
 {
 	t_angle		angle;	// угол повота по осям
 	t_vertex	pos;	// позиция игрока
 	t_vertex	vec;	// вектор направления игрока
-	int			sector;	// номер сектора где находиться ирок
-	int			oldsector;
-	int			p_he;	// высота игрока
+	int32_t		sector;	// номер сектора где находиться ирок
+	int32_t		p_he;	// высота игрока
 	float		movespeed;	//скорость
 	float		rotspeed;
-	int			ecvator;
+	int32_t		ecvator;
 
 }               t_trpalyer;
 
-typedef	struct	s_collision 
-{
-	t_vertex	raypos;
-}				t_collision;
-
-
 typedef	struct	s_event
 {
-	int		move_up;
-	int		move_down;
-	int		rot_rigth;
-	int		rot_left;
-	int		rot_up;
-	int		rot_down;
-	int		strafe_left;
-	int		strafe_rigth;
-	int		shoot_event;
-	int		jump_event;
+	int32_t		move_up;
+	int32_t		move_down;
+	int32_t		rot_rigth;
+	int32_t		rot_left;
+	int32_t		rot_up;
+	int32_t		rot_down;
+	int32_t		strafe_left;
+	int32_t		strafe_rigth;
+	int32_t		shoot_event;
+	int32_t		jump_event;
 }				t_event;
 
 typedef	struct	s_heigth
 {
-	int		floor;
-	int		cell;
+	double		floor;
+	double		cell;
 }				t_heigth;
 
 
@@ -143,19 +152,26 @@ typedef struct	s_sky
 {
 	t_vertex	start;
 	t_vertex	end;
-	int			h;
-	int			w;
+	int32_t		h;
+	int32_t		w;
 	SDL_Surface	*sky;
 }				t_sky;
 
+typedef	struct	s_trans
+{
+	double		*transit_start;
+	double		*transit_end;
+	double		is_transition;
+}				t_trans;
+
 typedef	struct	s_sector
 {
-	int			num_vert;	//количество точек
-	int			numsector;	// номер сектора
-	t_heigth	heigth;	
-	int			*vertex;	// массив точек сектора
-	int			*typewall;
-	int			color;
+	size_t		color;
+	size_t		sector_index;	// номер сектора	
+	double		**vertex;
+	size_t		vertex_arr_len;
+	t_heigth	heigth;
+	int32_t		*transit;		// массив точек сектора
 }				t_sector;
 
 typedef	struct	s_intersection
@@ -178,9 +194,11 @@ typedef	struct	s_intersection
 typedef	struct	s_main
 {
 	t_vertex	*vertex; // массив структур ввсех точек карты
-	t_sector	**sector; // массив структур всех секторов
-	int			sum_sect;	// количество секторов
-	t_ray		ray;	// немного переменных 
+	t_sector	*sector; // массив структур всех секторов
+	size_t		sum_sect;	// количество секторов
+	size_t		sum_vert;	// количество вертексов
+	size_t		sum_vert_pair;	// количество вертексов
+	t_ray		ray;	// немного переменных
 	t_sky		sky;
 	t_fps		fps;	// фпс
 	t_sdl		sdl;	// все сдл переменные
@@ -189,21 +207,41 @@ typedef	struct	s_main
 
 }				t_main;
 
+void			parse_player(t_main *main, t_list *list);
+
+t_list			*find_elem(t_list *list, char *elem);
+
+t_sector		processing(t_main *main, size_t index, char *sector_data);
+
+size_t			content_len(t_list *list, char *content);
+
+void			parse_sector(t_main *main, t_list *list);
+
+void 			read_file(t_main *main);
+
+t_main 			*init_main(void);
+
+void			print_error(const char *msg);
+
+void			two_dim_del(char ***array);
+
+size_t			two_dim_len(char **array);
+
 void			ft_sdlinit(t_main *m);
 void			ft_sdlloop(t_main *m);
 void			ft_init(t_main *m);
-void			ft_key(t_main *m, int *run);
+void			ft_key(t_main *m, int32_t *run);
 void			ft_mouse(t_main *m);
 void			ft_transform(t_main	*m);
-void			ft_put_pixel(t_main *m, int x, int y, int pixel);
-int				ft_get_pixel(SDL_Surface *texture, int x, int y);
+void			ft_put_pixel(t_main *m, int32_t x, int32_t y, int32_t pixel);
+int				ft_get_pixel(SDL_Surface *texture, int32_t x, int32_t y);
 void			ft_fps_utils(t_main *m);
 void			ft_fps_look(t_main *m);
 void			ft_draw_map(t_main *m);
-void			drawline(t_main *m, int x1, int y1, int x2, int y2);
+void			drawline(t_main *m, int32_t x1, int32_t y1, int32_t x2, int32_t y2);
 t_vertex		ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex end2);
-void			drawscreen(t_main *m, int x, double z, int y0, int sect, int wall);
-void			ft_draw_floor(t_main *m, int start, int end, int x);
+void			ft_drawscreen(t_main *m, t_ray ray);
+void			ft_draw_floor(t_main *m, int32_t start, int32_t end, int32_t x);
 void			ft_load_texture(t_main *m);
 void			ft_ray(t_main *m, t_ray ray);
 int				ft_collision(t_main *m, t_vertex start, t_vertex end);

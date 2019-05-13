@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yalytvyn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 15:10:36 by yalytvyn          #+#    #+#             */
-/*   Updated: 2018/11/13 17:22:51 by yalytvyn         ###   ########.fr       */
+/*   Updated: 2019/05/08 15:59:42 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char		*ft_strndup(const char *src, size_t size)
-{
-	char	*dest;
-	size_t	i;
-
-	i = 0;
-	dest = (char*)malloc(sizeof(char) * (size + 1));
-	if (dest == NULL)
-		return (NULL);
-	while (i < size)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
 
 int			ft_copy(char **line, t_list *tmp)
 {
@@ -54,7 +36,6 @@ int			ft_copy(char **line, t_list *tmp)
 	if (len > 0)
 		return (1);
 	return (0);
-	free(del);
 }
 
 t_list		*ft_getlst(t_list **list, int fd)

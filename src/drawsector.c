@@ -12,7 +12,7 @@
 
 #include "doom.h"
 
-void	ft_draw_floor(t_main *m, int start, int end, int x)
+void	ft_draw_floor(t_main *m, int32_t start, int32_t end, int32_t x)
 {
 	int	color = 0x000c68;
 	while (start < end)

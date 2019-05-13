@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yalytvyn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/30 13:07:22 by yalytvyn          #+#    #+#             */
-/*   Updated: 2018/11/26 13:33:50 by yalytvyn         ###   ########.fr       */
+/*   Updated: 2019/05/08 15:02:32 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,32 @@
 # include <string.h>
 # include <fcntl.h>
 # include "get_next_line.h"
+
+# define FT_MIN(A, B)	(((A) < (B)) ? (A) : (B))
+# define FT_MAX(A, B)	(((A) > (B)) ? (A) : (B))
+
+# define FT_ABS(X)		(((X) < 0) ? (-(X)) : (X))
+# define FT_POW(X)		(X * X)
+
+# define FT_ULONG_MAX	((unsigned long)(~0L))
+# define FT_LONG_MAX	((long)(FT_ULONG_MAX >> 1))
+# define FT_LONG_MIN	((long)(~FT_LONG_MAX))
+
+# define FT_UINT_MAX	((unsigned)(~0L))
+# define FT_INT_MAX		((int)(FT_UINT_MAX >> 1))
+# define FT_INT_MIN		((int)(~FT_INT_MAX))
+
+# define FT_UCHAR_MAX	((unsigned char)(~0L))
+# define FT_CHAR_MAX	((char)(FT_UCHAR_MAX >> 1))
+# define FT_CHAR_MIN	((char)(~FT_CHAR_MAX))
+
+# define INDEX(X)		((X) - 1)
+
+typedef enum	e_bool
+{
+	false,
+	true
+}				t_bool;
 
 typedef struct	s_list
 {
@@ -56,7 +82,10 @@ char			*ft_strnstr(const char *s1, const char *s2, size_t len);
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strncmp(const char *s1, const char *s2, size_t num);
 int				ft_atoi(const char *str);
+double			ft_atof(const char *str);
+t_bool			ft_isint(const char *str, t_bool strict);
 int				ft_isalpha(int c);
+int				ft_isspace(int c);
 int				ft_isdigit(int c);
 int				ft_isalnum(int c);
 int				ft_isascii(int c);

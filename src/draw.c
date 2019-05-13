@@ -62,57 +62,104 @@ void	drawline(t_main *m, int x1, int y1, int x2, int y2)
 }
 
 //рисуем сегмент стены 
-void	drawscreen(t_main *m, int x, double z, int heigth, int sect, int wall)
+
+void	ft_drawscreen(t_main *m, t_ray ray)
 {
-	int start;
-	int endstart;
-	int he;
-	double	diff;
-	int	buff;
-	double	dhe;
-	double	hesect;
-	static	int drawstart = HEIGHT;
-	static	int oldw = 0;
+	int32_t		start;
+	int32_t		end;
+	int32_t		he_wall;
+	int			color;
+	double		diff;
+	double		hesect;
+	double		dhe;
+	int32_t		flag;
+	static int32_t old_start = 0;
+	static int32_t old_end = 0;
+	static int32_t old_w = -1;
+	static int32_t buffer = HEIGHT;
 
-	if (oldw != x)
-		drawstart = HEIGHT;
-	// считаем начало стены;
-	he = DIST / z;
-	hesect = m->sector[sect]->heigth.floor + m->sector[sect]->heigth.cell;
-	diff = he / hesect;
-	dhe = m->sector[sect]->heigth.floor + m->player.pos.z;
-		endstart = m->player.ecvator + he; 
-	if (m->player.pos.z > m->sector[sect]->heigth.floor)
-		endstart += dhe * diff;
-	// высота стены
-	start = endstart - HE_P * (heigth) / z;
-	buff = start;
-	if (endstart > HEIGHT)
-		endstart = HEIGHT;
-	if (m->sector[m->player.sector]->heigth.floor > m->sector[m->player.oldsector]->heigth.floor && sect == m->player.sector)
-	{
-		ft_draw_floor(m, start, drawstart, x);
-	 	drawstart = buff;
-	}
-//	else if (m->sector[m->player.sector]->heigth.floor > m->sector[m->player.oldsector]->heigth.floor)
-//		ft_draw_floor(m, endstart, drawstart, x);
-	if (m->sector[sect]->heigth.floor <= m->sector[m->player.sector]->heigth.floor)
-		ft_draw_floor(m, endstart, drawstart, x);
-	if (m->sector[sect]->heigth.floor > m->sector[m->player.sector]->heigth.floor)
-	{
-		ft_draw_floor(m, start, drawstart, x);
-	 	drawstart = buff;
-	}
-	
-//	if (m->sector[sect]->heigth.floor == m->sector[m->player.sector]->heigth.floor)
-//		ft_draw_floor(m, endstart, drawstart, x);
+	flag = 0;
+	he_wall = DIST / ray.camdist;
+	hesect = m->sector[ray.num_sect].heigth.cell - m->sector[ray.num_sect].heigth.floor;
+	diff = he_wall / hesect;
+	dhe = m->sector[ray.num_sect].heigth.floor - m->sector[m->player.sector].heigth.floor;
+	end = m->player.ecvator + he_wall - dhe * diff;
+	start = end - HE_P * (m->sector[ray.num_sect].heigth.cell
+		- m->sector[ray.num_sect].heigth.floor) / ray.camdist;
 
-	while (start < endstart && start < drawstart)
+	if (old_w != ray.w)
 	{
-		ft_put_pixel(m, x, start, m->sector[sect]->color);
-		start++;
+		buffer = HEIGHT;
+		while (buffer >= end)
+		{
+			ft_put_pixel(m, ray.w, buffer, 0xffff00);
+			buffer--;
+			flag = 1;
+		}
+		buffer = end;
 	}
-	oldw = x;
-	if (buff < drawstart)
-		drawstart = buff;
+	if (ray.old_num_sect != ray.num_sect)
+	{
+		if (m->sector[ray.old_num_sect].heigth.floor == m->sector[ray.num_sect].heigth.floor)
+		{	
+			while (buffer > end)
+			{
+			//	SDL_Log("|%d %d|\n", end, old_start);
+				ft_put_pixel(m, ray.w, buffer, 0xff0000);
+				buffer--;
+				flag = 1;
+			}
+			buffer = end;
+		}
+	}
+	if (m->sector[ray.num_sect].transit[ray.wall_sect] == -1)
+		while (start < end)
+		{
+			ft_put_pixel(m, ray.w, start, 0xffff00 / (ray.num_sect + 1));
+			start++;
+			flag = 1;
+		}
+	if (flag == 1)
+	{
+		old_start = start;
+		old_end = end;
+	}
+	old_w = ray.w;
 }
+//	int start;
+//	int endstart;
+//	int he;
+//	int	buff;
+//	static	int drawstart = HEIGHT;
+//	static	int oldw = 0;
+//
+//	if (oldw != x)
+//		drawstart = HEIGHT;
+//	// считаем начало стены;
+//	he = DIST / z;
+//	endstart = m->player.ecvator + he;
+//	// высота стены
+//	start = endstart - HE_P * (heigth) / z;
+//	buff = start;
+//	if (endstart > HEIGHT)
+//		endstart = HEIGHT;
+//	//SDL_Log("|%d %d | %d|\n", start, endstart, drawstart);
+//	if (oldw != x)
+//		ft_draw_floor(m, endstart, HEIGHT, x);
+//	if (m->sector[sect]->heigth.floor != m->sector[m->player.sector]->heigth.floor)
+//	{
+//		ft_draw_floor(m, start, drawstart, x);
+//		drawstart = buff;
+//	}
+//	if (sect != m->player.sector && m->sector[sect]->heigth.floor == m->sector[m->player.sector]->heigth.floor)
+//	{
+//		ft_draw_floor(m, endstart, drawstart, x);
+//	}
+//	while (start < endstart && start < drawstart)
+//	{
+//		ft_put_pixel(m, x, start, m->sector[sect]->color);
+//		start++;
+//	}
+//	oldw = x;
+//	if (buff < drawstart)
+//		drawstart = buff;
