@@ -62,6 +62,19 @@ typedef	struct	s_sendray
 	double	angle;
 }				t_sendray;
 
+typedef struct	s_heigth_wall 
+{
+	int32_t		w;
+	int32_t		start;
+	int32_t		end;
+	int32_t		color;
+	int32_t		he_wall;
+	int32_t		buffer_draw;
+	double		diff;
+	double		d_heigth;
+	double		he_sect;
+}				t_heigth_wall;
+
 
 typedef struct	s_ray
 {
@@ -241,7 +254,9 @@ void			ft_draw_map(t_main *m);
 void			drawline(t_main *m, int32_t x1, int32_t y1, int32_t x2, int32_t y2);
 t_vertex		ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex end2);
 void			ft_drawscreen(t_main *m, t_ray ray);
-void			ft_draw_floor(t_main *m, int32_t start, int32_t end, int32_t x);
+int32_t			ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall);
+int32_t			ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall);
+int32_t			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall);
 void			ft_load_texture(t_main *m);
 void			ft_ray(t_main *m, t_ray ray);
 int				ft_collision(t_main *m, t_vertex start, t_vertex end);

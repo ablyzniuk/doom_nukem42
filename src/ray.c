@@ -102,8 +102,8 @@ void	ft_ray(t_main *m, t_ray ray)
 			ray.addlen += ray.intersec.z;
 			sv_ray.sv_pos.x = ray.ray_start.x;
 			sv_ray.sv_pos.y = ray.ray_start.y;
-			ray.ray_start.x = ray.intersec.x * ray.vx;
-			ray.ray_start.y = ray.intersec.y * ray.vy;
+			ray.ray_start.x = ray.intersec.x + 0.0000001 * ray.vx;
+			ray.ray_start.y = ray.intersec.y + 0.0000001 * ray.vy;
 			ft_ray(m, ray);
 			ray.ray_end.x = ray.ray_end.x;
 			ray.ray_end.y = ray.ray_end.y;

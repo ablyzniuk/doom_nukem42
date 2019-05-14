@@ -65,65 +65,25 @@ void	drawline(t_main *m, int x1, int y1, int x2, int y2)
 
 void	ft_drawscreen(t_main *m, t_ray ray)
 {
-	int32_t		start;
-	int32_t		end;
-	int32_t		he_wall;
-	int			color;
-	double		diff;
-	double		hesect;
-	double		dhe;
-	int32_t		flag;
-	static int32_t old_start = 0;
-	static int32_t old_end = 0;
+	t_heigth_wall	wall;
 	static int32_t old_w = -1;
 	static int32_t buffer = HEIGHT;
 
-	flag = 0;
-	he_wall = DIST / ray.camdist;
-	hesect = m->sector[ray.num_sect].heigth.cell - m->sector[ray.num_sect].heigth.floor;
-	diff = he_wall / hesect;
-	dhe = m->sector[ray.num_sect].heigth.floor - m->sector[m->player.sector].heigth.floor;
-	end = m->player.ecvator + he_wall - dhe * diff;
-	start = end - HE_P * (m->sector[ray.num_sect].heigth.cell
-		- m->sector[ray.num_sect].heigth.floor) / ray.camdist;
-
 	if (old_w != ray.w)
-	{
 		buffer = HEIGHT;
-		while (buffer >= end)
-		{
-			ft_put_pixel(m, ray.w, buffer, 0xffff00);
-			buffer--;
-			flag = 1;
-		}
-		buffer = end;
-	}
-	if (ray.old_num_sect != ray.num_sect)
-	{
-		if (m->sector[ray.old_num_sect].heigth.floor == m->sector[ray.num_sect].heigth.floor)
-		{	
-			while (buffer > end)
-			{
-			//	SDL_Log("|%d %d|\n", end, old_start);
-				ft_put_pixel(m, ray.w, buffer, 0xff0000);
-				buffer--;
-				flag = 1;
-			}
-			buffer = end;
-		}
-	}
-	if (m->sector[ray.num_sect].transit[ray.wall_sect] == -1)
-		while (start < end)
-		{
-			ft_put_pixel(m, ray.w, start, 0xffff00 / (ray.num_sect + 1));
-			start++;
-			flag = 1;
-		}
-	if (flag == 1)
-	{
-		old_start = start;
-		old_end = end;
-	}
+	wall.he_wall = DIST / ray.camdist;
+	wall.he_sect = m->sector[ray.num_sect].heigth.cell - m->sector[ray.num_sect].heigth.floor;
+	wall.diff = wall.he_wall / wall.he_sect;
+	wall.d_heigth = m->sector[ray.num_sect].heigth.floor - m->sector[m->player.sector].heigth.floor;
+	wall.end = m->player.ecvator + wall.he_wall - wall.d_heigth * wall.diff;
+	wall.start = wall.end - HE_P * (m->sector[ray.num_sect].heigth.cell
+	- m->sector[ray.num_sect].heigth.floor) / ray.camdist;
+	wall.w = old_w;
+	wall.buffer_draw = buffer;
+	wall.buffer_draw = ft_draw_floor(m, ray, wall);
+	wall.buffer_draw = ft_draw_wall(m, ray, wall);
+	wall.buffer_draw = ft_draw_cell(m, ray, wall);
+	buffer = wall.buffer_draw;
 	old_w = ray.w;
 }
 //	int start;
