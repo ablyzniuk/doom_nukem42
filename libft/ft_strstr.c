@@ -20,7 +20,7 @@ char	*ft_strstr(const char *s1, const char *s2)
 
 	i = 0;
 	buf = 0;
-	buf = ft_strlen(s2);
+	buf = (int)ft_strlen(s2);
 	if (buf == 0)
 		return ((char*)s1);
 	while (s1[i] != '\0')

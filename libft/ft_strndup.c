@@ -10,13 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 char		*ft_strndup(const char *src, size_t size)
 {
 	char	*dest;
 	size_t	i;
 
 	i = 0;
-	dest = (char*)malloc(sizeof(char) * (size + 1));
+	dest = (char *)ft_memalloc(sizeof(char) * (size + 1));
 	if (dest == NULL)
 		return (NULL);
 	while (i < size)

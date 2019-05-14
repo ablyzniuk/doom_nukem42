@@ -16,6 +16,10 @@ FLAG = -Wall -Wextra -Werror
 INC = includes
 
 SRC = ft_memset.c \
+                ft_isint.c \
+				ft_strndup.c \
+                ft_isspace.c\
+                ft_atof.c \
 				ft_bzero.c \
 				ft_memcpy.c \
 				ft_memccpy.c \
@@ -84,7 +88,7 @@ SRCO = *.o
 
 
 $(NAME):
-	@gcc -c -I$(INC) $(FLAG) $(SRC)
+	@gcc -c -g -I$(INC) $(FLAG) $(SRC)
 	@ar rc $(NAME) $(SRCO)
 all: $(NAME)
 

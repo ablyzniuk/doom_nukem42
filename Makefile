@@ -6,7 +6,7 @@
 #    By: yalytvyn <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/08 12:28:56 by yalytvyn          #+#    #+#              #
-#    Updated: 2019/03/08 12:28:57 by yalytvyn         ###   ########.fr        #
+#    Updated: 2019/05/08 19:27:58 by ablizniu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,12 +30,12 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft/
-	gcc -Wall -Wextra -O2 -L libft/ -lft -L/usr/local/lib -Iincludes -Ilibft/includes $(SDL2_HEADER) $(SDL2_P) $(SDLFLAGS) $(SRC)  -o $(NAME) 
+	gcc -Wall -Wextra -g -L libft/ -lft -L/usr/local/lib -Iincludes -Ilibft/includes $(SDL2_HEADER) $(SDL2_P) $(SDLFLAGS) $(SRC)  -o $(NAME) 
 	printf '\033[32m[ ✔ ] %s\n\033[0m' "Create Dooms"
 
 obj/%.o: src/%.c
 	mkdir -p obj
-	gcc  -Wall -Wextra -c -O2 -Iincludes -Ilibft/includes $(SDL2_HEADER) $< -o $@
+	gcc  -Wall -Wextra -c -g -Iincludes -Ilibft/includes $(SDL2_HEADER) $< -o $@
 	printf '\033[0m[ ✔ ] %s\n\033[0m' "$<"
 
 clean:

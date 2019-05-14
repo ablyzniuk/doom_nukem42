@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   resourse.c                                         :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/22 14:13:27 by yalytvyn          #+#    #+#             */
-/*   Updated: 2019/05/07 18:08:29 by ablizniu         ###   ########.fr       */
+/*   Created: 2019/04/30 15:30:50 by ablizniu          #+#    #+#             */
+/*   Updated: 2019/04/30 15:30:50 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doom.h"
 
-void    ft_load_texture(t_main *m)
+void print_error(const char *msg)
 {
-
-	m->sky.sky = SDL_LoadBMP("resourse/sky/sky.bmp");
-	printf("%s\n", SDL_GetError());
-	if (m->sky.sky == NULL)
-		print_error(BAD_SKYBOX);
+	ft_putendl(msg);
+	exit(0);
 }
