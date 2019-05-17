@@ -20,7 +20,5 @@ int		main()
 	ft_sdlinit(main);
 	ft_init(main);
 	ft_sdlloop(main);
-	int i, j;
-	i = 0;
 	return (0);
 }

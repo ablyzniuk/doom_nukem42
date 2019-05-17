@@ -19,7 +19,7 @@ int32_t	ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall)
 
 	sv_start = wall.start;
 	sv_end = wall.end;
-	if (wall.w != ray.w)//   пол сектора
+	if (wall.w != ray.w && 0)//   пол сектора
 	{
 		while (wall.end < wall.buffer_draw)
 		{
@@ -29,7 +29,7 @@ int32_t	ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall)
 		return (sv_end);
 	}
 	if (m->sector[ray.num_sect].heigth.floor ==
-	m->sector[ray.old_num_sect].heigth.floor)
+	m->sector[ray.old_num_sect].heigth.floor && 0)
 	{
 		while (wall.end < wall.buffer_draw)
 		{
@@ -38,16 +38,17 @@ int32_t	ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall)
 		}
 		return (sv_end < wall.buffer_draw ? sv_end : wall.buffer_draw);
 	}
-	if (m->sector[ray.num_sect].heigth.floor >
-	m->sector[ray.old_num_sect].heigth.floor && 0)
+	if (m->sector[ray.num_sect].heigth.floor !=
+	m->sector[m->sector[ray.num_sect].transit[ray.wall_sect]].heigth.floor && 0)
 	{
-		wall.start = wall.end - HE_P * abs(m->sector[ray.num_sect].heigth.floor
-			- m->sector[m->player.sector].heigth.floor)
-			/ ray.camdist;
+		wall.start = wall.end - HE_P *
+		fabs(m->sector[ray.num_sect].heigth.floor
+		- m->sector[m->sector[ray.num_sect].transit[ray.wall_sect]].heigth.floor)
+		/ ray.camdist;
 		sv_start = wall.start;
-		while (wall.start < wall.end)
+		while (wall.start < wall.buffer_draw)
 		{
-			ft_put_pixel(m, ray.w, wall.start, 0xffffa2);
+			ft_put_pixel(m, ray.w, wall.start, 0x00ffa2);
 			wall.start++;
 		}
 		return (sv_start < wall.buffer_draw ? sv_start : wall.buffer_draw);
@@ -62,28 +63,22 @@ int32_t	ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall)
 
 	sv_start = wall.start;
 	sv_end	= wall.end;
-	if (m->sector[ray.num_sect].transit[ray.wall_sect] == -1)
+	if (m->sector[ray.num_sect].transit[ray.wall_sect] != -2 && ray.num_sect != 0)
 	{
 		while (wall.start < wall.end && wall.start < wall.buffer_draw)
 		{
 			ft_put_pixel(m, ray.w, wall.start, 0xffffff / (ray.num_sect + 1));
 			wall.start++;
 		}
-	return (sv_start < wall.buffer_draw ? sv_start : wall.buffer_draw);
+		return (sv_start < wall.buffer_draw ? sv_start : wall.buffer_draw);
 	}
 	if (m->sector[ray.num_sect].heigth.floor <
-	m->sector[m->sector[ray.num_sect].transit[ray.wall_sect]].heigth.floor)
+	m->sector[m->sector[ray.num_sect].transit[ray.wall_sect]].heigth.floor && 0)
 	{
-		if (ray.num_sect == 1)
-			SDL_Log("111\n");
-		if (ray.num_sect != m->player.sector && m->sector[ray.num_sect].heigth.floor != m->sector[m->player.sector].heigth.floor)
-			wall.start = wall.end - HE_P * abs(m->sector[ray.num_sect].heigth.floor
-			- m->sector[m->player.sector].heigth.floor)
-			/ ray.camdist;
-		else
-			wall.start = wall.end - HE_P * abs(m->sector[m->sector[ray.num_sect].transit[ray.wall_sect]].heigth.floor
-			- m->sector[m->player.sector].heigth.floor)
-			/ ray.camdist;
+		wall.start = wall.end - HE_P *
+		fabs(m->sector[m->player.sector].heigth.floor
+		- m->sector[m->sector[ray.num_sect].transit[ray.wall_sect]].heigth.floor)
+		/ ray.camdist;
 		sv_start = wall.start;
 		while (wall.start < wall.end && wall.start < wall.buffer_draw)
 		{
