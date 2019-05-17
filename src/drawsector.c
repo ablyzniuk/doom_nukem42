@@ -29,7 +29,7 @@ int32_t	ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall)
 		return (sv_end);
 	}
 	if (m->sector[ray.num_sect].heigth.floor ==
-	m->sector[m->sector[ray.num_sect].transit[ray.wall_sect]].heigth.floor)
+	m->sector[ray.old_num_sect].heigth.floor)
 	{
 		while (wall.end < wall.buffer_draw)
 		{
@@ -39,14 +39,18 @@ int32_t	ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall)
 		return (sv_end < wall.buffer_draw ? sv_end : wall.buffer_draw);
 	}
 	if (m->sector[ray.num_sect].heigth.floor >
-	m->sector[ray.old_num_sect].heigth.floor && ray.num_sect != ray.old_num_sect && 0)
+	m->sector[ray.old_num_sect].heigth.floor && 0)
 	{
-		while (wall.end < wall.buffer_draw)
+		wall.start = wall.end - HE_P * abs(m->sector[ray.num_sect].heigth.floor
+			- m->sector[m->player.sector].heigth.floor)
+			/ ray.camdist;
+		sv_start = wall.start;
+		while (wall.start < wall.end)
 		{
-			ft_put_pixel(m, ray.w, wall.end, 0xffffa2);
-			wall.end++;
+			ft_put_pixel(m, ray.w, wall.start, 0xffffa2);
+			wall.start++;
 		}
-		return (sv_end < wall.buffer_draw ? sv_end : wall.buffer_draw);
+		return (sv_start < wall.buffer_draw ? sv_start : wall.buffer_draw);
 	}
 	return (wall.buffer_draw);
 }
@@ -70,9 +74,16 @@ int32_t	ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall)
 	if (m->sector[ray.num_sect].heigth.floor <
 	m->sector[m->sector[ray.num_sect].transit[ray.wall_sect]].heigth.floor)
 	{
-		wall.start = wall.end - HE_P * abs(m->sector[ray.num_sect].heigth.floor
-		- m->sector[m->player.sector].heigth.floor)
-		/ ray.camdist;
+		if (ray.num_sect == 1)
+			SDL_Log("111\n");
+		if (ray.num_sect != m->player.sector && m->sector[ray.num_sect].heigth.floor != m->sector[m->player.sector].heigth.floor)
+			wall.start = wall.end - HE_P * abs(m->sector[ray.num_sect].heigth.floor
+			- m->sector[m->player.sector].heigth.floor)
+			/ ray.camdist;
+		else
+			wall.start = wall.end - HE_P * abs(m->sector[m->sector[ray.num_sect].transit[ray.wall_sect]].heigth.floor
+			- m->sector[m->player.sector].heigth.floor)
+			/ ray.camdist;
 		sv_start = wall.start;
 		while (wall.start < wall.end && wall.start < wall.buffer_draw)
 		{

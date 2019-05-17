@@ -13,7 +13,7 @@
 #ifndef DOOM_H
 # define DOOM_H
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include "errors.h"
 #include <math.h>
 #include <unistd.h>
