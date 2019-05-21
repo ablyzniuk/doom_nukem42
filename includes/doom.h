@@ -68,6 +68,8 @@ typedef struct	s_heigth_wall
 	int32_t		start;
 	int32_t		end;
 	int32_t		color;
+	int32_t		floor;
+	int32_t		ceil;
 	double		he_wall;
 	int32_t		old_end;
 	int32_t		old_start;
@@ -94,6 +96,7 @@ typedef struct	s_ray
 	double		ancos;	//пре кос син
 	double		ansin;
 	double		addlen;
+
 	size_t		old_num_sect;
 	int32_t		num_sect;	// номер стены
 	size_t		wall_sect;

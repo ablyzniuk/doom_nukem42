@@ -63,9 +63,9 @@ int32_t	ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall)
 
 	sv_start = wall.start;
 	sv_end	= wall.end;
-	if (m->sector[ray.num_sect].transit[ray.wall_sect] != -2 && ray.num_sect != 0)
+	if (ray.num_sect == 1)
 	{
-		while (wall.start < wall.end && wall.start < wall.buffer_draw)
+		while (wall.start < wall.end)
 		{
 			ft_put_pixel(m, ray.w, wall.start, 0xffffff / (ray.num_sect + 1));
 			wall.start++;
