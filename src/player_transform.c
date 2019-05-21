@@ -138,7 +138,7 @@ static void		ft_transform_vec_x(t_main *m)
 	{
 		m->sky.start.x += 15;
 		m->sky.end.x += 15;
-		m->player.angle.hor += 3;
+		m->player.angle.hor += 5;
 		m->player.vec.x = VECX * ancos - VECY * ansin;
 		m->player.vec.y = VECX * ansin + VECY * ancos;
 		m->eventcall.rot_left = 0;
@@ -148,7 +148,7 @@ static void		ft_transform_vec_x(t_main *m)
 	{
 		m->sky.start.x -= 15;
 		m->sky.end.x -= 15;
-		m->player.angle.hor -= 3;
+		m->player.angle.hor -= 5;
 		m->player.vec.x = VECX * ancos - VECY * ansin;
 		m->player.vec.y = VECX * ansin + VECY * ancos;
 		m->eventcall.rot_left = 0;
@@ -168,7 +168,7 @@ static void		ft_transform_vec_y(t_main *m)
 	{
 		m->sky.start.y -= 5;
 		m->sky.end.y -= 10;
-		m->player.angle.ver += 1;
+		m->player.angle.ver += 3;
 		m->player.ecvator += 10;
 		m->player.vec.z = VECX * ancos - VECY * ansin;
 		m->eventcall.rot_up = 0;
@@ -178,7 +178,7 @@ static void		ft_transform_vec_y(t_main *m)
 	{
 		m->sky.start.y += 5;
 		m->sky.end.y += 5;
-		m->player.angle.ver -= 1;
+		m->player.angle.ver -= 3;
 		m->player.ecvator -= 10;
 		m->player.vec.z = VECX * ancos - VECY * ansin;
 		m->eventcall.rot_up = 0;

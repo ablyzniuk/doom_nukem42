@@ -28,7 +28,7 @@ void	ft_get_data_ray(t_main *m, t_ray *ray)
 	ray->ray_end.y = m->player.pos.y + ray->len_ray * ray->vy;
 	ray->wall_sect = 0;
 	ray->num_sect = m->player.sector;
-	ray->old_num_sect = ray->num_sect;
+	ray->old_num_sect = -2;
 	ray->ray_start.x = m->player.pos.x;
 	ray->ray_start.y = m->player.pos.y;
 	ray->addlen = 0.0;
@@ -67,7 +67,7 @@ void	ft_draw_map(t_main *m)
 		ray.w++;
 	}
 	//ft_draw_cam(m, len);
-	SDL_Log("-------------- %d", m->player.sector);
+//	SDL_Log("-------------- %d", m->player.sector);
 }
 
 void	ft_ray(t_main *m, t_ray ray)
@@ -76,7 +76,7 @@ void	ft_ray(t_main *m, t_ray ray)
 
 	ray.ray_deep++;
 	ray.wall_sect = 0;
-	ft_put_pixel(m, m->player.pos.x,m->player.pos.y, 0x0000ff);
+	ft_put_pixel(m, m->player.pos.x,m->player.pos.y, 0xff00ff);
 	while (ray.wall_sect < m->sector[ray.num_sect].vertex_arr_len)
 	{
 		ft_get_array_wall(m, &ray);
@@ -89,8 +89,7 @@ void	ft_ray(t_main *m, t_ray ray)
 			ft_drawscreen(m, ray);
 		}
 		
-		if (ray.intersec.z != -1 && m->sector[ray.num_sect].transit[ray.wall_sect] != -1 && ray.ray_deep < 30
-		&& m->sector[ray.num_sect].transit[ray.wall_sect] != ray.old_num_sect)
+		if (ray.intersec.z != -1 && m->sector[ray.num_sect].transit[ray.wall_sect] != -1 && ray.ray_deep < 10)
 		{
 			sv_ray.sv_ray_end.x = ray.ray_end.x;
 			sv_ray.sv_ray_end.y = ray.ray_end.y;
@@ -102,8 +101,8 @@ void	ft_ray(t_main *m, t_ray ray)
 			ray.addlen += ray.intersec.z;
 			sv_ray.sv_pos.x = ray.ray_start.x;
 			sv_ray.sv_pos.y = ray.ray_start.y;
-			ray.ray_start.x = ray.intersec.x + 0.0000001 * ray.vx;
-			ray.ray_start.y = ray.intersec.y + 0.0000001 * ray.vy;
+			ray.ray_start.x = ray.intersec.x;
+			ray.ray_start.y = ray.intersec.y;
 			ft_ray(m, ray);
 			ray.ray_end.x = ray.ray_end.x;
 			ray.ray_end.y = ray.ray_end.y;
