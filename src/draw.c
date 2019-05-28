@@ -66,7 +66,7 @@ void	drawline(t_main *m, int x1, int y1, int x2, int y2)
 void	ft_drawscreen(t_main *m, t_ray ray)
 {
 	t_heigth_wall		wall;
-	static t_draw_save	sv_draw = {-1, -1, HEIGHT, HEIGHT};	
+	static t_draw_save	sv_draw = {HALFHEIGTH, HALFHEIGTH, HEIGHT, HEIGHT};	
 
 	if (sv_draw.old_w != ray.w)
 		sv_draw.buffer = HEIGHT;
@@ -74,21 +74,19 @@ void	ft_drawscreen(t_main *m, t_ray ray)
 	wall.he_wall = DIST / ray.camdist;
 	wall.he_sect = fabs(m->sector[ray.num_sect].heigth.cell - m->sector[ray.num_sect].heigth.floor);
 	wall.diff = wall.he_wall / 15;
-	wall.d_heigth = m->sector[ray.num_sect].heigth.floor - m->sector[m->player.sector].heigth.floor;
 	wall.floor = m->sector[ray.num_sect].heigth.floor - m->player.pos.z;
 	wall.ceil = m->sector[ray.num_sect].heigth.cell - m->player.pos.z;
-
-	//SDL_Log("%f %d\n", m->player.pos.z, m->player.p_he);
-
 	wall.end = m->player.ecvator + wall.diff * m->player.p_he - wall.diff * wall.floor * 2;
 	wall.start = wall.end - wall.he_wall - wall.diff * wall.ceil / 2;
+	wall.buffer_draw = sv_draw.buffer;
+	sv_draw.buffer = ft_draw_floor(m, ray, wall);
+	wall.buffer_draw = sv_draw.buffer;
+	sv_draw.buffer = ft_draw_wall(m, ray, wall);
+	wall.buffer_draw = sv_draw.buffer;
+	sv_draw.buffer = ft_draw_cell(m, ray, wall);
+	wall.buffer_draw = sv_draw.buffer;
 
-	if (m->sector[ray.num_sect].transit[ray.wall_sect] == -1)
-		while (wall.start < wall.end)
-		{
-			ft_put_pixel(m, ray.w, wall.start, 0xffffff / (ray.num_sect + 1));
-			wall.start++;
-		}
+	sv_draw.old_w = ray.w;
 	sv_draw.old_end = wall.end;
 	sv_draw.old_start = wall.start;
 }

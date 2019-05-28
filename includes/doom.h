@@ -21,10 +21,10 @@
 #include "libft.h"
 
 #define RAY_BETWEEN_ANGLE 60.0 / (double)WIDTH
-
-#define WIDTH 900
-#define HEIGHT 600
+#define WIDTH 1080
+#define HEIGHT 900
 #define	HALFWIDTH (double)WIDTH / 2.0
+#define	HALFHEIGTH HEIGHT / 2
 #define	FOV 60
 #define	FPS 60
 #define	TICKS_FRAME 333 / FPS
@@ -76,7 +76,6 @@ typedef struct	s_heigth_wall
 	int32_t		old_start;
 	int32_t		buffer_draw;
 	double		diff;
-	double		d_heigth;
 	double		he_sect;
 }				t_heigth_wall;
 
@@ -98,7 +97,7 @@ typedef struct	s_ray
 	double		ansin;
 	double		addlen;
 
-	size_t		old_num_sect;
+	int32_t		old_num_sect;
 	int32_t		num_sect;	// номер стены
 	size_t		wall_sect;
 	int32_t		len_ray;	

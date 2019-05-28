@@ -89,7 +89,8 @@ void	ft_ray(t_main *m, t_ray ray)
 			ft_drawscreen(m, ray);
 		}
 		
-		if (ray.intersec.z != -1 && m->sector[ray.num_sect].transit[ray.wall_sect] != -1 && ray.ray_deep < 32)
+		if (ray.intersec.z != -1 && m->sector[ray.num_sect].transit[ray.wall_sect] != -1 && ray.ray_deep < 32
+		&& m->sector[ray.num_sect].transit[ray.wall_sect] != ray.old_num_sect)
 		{
 			sv_ray.sv_ray_end.x = ray.ray_end.x;
 			sv_ray.sv_ray_end.y = ray.ray_end.y;
@@ -101,8 +102,8 @@ void	ft_ray(t_main *m, t_ray ray)
 			ray.addlen += ray.intersec.z;
 			sv_ray.sv_pos.x = ray.ray_start.x;
 			sv_ray.sv_pos.y = ray.ray_start.y;
-			ray.ray_start.x = ray.intersec.x;
-			ray.ray_start.y = ray.intersec.y;
+			ray.ray_start.x = ray.intersec.x - 0.00001 * ray.vx;
+			ray.ray_start.y = ray.intersec.y - 0.00001 * ray.vy;
 			ft_ray(m, ray);
 			ray.ray_end.x = ray.ray_end.x;
 			ray.ray_end.y = ray.ray_end.y;
