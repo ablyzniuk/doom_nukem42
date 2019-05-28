@@ -42,7 +42,7 @@ void	ft_init(t_main *m)
 //	// скоость
 	m->player.movespeed = 0;
 	m->player.rotspeed = 0;
-	m->player.p_he	= 5;
+	m->player.p_he = 7;
 //	m->player.sector = 0;
 //	// обработкичи кнопок
 	m->eventcall.move_down = 0;

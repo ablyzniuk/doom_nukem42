@@ -14,6 +14,7 @@
 # define DOOM_H
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include "errors.h"
 #include <math.h>
 #include <unistd.h>
@@ -133,6 +134,8 @@ typedef struct	s_fps
 
 typedef	struct	s_sdl
 {
+	SDL_Surface	*debug;
+	TTF_Font	*font;
 	SDL_Window	*window;
 	SDL_Surface *winsurface;
 	SDL_Surface	*skybox;
@@ -165,6 +168,8 @@ typedef	struct	s_event
 	int32_t		strafe_rigth;
 	int32_t		shoot_event;
 	int32_t		jump_event;
+	int32_t		flag_debug;
+	int32_t		geg_flag;
 }				t_event;
 
 typedef	struct	s_heigth
@@ -276,5 +281,6 @@ int				ft_collision(t_main *m, t_vertex start, t_vertex end);
 int				ft_cmp_vertex(t_vertex one, t_vertex two);
 void			ft_init_sky(t_main *m);
 void			ft_draw_sky(t_main *m);
+void    		ft_debug(t_main *m);
 
 #endif

@@ -20,5 +20,7 @@ int		main()
 	ft_sdlinit(main);
 	ft_init(main);
 	ft_sdlloop(main);
+	SDL_Quit();
+	TTF_Quit();
 	return (0);
 }

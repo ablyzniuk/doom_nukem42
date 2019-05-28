@@ -15,6 +15,7 @@
 // сдл инит
 void    ft_sdlinit(t_main *m)
 {
+	TTF_Init();
 	SDL_Init(SDL_INIT_EVERYTHING);
 	m->sdl.window = SDL_CreateWindow(
 		"Doom Nukem",
@@ -45,6 +46,7 @@ void    ft_sdlloop(t_main *m)
 			ft_key(m, &run);
 			ft_mouse(m);
 		}
+		ft_debug(m);
 		SDL_UpdateWindowSurface(m->sdl.window);
 	//	ft_fps_look(m);
 		ft_fps_utils(m);

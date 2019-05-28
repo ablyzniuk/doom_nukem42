@@ -19,4 +19,7 @@ void    ft_load_texture(t_main *m)
 	printf("%s\n", SDL_GetError());
 	if (m->sky.sky == NULL)
 		print_error(BAD_SKYBOX);
+	m->sdl.font = TTF_OpenFont("resourse/font/ArialBold.ttf", 18);
+	if (m->sdl.font == NULL)
+		exit(-10);
 }

@@ -73,21 +73,24 @@ void	ft_drawscreen(t_main *m, t_ray ray)
 
 	wall.he_wall = DIST / ray.camdist;
 	wall.he_sect = fabs(m->sector[ray.num_sect].heigth.cell - m->sector[ray.num_sect].heigth.floor);
-	wall.diff = wall.he_wall / wall.he_sect;
+	wall.diff = wall.he_wall / 15;
 	wall.d_heigth = m->sector[ray.num_sect].heigth.floor - m->sector[m->player.sector].heigth.floor;
-	wall.floor = m->sector[ray.num_sect].heigth.floor - m->player.p_he;
-	wall.ceil = m->sector[ray.num_sect].heigth.cell - m->player.p_he;
+	wall.floor = m->sector[ray.num_sect].heigth.floor - m->player.pos.z;
+	wall.ceil = m->sector[ray.num_sect].heigth.cell - m->player.pos.z;
 
-	//SDL_Log("%d %d\n", wall.floor, wall.ceil);
+	//SDL_Log("%f %d\n", m->player.pos.z, m->player.p_he);
 
-	wall.end = m->player.ecvator + wall.he_wall / 2.0 - wall.floor * m->player.p_he * 2;
-	wall.start = wall.end - wall.he_wall - wall.ceil * m->player.p_he * 2;
+	wall.end = m->player.ecvator + wall.diff * m->player.p_he - wall.diff * wall.floor * 2;
+	wall.start = wall.end - wall.he_wall - wall.diff * wall.ceil / 2;
+
 	if (m->sector[ray.num_sect].transit[ray.wall_sect] == -1)
 		while (wall.start < wall.end)
 		{
-			ft_put_pixel(m, ray.w, wall.start, 0x00ffa2);
+			ft_put_pixel(m, ray.w, wall.start, 0xffffff / (ray.num_sect + 1));
 			wall.start++;
 		}
+	sv_draw.old_end = wall.end;
+	sv_draw.old_start = wall.start;
 }
 //	int start;
 //	int endstart;

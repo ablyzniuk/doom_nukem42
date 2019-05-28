@@ -53,7 +53,7 @@ int ft_collision(t_main *m, t_vertex start, t_vertex end)
 	{
 		m->player.sector = m->sector[m->player.sector].transit[wall_sect];
 		m->player.pos.z = he;
-		m->player.p_he = he + 5;
+		//m->player.p_he = m->player.pos.z + 5;
 		return (1);
 	}
 	return (-1);

@@ -12,7 +12,13 @@
 
 #include "doom.h"
 
-
+static void		ft_geg(t_main *m)
+{
+	if (m->eventcall.geg_flag == 1)
+		m->player.p_he = 2;
+	if (m->eventcall.geg_flag == 0)
+		m->player.p_he = 7;	
+}
 //   jump фиксить потом
 static void		ft_transform_jump(t_main *m)
 {
@@ -164,7 +170,7 @@ static void		ft_transform_vec_y(t_main *m)
 
 	ancos = cos(m->player.angle.ver * M_PI / 180);
 	ansin = sin(m->player.angle.ver * M_PI / 180);
-	if (m->eventcall.rot_up == 1 && m->player.angle.ver <= 30)
+	if (m->eventcall.rot_up == 1 && m->player.angle.ver <= 90)
 	{
 		m->sky.start.y -= 5;
 		m->sky.end.y -= 10;
@@ -174,7 +180,7 @@ static void		ft_transform_vec_y(t_main *m)
 		m->eventcall.rot_up = 0;
 		m->eventcall.rot_down = 0;
 	}
-	else if (m->eventcall.rot_down == 1  && m->player.angle.ver >= -30)
+	else if (m->eventcall.rot_down == 1  && m->player.angle.ver >= -90)
 	{
 		m->sky.start.y += 5;
 		m->sky.end.y += 5;
@@ -193,4 +199,5 @@ void			ft_transform(t_main	*m)
 	ft_transform_pos(m);
 	ft_transform_strafe(m);
 	ft_transform_jump(m);
+	ft_geg(m);
 }
