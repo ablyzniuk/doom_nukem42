@@ -17,7 +17,7 @@ static void		ft_geg(t_main *m)
 	if (m->eventcall.geg_flag == 1)
 		m->player.p_he = 2;
 	if (m->eventcall.geg_flag == 0)
-		m->player.p_he = 7;	
+		m->player.p_he = 10;	
 }
 //   jump фиксить потом
 static void		ft_transform_jump(t_main *m)

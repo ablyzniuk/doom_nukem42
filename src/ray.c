@@ -86,6 +86,7 @@ void	ft_ray(t_main *m, t_ray ray)
 			ray.camdist = (ray.intersec.z + ray.addlen) * ray.len_ray;
 			if (ray.angle != 0.0)
 				ray.camdist = (ray.intersec.z + ray.addlen) * ray.len_ray * cos(ray.angle);
+			ray.next_sect = m->sector[ray.num_sect].transit[ray.wall_sect];
 			ft_drawscreen(m, ray);
 		}
 		

@@ -63,8 +63,26 @@ typedef	struct	s_sendray
 	double	angle;
 }				t_sendray;
 
+typedef	struct	s_height_w
+{
+	int32_t		flag;
+	int32_t		start;
+	int32_t		end;
+}				t_height_w;
+
+typedef	struct	s_buffer
+{
+	int32_t		buffer_draw_bot;
+	int32_t		buffer_draw_top;
+}				t_buffer;
+
+
 typedef struct	s_heigth_wall 
 {
+	t_height_w	border_top;
+	t_height_w	border_bot;
+	t_height_w	floor_h;
+	t_height_w	ceil_h;
 	int32_t		w;
 	int32_t		start;
 	int32_t		end;
@@ -74,7 +92,6 @@ typedef struct	s_heigth_wall
 	double		he_wall;
 	int32_t		old_end;
 	int32_t		old_start;
-	int32_t		buffer_draw;
 	double		diff;
 	double		he_sect;
 }				t_heigth_wall;
@@ -82,9 +99,8 @@ typedef struct	s_heigth_wall
 typedef	struct	s_draw_save
 {
 	int32_t		old_w;
-	int32_t		old_start;
-	int32_t		old_end;
-	int32_t		buffer;
+	int32_t		buffer_bot;
+	int32_t		buffer_top;
 }				t_draw_save;
 
 
@@ -96,7 +112,7 @@ typedef struct	s_ray
 	double		ancos;	//пре кос син
 	double		ansin;
 	double		addlen;
-
+	int32_t		next_sect;
 	int32_t		old_num_sect;
 	int32_t		num_sect;	// номер стены
 	size_t		wall_sect;
@@ -221,6 +237,13 @@ typedef	struct	s_intersection
 	double		u;
 }				t_intersection;
 
+typedef	struct	s_debug
+{
+	int32_t top_start;
+	int32_t	top_end;
+}				t_debug;
+
+
 typedef	struct	s_main
 {
 	t_vertex	*vertex; // массив структур ввсех точек карты
@@ -232,6 +255,7 @@ typedef	struct	s_main
 	t_sky		sky;
 	t_fps		fps;	// фпс
 	t_sdl		sdl;	// все сдл переменные
+	t_debug		debug;
 	t_trpalyer	player;	// данные о игроке
 	t_event		eventcall; // обработчик движений и т.д.
 
@@ -271,9 +295,10 @@ void			ft_draw_map(t_main *m);
 void			drawline(t_main *m, int32_t x1, int32_t y1, int32_t x2, int32_t y2);
 t_vertex		ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex end2);
 void			ft_drawscreen(t_main *m, t_ray ray);
-int32_t			ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall);
-int32_t			ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall);
-int32_t			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall);
+void			ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
+void			ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
+void			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
+void			ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_load_texture(t_main *m);
 void			ft_ray(t_main *m, t_ray ray);
 int				ft_collision(t_main *m, t_vertex start, t_vertex end);
