@@ -16,7 +16,6 @@ void    ft_load_texture(t_main *m)
 {
 
 	m->sky.sky = SDL_LoadBMP("resourse/sky/sky.bmp");
-	printf("%s\n", SDL_GetError());
 	if (m->sky.sky == NULL)
 		print_error(BAD_SKYBOX);
 	m->sdl.font = TTF_OpenFont("resourse/font/ArialBold.ttf", 18);

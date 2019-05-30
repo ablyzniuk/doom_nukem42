@@ -54,6 +54,18 @@ static void		ft_key_move(t_main *m)
 		else
 			m->eventcall.flag_debug = 1;
 	}
+	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_KP_PLUS)
+	{
+		m->player.pos.z++;
+		m->sector[m->player.sector].heigth.cell++;
+		m->sector[m->player.sector].heigth.floor++;
+	}
+	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_KP_MINUS)
+	{
+		m->player.pos.z--;
+		m->sector[m->player.sector].heigth.cell--;
+		m->sector[m->player.sector].heigth.floor--;
+	}
 }
 
 void	ft_key(t_main *m, int *run)
