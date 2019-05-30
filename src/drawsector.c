@@ -45,9 +45,15 @@ void	ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 
 void	ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 {
-	int32_t		sv_start;
-	int32_t		sv_end;
-	
+int32_t	save;
+
+	save = wall.ceil_h.start;
+	while (wall.ceil_h.start < wall.ceil_h.end && wall.ceil_h.start <  buf->buffer_draw_bot)
+	{
+		ft_put_pixel(m, ray.w, wall.ceil_h.start, 0xffffff / (ray.num_sect + 5));
+		wall.ceil_h.start++;
+	}
+	buf->buffer_draw_top = save > buf->buffer_draw_top ? save : buf->buffer_draw_top;
 
 }
 
@@ -75,6 +81,6 @@ void	ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 			ft_put_pixel(m, ray.w, wall.border_top.start, 0xff0000);
 			wall.border_top.start++;
 		}
-		buf->buffer_draw_top = save < buf->buffer_draw_top ? save : buf->buffer_draw_top;
+		buf->buffer_draw_top = save > buf->buffer_draw_top ? save : buf->buffer_draw_top;
 	}
 }

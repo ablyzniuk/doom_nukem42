@@ -41,6 +41,10 @@ void    ft_debug(t_main *m)
 		m->sdl.debug = TTF_RenderText_Solid(m->sdl.font, str, color_fg);
 		SDL_BlitSurface(m->sdl.debug, NULL, m->sdl.winsurface, &rect);
 		str = ft_strjoin("sector:  ", ft_itoa(m->player.sector));
+		str = ft_strjoin(str, " fl cl:  ");
+		str = ft_strjoin(str, ft_itoa(m->sector[m->player.sector].heigth.floor));
+		str = ft_strjoin(str, " ");
+		str = ft_strjoin(str, ft_itoa(m->sector[m->player.sector].heigth.cell));
 		m->sdl.debug = TTF_RenderText_Solid(m->sdl.font, str, color_fg);
 		rect.y = 40;
 		SDL_BlitSurface(m->sdl.debug, NULL, m->sdl.winsurface, &rect);
@@ -50,5 +54,6 @@ void    ft_debug(t_main *m)
 		rect.y = 60;
 		m->sdl.debug = TTF_RenderText_Solid(m->sdl.font, str, color_fg);
 		SDL_BlitSurface(m->sdl.debug, NULL, m->sdl.winsurface, &rect);
+		
 	}
 }

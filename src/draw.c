@@ -64,11 +64,11 @@ void	ft_get_wall_heigth(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf
 {
 	wall->he_wall = DIST / ray.camdist;
 	wall->he_sect = fabs(m->sector[ray.num_sect].heigth.cell - m->sector[ray.num_sect].heigth.floor);
-	wall->diff = wall->he_wall / 15.0;
+	wall->diff = wall->he_wall / 10.0;
 	wall->floor = m->sector[ray.num_sect].heigth.floor - m->player.pos.z;
 	wall->ceil = m->sector[ray.num_sect].heigth.cell - m->player.pos.z;
-	wall->end = m->player.ecvator + wall->diff * m->player.p_he - wall->diff * wall->floor * 2.0;
-	wall->start = wall->end - wall->he_wall - wall->diff * wall->ceil / 2.0;
+	wall->end = m->player.ecvator + wall->diff * m->player.p_he - wall->diff * wall->floor * 2;
+	wall->start = wall->end - wall->he_wall - wall->diff * wall->he_sect + wall->diff * wall->floor;
 }
 
 
@@ -85,7 +85,7 @@ void	ft_get_border_bot(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf)
 	{
 		diff = m->sector[ray.next_sect].heigth.floor - m->sector[ray.num_sect].heigth.floor;
 		wall->border_bot.end = wall->end;
-		wall->border_bot.start = wall->border_bot.end - wall->diff * diff * 2.0;
+		wall->border_bot.start = wall->border_bot.end - wall->diff * diff * 2;
 		wall->border_bot.flag = 1;
 	}
 	else
@@ -105,10 +105,7 @@ void	ft_get_floor(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf)
 		wall->floor_h.flag = 0;
 }
 
-void	ft_get_ceil(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf)
-{
-	
-}
+
 
 void	ft_get_border_top(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf)
 {
@@ -123,7 +120,7 @@ void	ft_get_border_top(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf)
 	{
 		diff = m->sector[ray.num_sect].heigth.cell - m->sector[ray.next_sect].heigth.cell;
 		wall->border_top.start = wall->start;
-		wall->border_top.end = wall->border_top.start + wall->diff * diff * 2.0;
+		wall->border_top.end = wall->border_top.start + wall->diff * diff;
 		wall->border_top.flag = 1;
 		if (ray.w == HALFWIDTH)
 		{
@@ -133,6 +130,19 @@ void	ft_get_border_top(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf)
 	}
 	else
 		wall->border_top.flag = 0;
+}
+
+void	ft_get_ceil(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf)
+{
+	if (wall->border_top.flag == 0)
+		wall->ceil_h.end = wall->start;
+	else
+		wall->ceil_h.end = wall->border_top.start;
+	wall->ceil_h.start = buf->buffer_draw_top;
+	if (wall->ceil_h.start < wall->ceil_h.end)
+		wall->ceil_h.flag = 1;
+	else
+		wall->ceil_h.flag = 0;
 }
 
 void	ft_drawscreen(t_main *m, t_ray ray)
@@ -152,12 +162,15 @@ void	ft_drawscreen(t_main *m, t_ray ray)
 	ft_get_border_bot(m, ray, &wall, &buffer);
 	ft_get_border_top(m, ray, &wall, &buffer);
 	ft_get_floor(m, ray, &wall, &buffer);
+	ft_get_ceil(m, ray, &wall, &buffer);
 	if (wall.floor_h.flag == 1)
 		ft_draw_floor(m, ray, wall, &buffer);
 	if (m->sector[ray.num_sect].transit[ray.wall_sect] == -1)
 		ft_draw_wall(m, ray, wall, &buffer);
 	if (wall.border_bot.flag == 1 || wall.border_top.flag == 1)
 		ft_draw_border(m, ray, wall, &buffer);
+	if (wall.ceil_h.flag == 1)
+		ft_draw_cell(m, ray, wall, &buffer);
 	
 	sv_draw.buffer_bot = wall.end < buffer.buffer_draw_bot ? wall.end : buffer.buffer_draw_bot;
 	sv_draw.buffer_top = wall.start > buffer.buffer_draw_top ? wall.start : buffer.buffer_draw_top;
