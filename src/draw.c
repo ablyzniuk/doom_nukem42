@@ -24,14 +24,7 @@ void	ft_put_pixel(t_main *m, int x, int y, int pixel)
 }
 
 //берем пиксель с текстуры / потом
-int		ft_get_pixel(SDL_Surface *texture, int x, int y)
-{
-	int	*get_pixel;
 
-	get_pixel = texture->pixels + y * texture->pitch +
-	x * texture->format->BytesPerPixel;
-	return (*get_pixel);
-}
 
 // брезенхем
 void	drawline(t_main *m, int x1, int y1, int x2, int y2)

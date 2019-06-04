@@ -87,8 +87,8 @@ typedef struct	s_heigth_wall
 	int32_t		start;
 	int32_t		end;
 	int32_t		color;
-	int32_t		floor;
-	int32_t		ceil;
+	double		floor;
+	double		ceil;
 	double		he_wall;
 	int32_t		old_end;
 	int32_t		old_start;
@@ -185,6 +185,8 @@ typedef	struct	s_event
 	int32_t		jump_event;
 	int32_t		flag_debug;
 	int32_t		geg_flag;
+	int32_t		is_ground;
+	int32_t		look_jump;
 }				t_event;
 
 typedef	struct	s_heigth
@@ -258,7 +260,7 @@ typedef	struct	s_main
 	t_debug		debug;
 	t_trpalyer	player;	// данные о игроке
 	t_event		eventcall; // обработчик движений и т.д.
-
+	SDL_Surface	*texture;
 }				t_main;
 
 void			parse_player(t_main *main, t_list *list);
@@ -296,12 +298,14 @@ void			drawline(t_main *m, int32_t x1, int32_t y1, int32_t x2, int32_t y2);
 t_vertex		ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex end2);
 void			ft_drawscreen(t_main *m, t_ray ray);
 void			ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
+int32_t			ft_get_pixel_wall(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
 void			ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_load_texture(t_main *m);
 void			ft_ray(t_main *m, t_ray ray);
 int				ft_collision(t_main *m, t_vertex start, t_vertex end);
+void			ft_gravity(t_main *m);
 int				ft_cmp_vertex(t_vertex one, t_vertex two);
 void			ft_init_sky(t_main *m);
 void			ft_draw_sky(t_main *m);

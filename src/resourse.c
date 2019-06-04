@@ -21,4 +21,7 @@ void    ft_load_texture(t_main *m)
 	m->sdl.font = TTF_OpenFont("resourse/font/ArialBold.ttf", 18);
 	if (m->sdl.font == NULL)
 		exit(-10);
+	m->texture = SDL_LoadBMP("resourse/textures/1.bmp");
+	if (m->texture == NULL)
+		exit(-11);
 }

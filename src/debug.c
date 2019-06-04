@@ -54,6 +54,5 @@ void    ft_debug(t_main *m)
 		rect.y = 60;
 		m->sdl.debug = TTF_RenderText_Solid(m->sdl.font, str, color_fg);
 		SDL_BlitSurface(m->sdl.debug, NULL, m->sdl.winsurface, &rect);
-		
 	}
 }

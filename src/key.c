@@ -30,7 +30,7 @@ static void		ft_key_move(t_main *m)
 		m->eventcall.strafe_left = 1;
 	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_d)
 		m->eventcall.strafe_rigth = 1;
-	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_SPACE && m->eventcall.jump_event == 0)
+	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_SPACE && m->eventcall.look_jump == 1)
 		m->eventcall.jump_event = 1;
 	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_LCTRL && m->eventcall.jump_event == 0)
 		m->eventcall.geg_flag = 1;
@@ -46,7 +46,9 @@ static void		ft_key_move(t_main *m)
 	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_LCTRL)
 		m->eventcall.geg_flag = 0;
 
-
+	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_SPACE)
+		m->eventcall.jump_event = 0;
+		
 	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_BACKSPACE)
 	{	
 		if (m->eventcall.flag_debug == 1)

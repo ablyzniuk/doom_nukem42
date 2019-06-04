@@ -12,6 +12,27 @@
 
 #include "doom.h"
 
+void	ft_gravity(t_main *m)
+{
+	float	force_jump;
+
+	force_jump = 0.5;
+	if (m->player.pos.z >= m->sector[m->player.sector].heigth.floor)
+	{
+		m->eventcall.look_jump = 0;
+		m->eventcall.is_ground = 0;
+		if (m->player.pos.z - force_jump < m->sector[m->player.sector].heigth.floor)
+			m->player.pos.z = m->sector[m->player.sector].heigth.floor;
+		else
+			m->player.pos.z -= force_jump;
+		if (m->player.pos.z == m->sector[m->player.sector].heigth.floor)
+		{
+			m->eventcall.is_ground = 1;
+			m->eventcall.look_jump = 1;
+		}
+	}
+}
+
 static void		ft_geg(t_main *m)
 {
 	if (m->eventcall.geg_flag == 1)
@@ -19,42 +40,24 @@ static void		ft_geg(t_main *m)
 	if (m->eventcall.geg_flag == 0)
 		m->player.p_he = 10;	
 }
-//   jump фиксить потом
+
 static void		ft_transform_jump(t_main *m)
 {
-	static float	jump = 0.0;
-	static int		flag = 0;
+	static	double	force_jump = 1.5;
 
 	if (m->eventcall.jump_event == 1)
 	{
-		if (flag == 0.0)
+		if (force_jump >= 0.1)
+			force_jump -= 0.1;
+		m->player.pos.z += force_jump;
+		if (force_jump <= 0.1)
 		{
-			if (jump < 9.0)
-				m->player.pos.z += jump;
-			if (m->player.pos.z < 9.0)
-			{
-				flag = 1;
-				jump = 0.0;
-			}
-			jump += 0.3;
-		}
-		if (flag == 1)
-		{
-			if (jump < 9.0)
-				m->player.pos.z -= jump;
-			if (m->player.pos.z < 9.0)
-			{
-				m->eventcall.jump_event = 0;
-				jump = 0.0;
-				flag = 0;
-				return ;								
-			}
-			jump += 0.3;
+			force_jump = 1.5;
+			m->eventcall.jump_event = 0;
 		}
 	}
 }
 
-// стрейф
 static void		ft_transform_strafe(t_main *m)
 {
 	float		ancos;
@@ -132,7 +135,6 @@ static void		ft_transform_pos(t_main *m)
 	}
 }
 
-// повороты
 static void		ft_transform_vec_x(t_main *m)
 {
 	float	ancos;
@@ -194,10 +196,10 @@ static void		ft_transform_vec_y(t_main *m)
 
 void			ft_transform(t_main	*m)
 {
+	ft_transform_jump(m);
 	ft_transform_vec_x(m);
 	ft_transform_vec_y(m);
 	ft_transform_pos(m);
 	ft_transform_strafe(m);
-	ft_transform_jump(m);
 	ft_geg(m);
 }
