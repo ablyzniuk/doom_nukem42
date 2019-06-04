@@ -28,6 +28,7 @@ void	ft_init(t_main *m)
 {
 	ft_init_sky(m);
 	read_file(m);
+	system("leaks doom");
 	// углы поворота игрока
 	m->player.angle.hor = 0.0;
 	m->player.angle.ver = 0.0;

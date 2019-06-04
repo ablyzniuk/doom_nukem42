@@ -1,0 +1,4 @@
+/Users/ablizniu/Documents/test_doom/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/ablizniu/Documents/test_doom/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/ablizniu/Documents/test_doom/cmake-build-debug/CMakeFiles/doom_nukem.dir
+/Users/ablizniu/Documents/test_doom/cmake-build-debug/CMakeFiles/ft.dir
