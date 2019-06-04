@@ -14,10 +14,11 @@ NAME	= doom
 
 SRC		=	src/*.c
 
-SDL2_HEADER = -I frameworks/SDL2.framework/Headers/ \
+SDL2_HEADER =	-I frameworks/SDL2.framework/Headers/ \
 				-I frameworks/SDL2_mixer.framework/Headers/ \
+				-I frameworks/SDL2_ttf.framework/Headers/
 
-SDLFLAGS = -framework SDL2 -framework SDL2_mixer -F ./frameworks
+SDLFLAGS = -framework SDL2 -framework SDL2_mixer -framework SDL2_ttf -F ./frameworks
 
 SDL2_P = -rpath @loader_path/frameworks/
 

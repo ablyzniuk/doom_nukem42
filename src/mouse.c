@@ -34,12 +34,12 @@ static void		ft_rot_horizontal(t_main *m)
 // верх низ
 static void		ft_rot_vertical(t_main *m)
 {
-	if (m->sdl.event.motion.yrel > 0 && m->sdl.event.type == SDL_MOUSEMOTION)
+	if (m->sdl.event.motion.yrel < 0 && m->sdl.event.type == SDL_MOUSEMOTION)
 	{
 		m->eventcall.rot_up = 1;
 		m->eventcall.rot_down = 0;
 	}
-	else if (m->sdl.event.motion.yrel < 0 && m->sdl.event.type == SDL_MOUSEMOTION)
+	else if (m->sdl.event.motion.yrel > 0 && m->sdl.event.type == SDL_MOUSEMOTION)
 	{
 		m->eventcall.rot_up = 0;
 		m->eventcall.rot_down = 1;
