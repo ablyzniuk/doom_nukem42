@@ -39,6 +39,7 @@ void    ft_sdlloop(t_main *m)
 	{
 		SDL_FillRect(m->sdl.winsurface, NULL, 0x000000);
 		ft_gravity(m);
+		ft_de_gravity(m);
 		ft_draw_sky(m);
 		ft_draw_map(m);
 		ft_transform(m);
