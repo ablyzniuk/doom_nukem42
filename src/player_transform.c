@@ -33,6 +33,27 @@ void	ft_gravity(t_main *m)
 	}
 }
 
+void	ft_de_gravity(t_main *m)
+{
+	float	force_jump;
+
+	force_jump = 0.5;
+	if (m->player.pos.z <= m->sector[m->player.sector].heigth.floor)
+	{
+		m->eventcall.look_jump = 0;
+		m->eventcall.is_ground = 0;
+		if (m->player.pos.z + force_jump > m->sector[m->player.sector].heigth.floor)
+			m->player.pos.z = m->sector[m->player.sector].heigth.floor;
+		else
+			m->player.pos.z += force_jump;
+		if (m->player.pos.z == m->sector[m->player.sector].heigth.floor)
+		{
+			m->eventcall.is_ground = 1;
+			m->eventcall.look_jump = 1;
+		}
+	}
+}
+
 static void		ft_geg(t_main *m)
 {
 	if (m->eventcall.geg_flag == 1)

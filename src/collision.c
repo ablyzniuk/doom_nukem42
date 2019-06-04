@@ -14,8 +14,8 @@
 
 int ft_collision(t_main *m, t_vertex start, t_vertex end)
 {
-	size_t			wall_sect;
-	size_t			k;
+	size_t		wall_sect;
+	size_t		k;
 	int			flag;
 	int			he;
 	t_vertex	res;
@@ -52,10 +52,7 @@ int ft_collision(t_main *m, t_vertex start, t_vertex end)
 	if (flag == 1)
 	{
 		m->player.sector = m->sector[m->player.sector].transit[wall_sect];
-		m->player.pos.z = he;
-		//m->player.p_he = m->player.pos.z + 5;
 		return (1);
 	}
 	return (-1);
-	return (0);
 }
