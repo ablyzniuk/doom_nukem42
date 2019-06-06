@@ -16,23 +16,23 @@ double	ft_dist(t_vertex start, t_vertex end)
 {
 	double	dist;
 
-	dist = sqrt(pow(end.x - start.x, 2) + pow(end.y - start.y, 2));
+	dist = sqrt(pow(end.x - start.x, 2.0) + pow(end.y - start.y, 2.0));
 	return (dist);
 }
 
-double	ft_dist_cord(int32_t x1, int32_t y1, int32_t	x2, int32_t y2)
+double	ft_dist_cord(double x1, double y1, double x2, double y2)
 {
 	double	dist;
 
-	dist = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+	dist = sqrt(pow(x1 - x2, 2.0) + pow(y1 - y2, 2.0));
 	return (dist);
 }
 
 double	ft_get_dist_cols(t_main *m, t_cols_wall *lst, t_collision cols, t_vertex pos_vec)
 {
-	int32_t		a;
-	int32_t		b;
-	int32_t		c;
+	double		a;
+	double		b;
+	double		c;
 	double		dist;
 	double		t;
 
@@ -57,7 +57,7 @@ double	ft_get_dist_cols(t_main *m, t_cols_wall *lst, t_collision cols, t_vertex 
 	return (dist);
 }
 
-int32_t ft_collision(t_main *m, t_vertex pos_vec, int32_t move)
+int32_t ft_collision(t_main *m, t_vertex pos_vec, double move)
 {
 	t_collision	cols;
 	t_cols_wall	*lst;
@@ -71,26 +71,27 @@ int32_t ft_collision(t_main *m, t_vertex pos_vec, int32_t move)
 	cols.flag_tp_x = -1;
 	cols.flag_tp_y = -1;
 	lst = m->sector[m->player.sector].cols;
-	pos_x.z = m->player.sector;
-	pos_y.z = m->player.sector;
 	while (lst)
 	{
-	
 		if (cols.flag_x == 0)
 		{
 			pos_x.x = m->player.pos.x + pos_vec.x * move;
 			pos_x.y = m->player.pos.y;
 			dist = fabs(ft_get_dist_cols(m, lst, cols, pos_x));
 			res = ft_intersection(m->player.pos, pos_x, lst->start, lst->end);
-			if (dist <= 0.4 && lst->type == -1)
+				printf("%f\n", ft_dist_cord(m->player.pos.x, pos_x.x, m->player.pos.y, pos_x.y));
+			if (dist <= 0.7 && lst->type == -1)
 			{
-					printf("sec %d, wat %d wall %d\n", lst->sector, lst->type, lst->num_wall);
 					cols.flag_x = 1;
 			}
-			else if (lst->type != -1)
+			else if (lst->type != -1 && lst->sector == m->player.sector)
 			{
 				if (res.z != -1)
+				{
+						printf("Dec\n");
+						printf("%f\n", ft_dist_cord(m->player.pos.x, pos_x.x, m->player.pos.y, pos_x.y));
 					cols.flag_tp_x = lst->type;
+				}
 			}
 		}
 		if (cols.flag_y == 0)
@@ -99,32 +100,40 @@ int32_t ft_collision(t_main *m, t_vertex pos_vec, int32_t move)
 			pos_y.y = m->player.pos.y + pos_vec.y * move;
 			dist = fabs(ft_get_dist_cols(m, lst, cols, pos_y));
 			res = ft_intersection(m->player.pos, pos_y, lst->start, lst->end);
-			if (dist <= 0.4 && lst->type == -1)
+			if (dist <= 0.7 && lst->type == -1)
 			{
-				printf("sec %d, wat %d wall %d\n", lst->sector, lst->type, lst->num_wall);
+			
 				cols.flag_y = 1;
 			}
-			else if (lst->type != -1)
+			else if (lst->type != -1 && lst->sector == m->player.sector)
 			{	
 				if (res.z != -1)
+				{
+				printf("Dec\n");
 					cols.flag_tp_y = lst->type;
+				}
 			}
 		}
 		lst = lst->next;
 	}
-	if (cols.flag_x != 1)
+
+	if (cols.flag_tp_x != -1 || cols.flag_tp_y != -1)
 	{
+		printf ("x %d y %d\n",cols.flag_tp_x, cols.flag_tp_y );
 		if (cols.flag_tp_x != -1)
 			m->player.sector = cols.flag_tp_x;
+		else if (cols.flag_tp_y != -1)
+			m->player.sector = cols.flag_tp_y;
+	}
+	if (cols.flag_x != 1)
+	{
 		m->player.pos.x += pos_vec.x * move;
 	}
 	if (cols.flag_y != 1)
 	{
-		if (cols.flag_tp_y != -1)
-			m->player.sector = cols.flag_tp_y;
 		m->player.pos.y += pos_vec.y * move;
 	}
-	SDL_Log("---\n");
+//	SDL_Log("---\n");
 	return (1);
 
 }

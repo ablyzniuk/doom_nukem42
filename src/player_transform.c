@@ -85,21 +85,21 @@ static void		ft_transform_strafe(t_main *m)
 	float		ansin;
 	t_vertex	pos_vec;
 
-	if (m->eventcall.strafe_rigth == 1)
+	if (m->eventcall.strafe_rigth == 1 && m->eventcall.strafe_left == 0)
 	{
-		ancos = cos((m->player.angle.hor + 90) * M_PI / 180);
-		ansin = sin((m->player.angle.hor + 90) * M_PI / 180);
+		ancos = cos((m->player.angle.hor + 90.0) * M_PI / 180);
+		ansin = sin((m->player.angle.hor + 90.0) * M_PI / 180);
 		pos_vec.x = (VECX * ancos - VECY * ansin) * m->player.movespeed;
 		pos_vec.y = (VECX * ansin + VECY * ancos) * m->player.movespeed;
-		ft_collision(m, pos_vec, 1);
+		ft_collision(m, pos_vec, 1.0);
 	}
-	else if (m->eventcall.strafe_left == 1)
+	else if (m->eventcall.strafe_left == 1 && m->eventcall.strafe_rigth == 0)
 	{
 		ancos = cos((m->player.angle.hor - 90) * M_PI / 180);
 		ansin = sin((m->player.angle.hor - 90) * M_PI / 180);
 		pos_vec.x = (VECX * ancos - VECY * ansin) * m->player.movespeed;
 		pos_vec.y = (VECX * ansin + VECY * ancos) * m->player.movespeed;
-		ft_collision(m, pos_vec, 1);
+		ft_collision(m, pos_vec, 1.0);
 	}
 }
 
@@ -111,17 +111,17 @@ static void		ft_transform_pos(t_main *m)
 
 	ancos = cos((m->player.angle.hor) * M_PI / 180);
 	ansin = sin((m->player.angle.hor) * M_PI / 180);
-	if (m->eventcall.move_up == 1)
+	if (m->eventcall.move_up == 1 && m->eventcall.move_down == 0)
 	{
 		pos_vec.x = (VECX * ancos - VECY * ansin) * m->player.movespeed;
 		pos_vec.y = (VECX * ansin + VECY * ancos) * m->player.movespeed;
-		ft_collision(m, pos_vec, 1);
+		ft_collision(m, pos_vec, 1.0);
 	}
-	else if (m->eventcall.move_down == 1)
+	else if (m->eventcall.move_down == 1 && m->eventcall.move_up == 0)
 	{
 		pos_vec.x = (VECX * ancos - VECY * ansin) * m->player.movespeed;
 		pos_vec.y = (VECX * ansin + VECY * ancos) * m->player.movespeed;
-		ft_collision(m, pos_vec, -1);
+		ft_collision(m, pos_vec, -1.0);
 	}
 }
 
@@ -136,7 +136,7 @@ static void		ft_transform_vec_x(t_main *m)
 	{
 		m->sky.start.x += 15;
 		m->sky.end.x += 15;
-		m->player.angle.hor += 3;
+		m->player.angle.hor += 3.0;
 		m->player.vec.x = VECX * ancos - VECY * ansin;
 		m->player.vec.y = VECX * ansin + VECY * ancos;
 		m->eventcall.rot_left = 0;
@@ -146,7 +146,7 @@ static void		ft_transform_vec_x(t_main *m)
 	{
 		m->sky.start.x -= 15;
 		m->sky.end.x -= 15;
-		m->player.angle.hor -= 3;
+		m->player.angle.hor -= 3.0;
 		m->player.vec.x = VECX * ancos - VECY * ansin;
 		m->player.vec.y = VECX * ansin + VECY * ancos;
 		m->eventcall.rot_left = 0;
@@ -186,10 +186,10 @@ static void		ft_transform_vec_y(t_main *m)
 
 void			ft_transform(t_main	*m)
 {
+	ft_transform_pos(m);
 	ft_transform_jump(m);
 	ft_transform_vec_x(m);
 	ft_transform_vec_y(m);
-	ft_transform_pos(m);
 	ft_transform_strafe(m);
 	ft_geg(m);
 }

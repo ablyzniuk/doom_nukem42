@@ -28,8 +28,8 @@
 #define	FOV 60
 #define	FPS 60
 #define	TICKS_FRAME 333 / FPS
-#define	VECX 1
-#define	VECY 0
+#define	VECX (double)1
+#define	VECY (double)0
 #define DIST (double)WIDTH * 1.3	// рассчет дальности плоскости проекци. для фова 60
 #define	ANG 180
 #define	HE_P 1150 / m->player.p_he
@@ -216,7 +216,6 @@ typedef	struct	s_collision
 	int32_t		flag_y;
 	int32_t		flag_tp_x;
 	int32_t		flag_tp_y;
-	int32_t		tp;
 	size_t		wall_sect;
 
 }				t_collision;
@@ -332,7 +331,7 @@ void			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_load_texture(t_main *m);
 void			ft_ray(t_main *m, t_ray ray);
-int32_t			ft_collision(t_main *m, t_vertex pos_vec, int32_t move);
+int32_t			ft_collision(t_main *m, t_vertex pos_vec, double move);
 void			ft_gravity(t_main *m);
 void			ft_de_gravity(t_main *m);
 int				ft_cmp_vertex(t_vertex one, t_vertex two);
