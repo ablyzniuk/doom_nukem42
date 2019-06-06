@@ -231,6 +231,20 @@ void		parse_vertex(t_main *main, t_list *list)
 	main->sum_vert = vertex_num;
 }
 
+void        free_tmp_list(t_list **head)
+{
+    t_list *tmp;
+
+    while (*head)
+    {
+        tmp = *head;
+        ft_memdel(&tmp->content);
+        ft_memdel((void *)&tmp);
+        (*head) = (*head)->next;
+    }
+    ft_memdel((void **)head);
+}
+
 void		read_file(t_main *main)
 {
 	char	*line;
@@ -248,4 +262,5 @@ void		read_file(t_main *main)
 	parse_vertex(main, list);
 	parse_sector(main, list);
 	parse_player(main, list);
+	free_tmp_list(&list);
 }

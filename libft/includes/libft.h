@@ -22,7 +22,7 @@
 # define FT_MIN(A, B)	(((A) < (B)) ? (A) : (B))
 # define FT_MAX(A, B)	(((A) > (B)) ? (A) : (B))
 
-# define FT_ABS(X)		(((X) < 0) ? (-(X)) : (X))
+# define FT_ABS(X)		(size_t)(((X) < 0) ? (-(X)) : (X))
 # define FT_POW(X)		(X * X)
 
 # define FT_ULONG_MAX	((unsigned long)(~0L))

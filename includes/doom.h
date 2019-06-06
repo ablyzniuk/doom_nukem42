@@ -33,6 +33,7 @@
 #define DIST (double)WIDTH * 1.3	// рассчет дальности плоскости проекци. для фова 60
 #define	ANG 180
 #define	HE_P 1150 / m->player.p_he
+#define	COLS 5
 
 #define DELIMITER '\t'
 
@@ -76,7 +77,6 @@ typedef	struct	s_buffer
 	int32_t		buffer_draw_top;
 }				t_buffer;
 
-
 typedef struct	s_heigth_wall 
 {
 	t_height_w	border_top;
@@ -102,7 +102,6 @@ typedef	struct	s_draw_save
 	int32_t		buffer_bot;
 	int32_t		buffer_top;
 }				t_draw_save;
-
 
 typedef struct	s_ray
 {
@@ -205,12 +204,39 @@ typedef struct	s_sky
 	SDL_Surface	*sky;
 }				t_sky;
 
+typedef	struct	s_collision
+{
+	t_vertex	vec_x;
+	t_vertex	vec_y;
+	t_vertex	result;
+	double		wall_len;
+	double		len_start;
+	double		len_end;
+	int32_t		flag_x;
+	int32_t		flag_y;
+	int32_t		flag_tp_x;
+	int32_t		flag_tp_y;
+	int32_t		tp;
+	size_t		wall_sect;
+
+}				t_collision;
+
 typedef	struct	s_trans
 {
 	double		*transit_start;
 	double		*transit_end;
 	double		is_transition;
 }				t_trans;
+
+typedef	struct	s_cols_wall
+{
+	t_vertex	start;
+	t_vertex	end;
+	int32_t		type;
+	int32_t		num_wall;
+	int32_t		sector;
+	struct s_cols_wall	*next;
+}				t_cols_wall;
 
 typedef	struct	s_sector
 {
@@ -219,6 +245,7 @@ typedef	struct	s_sector
 	double		**vertex;
 	size_t		vertex_arr_len;
 	t_heigth	heigth;
+	t_cols_wall	*cols;
 	int32_t		*transit;		// массив точек сектора
 }				t_sector;
 
@@ -243,6 +270,7 @@ typedef	struct	s_debug
 {
 	int32_t top_start;
 	int32_t	top_end;
+	int32_t	wall;
 }				t_debug;
 
 
@@ -304,11 +332,16 @@ void			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_load_texture(t_main *m);
 void			ft_ray(t_main *m, t_ray ray);
-int				ft_collision(t_main *m, t_vertex start, t_vertex end);
+int32_t			ft_collision(t_main *m, t_vertex pos_vec, int32_t move);
 void			ft_gravity(t_main *m);
+void			ft_de_gravity(t_main *m);
 int				ft_cmp_vertex(t_vertex one, t_vertex two);
+void			ft_lst_add_back(t_cols_wall *start, t_cols_wall *lst);
 void			ft_init_sky(t_main *m);
 void			ft_draw_sky(t_main *m);
+void			ft_cr_cols_init(t_main *m);
+
+t_cols_wall		*ft_cr_new_list(void);
 void    		ft_debug(t_main *m);
 
 #endif

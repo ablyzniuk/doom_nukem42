@@ -26,7 +26,6 @@ OBJ		= $(patsubst src/%.c,obj/%.o,$(SRC))
 
 .SILENT:
 
-
 all: $(NAME)
 
 $(NAME): $(OBJ)
