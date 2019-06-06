@@ -149,6 +149,8 @@ void	ft_drawscreen(t_main *m, t_ray ray)
 		sv_draw.buffer_bot = HEIGHT;
 		sv_draw.buffer_top = 0;
 	}
+	if (ray.camdist < 0.005)
+		ray.camdist = 0.005;
 	buffer.buffer_draw_bot = sv_draw.buffer_bot;
 	buffer.buffer_draw_top = sv_draw.buffer_top;
 	ft_get_wall_heigth(m, ray, &wall, &buffer);
