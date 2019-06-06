@@ -12,9 +12,6 @@
 
 #include "doom.h"
 
-
-// просчет пересечения двух отрезков
-// лютая ebola
 t_vertex	ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex end2)
 {
 	t_intersection	var;
@@ -48,7 +45,6 @@ t_vertex	ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex end
 	return (point);
 }
 
-//фпс лок
 void	ft_fps_look(t_main *m)
 {
 	float	frame;
@@ -61,13 +57,12 @@ void	ft_fps_look(t_main *m)
 	m->fps.looktime = SDL_GetTicks();
 }
 
-// ebola ??
 void	ft_fps_utils(t_main *m)
 {
 	m->fps.oldtime = m->fps.time;
 	m->fps.time = SDL_GetTicks();
 	m->fps.frametime = (m->fps.time - m->fps.oldtime) / 333.0;
-	m->player.movespeed = m->fps.frametime * 1.4;
+	m->player.movespeed = m->fps.frametime * 1.5;
 	m->player.rotspeed = m->fps.frametime * 3.0;
 	//SDL_Log("%d\n", (int) (1 / m->player.rotspeed));
 }

@@ -17,10 +17,11 @@ int		main()
 	t_main	*main;
 
 	main = init_main();
-	ft_sdlinit(main);
 	ft_init(main);
+	ft_sdlinit(main);
 	ft_sdlloop(main);
 	SDL_Quit();
 	TTF_Quit();
+	//system("leaks doom");
 	return (0);
 }
