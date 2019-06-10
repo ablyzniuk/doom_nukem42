@@ -21,22 +21,43 @@ int		ft_get_pixel(SDL_Surface *texture, int32_t x, int32_t y)
 	return (*get_pixel);
 }
 
-int32_t		ft_get_pixel_wall(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
+inline int32_t		ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
 {
 	int32_t	*color;
 	int32_t	i;
 	double	diff_x, diff_y;
 
 	ray.camdist = ray.camdist;
-	diff_y = wall.wall_h_map;
+	diff_y = wall.floor_h.floor_h;
 	diff_x = 64 / diff_y;
-	i = (int)((x * diff_x) * 100) % m->texture[0]->w;
-	color = m->texture[0]->pixels + i * m->texture[0]->pitch +
-	y * m->texture[0]->format->BytesPerPixel;
+	i = (int)((x * diff_x) * 100) % m->texture[2]->w;
+	color = m->texture[2]->pixels + i * m->texture[2]->pitch +
+	y * m->texture[2]->format->BytesPerPixel;
 	return (*color);
 }
 
-int32_t		ft_get_pixel_border(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
+inline int32_t		ft_get_pixel_wall(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
+{
+	int32_t	*color;
+	static int32_t	buff;
+	static int32_t	col = 0;
+	int32_t	i;
+	float	diff_x;
+
+	//ray.camdist = ray.camdist;
+	diff_x = 64 /  (float)wall.wall_h_map;
+	i = (int)((x * diff_x) * 100) % m->texture[0]->w;
+	if (i != col)
+	{
+		color = m->texture[0]->pixels + i * m->texture[0]->pitch +
+		y * m->texture[0]->format->BytesPerPixel;
+		col = *color;
+	}
+	buff = i;
+	return (col);
+}
+
+inline int32_t		ft_get_pixel_border(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
 {
 	int32_t	*color;
 	int32_t	i;
@@ -51,7 +72,7 @@ int32_t		ft_get_pixel_border(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x
 	return (*color);
 }
 
-int32_t		ft_get_pixel_border_top(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
+inline int32_t		ft_get_pixel_border_top(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
 {
 	int32_t	*color;
 	int32_t	i;

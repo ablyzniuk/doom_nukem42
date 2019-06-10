@@ -16,14 +16,18 @@ void	ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 {
 	int32_t	save;
 	int32_t color;
+	int32_t	x;
 
-	color = 0xffffff;
+	color =0x1971ff;
+	x = 0;
 	save = wall.floor_h.start;
 	while (wall.floor_h.start < wall.floor_h.end && wall.floor_h.start < buf->buffer_draw_bot)
 	{
+	//	color = ft_get_pixel_floor(m, ray, wall, x, abs(wall.y));
 		ft_put_pixel(m, ray.w, wall.floor_h.start, color);
 		color = 0x1971ff;
 		wall.floor_h.start++;
+		x++;
 	}
 	buf->buffer_draw_bot = save < buf->buffer_draw_bot ? save : buf->buffer_draw_bot;
 }
@@ -33,23 +37,24 @@ void	ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 	int32_t	save;
 	int32_t	color;
 	int32_t	x;
+	int32_t	start;
 	double	dx, dy;
+
 	dx = ray.wall_end.x - ray.wall_start.x;
 	dy = ray.wall_end.y - ray.wall_start.y;
 	x = 0;
-
-	while (wall.start < buf->buffer_draw_top)
+	start = wall.start;
+	while (start < buf->buffer_draw_top)
 	{
-		wall.start++;
+		start++;
 		x++;
 	}
 	save = wall.start;
-	color = 0xffffff;
-	while (wall.start < wall.end && wall.start < buf->buffer_draw_bot)
+	while (start < wall.end && start < buf->buffer_draw_bot)
 	{
 		color = ft_get_pixel_wall(m, ray, wall, x, abs(wall.y));
-		ft_put_pixel(m, ray.w, wall.start, color);
-		wall.start++;
+		ft_put_pixel(m, ray.w, start, color);
+		start++;
 		x++;
 	}
 	buf->buffer_draw_bot = save < buf->buffer_draw_bot ? save : buf->buffer_draw_bot;
@@ -95,8 +100,11 @@ void	ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 	if (wall.border_top.flag == 1)
 	{
 		x = 0;
-		if (wall.border_top.start < buf->buffer_draw_top)
-			wall.border_top.start = buf->buffer_draw_top;
+		while (wall.border_top.start < buf->buffer_draw_top)
+		{
+			wall.border_top.start++;
+			x++;
+		}
 		save = wall.border_top.end;
 		while (wall.border_top.start < wall.border_top.end && wall.border_top.start < buf->buffer_draw_bot)
 		{

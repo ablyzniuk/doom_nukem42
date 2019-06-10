@@ -20,19 +20,17 @@
 #include <unistd.h>
 #include "libft.h"
 
-#define RAY_BETWEEN_ANGLE 60.0 / (double)WIDTH
-#define WIDTH 1080
-#define HEIGHT 900
+
+#define WIDTH 800
+#define HEIGHT 600
 #define	HALFWIDTH (double)WIDTH / 2.0
 #define	HALFHEIGTH HEIGHT / 2
-#define	FOV 60
 #define	FPS 60
 #define	TICKS_FRAME 333 / FPS
 #define	VECX (double)1
 #define	VECY (double)0
 #define DIST (double)WIDTH * 1.3	// рассчет дальности плоскости проекци. для фова 60
 #define	ANG 180
-#define	HE_P 1150 / m->player.p_he
 #define	COLS 5
 
 #define DELIMITER '\t'
@@ -69,12 +67,15 @@ typedef	struct	s_height_w
 	int32_t		flag;	
 	int32_t		start;
 	int32_t		end;
+	int32_t		floor_h;
+	int32_t		ceil_h;
 }				t_height_w;
 
 typedef	struct	s_buffer
 {
 	int32_t		buffer_draw_bot;
 	int32_t		buffer_draw_top;
+
 }				t_buffer;
 
 typedef struct	s_heigth_wall 
@@ -300,7 +301,8 @@ typedef	struct	s_main
 	t_debug		debug;
 	t_trpalyer	player;	// данные о игроке
 	t_event		eventcall; // обработчик движений и т.д.
-	SDL_Surface	*texture[2];
+	SDL_Surface	*texture[3];
+	int32_t		**tex;
 }				t_main;
 
 void			parse_player(t_main *main, t_list *list);
@@ -341,6 +343,7 @@ void			ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 int32_t			ft_get_pixel_wall(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
 int32_t			ft_get_pixel_border(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
 int32_t			ft_get_pixel_border_top(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
+int32_t			ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
 void			ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
@@ -352,6 +355,7 @@ void			ft_gravity(t_main *m);
 void			ft_de_gravity(t_main *m);
 int				ft_cmp_vertex(t_vertex one, t_vertex two);
 void			ft_lst_add_back(t_cols_wall *start, t_cols_wall *lst);
+int32_t			**ft_init_texx(t_main *m);
 void			ft_init_sky(t_main *m);
 void			ft_draw_sky(t_main *m);
 void			ft_cr_cols_init(t_main *m);

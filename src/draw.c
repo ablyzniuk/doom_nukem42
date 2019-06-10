@@ -98,9 +98,8 @@ void	ft_get_floor(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf)
 		wall->floor_h.flag = 1;
 	else
 		wall->floor_h.flag = 0;
+	wall->floor_h.floor_h = wall->floor_h.end - wall->floor_h.start;
 }
-
-
 
 void	ft_get_border_top(t_main *m, t_ray ray, t_heigth_wall *wall)
 {
@@ -141,7 +140,7 @@ void	ft_get_ceil(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf)
 		wall->ceil_h.flag = 0;
 }
 
-void	ft_drawscreen(t_main *m, t_ray ray)
+inline void	ft_drawscreen(t_main *m, t_ray ray)
 {
 	t_heigth_wall		wall;
 	t_buffer			buffer;

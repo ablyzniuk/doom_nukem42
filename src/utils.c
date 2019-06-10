@@ -37,10 +37,8 @@ t_vertex	ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex end
 	if (var.seg_line2_s * var.seg_line2_e >= 0 || var.seg_line1_s * var.seg_line1_e >= 0)
 		return (point);
 	var.u = (double)var.seg_line2_s / (double)(var.seg_line2_s - var.seg_line2_e);
-	// кординаты пересечения
 	point.x = st1.x + var.u * var.dir1.x;
 	point.y = st1.y + var.u * var.dir1.y;
-	// как далеко
 	point.z = var.u;
 	return (point);
 }
@@ -64,7 +62,7 @@ void	ft_fps_utils(t_main *m)
 	m->fps.frametime = (m->fps.time - m->fps.oldtime) / 333.0;
 	m->player.movespeed = m->fps.frametime * 1.8;
 	m->player.rotspeed = m->fps.frametime * 5.0;
-	//SDL_Log("%d\n", (int) (1 / m->player.rotspeed));
+//	SDL_Log("%d\n", (int) (1 / m->fps.frametime));
 }
 
 int		ft_cmp_vertex(t_vertex one, t_vertex two)
