@@ -46,8 +46,6 @@ static void		ft_key_move(t_main *m)
 	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_LCTRL)
 		m->eventcall.geg_flag = 0;
 
-	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_SPACE)
-		m->eventcall.jump_event = 0;
 	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_BACKSPACE)
 	{	
 		if (m->eventcall.flag_debug == 1)

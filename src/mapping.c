@@ -12,9 +12,9 @@
 
 #include "doom.h"
 
-int		ft_get_pixel(SDL_Surface *texture, int x, int y)
+int		ft_get_pixel(SDL_Surface *texture, int32_t x, int32_t y)
 {
-	int	*get_pixel;
+	int32_t	*get_pixel;
 
 	get_pixel = texture->pixels + y * texture->pitch +
 	x * texture->format->BytesPerPixel;
@@ -24,13 +24,14 @@ int		ft_get_pixel(SDL_Surface *texture, int x, int y)
 int32_t		ft_get_pixel_wall(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
 {
 	int32_t	color = 0;
-	double	diff;
 	int32_t	i, j;
+	int32_t	k;
+	double	diff_x, diff_y;
 
-	diff = 10 / wall.he_sect;
-	i = wall.start * diff;
-	i = i % 64;
-	j = ray.w % 64;
-	color = ft_get_pixel(m->texture, j, i);
+	diff_y = wall.wall_h_map;
+	diff_x = 65.0 / diff_y;
+	i = (int)((x * diff_x) * 100.0) % 1000;
+
+	color = ft_get_pixel(m->texture, y, i);
 	return (color);
 }

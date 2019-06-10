@@ -12,24 +12,38 @@
 
 #include "doom.h"
 
+
 void	ft_gravity(t_main *m)
 {
 	float	force_jump;
 
 	force_jump = 0.4;
+	if (m->player.p_he > 10.0)
+	{
+		m->eventcall.is_ground = 0;
+		m->eventcall.look_jump = 0;
+		m->player.p_he -= force_jump * 1.3;
+	}
+	else
+	{
+		m->eventcall.look_jump = 1;
+		m->player.p_he = 10.0;
+	}
+	if (m->player.jump_h > 0)
+		m->player.jump_h -= force_jump;
+	else
+		m->player.jump_h = 0;	
+
+	
 	if (m->player.pos.z >= m->sector[m->player.sector].heigth.floor)
 	{
-		m->eventcall.look_jump = 0;
 		m->eventcall.is_ground = 0;
 		if (m->player.pos.z - force_jump < m->sector[m->player.sector].heigth.floor)
 			m->player.pos.z = m->sector[m->player.sector].heigth.floor;
 		else
 			m->player.pos.z -= force_jump;
-		if (m->player.pos.z == m->sector[m->player.sector].heigth.floor)
-		{
+		if (m->player.pos.z == m->sector[m->player.sector].heigth.floor && m->player.p_he == 10.0)
 			m->eventcall.is_ground = 1;
-			m->eventcall.look_jump = 1;
-		}
 	}
 }
 
@@ -38,28 +52,27 @@ void	ft_de_gravity(t_main *m)
 	float	force_jump;
 
 	force_jump = 0.4;
-	if (m->player.pos.z <= m->sector[m->player.sector].heigth.floor)
+	if (m->player.pos.z <= m->sector[m->player.sector].heigth.floor && m->player.p_he == 10)
 	{
-		m->eventcall.look_jump = 0;
 		m->eventcall.is_ground = 0;
 		if (m->player.pos.z + force_jump > m->sector[m->player.sector].heigth.floor)
 			m->player.pos.z = m->sector[m->player.sector].heigth.floor;
 		else
 			m->player.pos.z += force_jump;
-		if (m->player.pos.z == m->sector[m->player.sector].heigth.floor)
-		{
+		if (m->player.pos.z == m->sector[m->player.sector].heigth.floor && m->player.p_he == 10.0)
 			m->eventcall.is_ground = 1;
-			m->eventcall.look_jump = 1;
-		}
 	}
 }
 
 static void		ft_geg(t_main *m)
 {
-	if (m->eventcall.geg_flag == 1)
-		m->player.p_he = 2;
-	if (m->eventcall.geg_flag == 0)
-		m->player.p_he = 10;	
+	if (m->eventcall.jump_event == 0 && m->eventcall.is_ground == 1)
+	{
+		if (m->eventcall.geg_flag == 1)
+			m->player.p_he = 3.0;
+		if (m->eventcall.geg_flag == 0)
+			m->player.p_he = 10.0;	
+	}
 }
 
 static void		ft_transform_jump(t_main *m)
@@ -68,14 +81,15 @@ static void		ft_transform_jump(t_main *m)
 
 	if (m->eventcall.jump_event == 1)
 	{
+		//m->eventcall.look_jump = 0;
 		if (force_jump >= 0.1)
 			force_jump -= 0.1;
-		m->player.pos.z += force_jump;
-		if (force_jump <= 0.1)
-		{
-			force_jump = 1.5;
+		m->player.p_he += force_jump;
+		m->player.jump_h += force_jump;
+		if (m->player.p_he >= 14.0)
 			m->eventcall.jump_event = 0;
-		}
+		if (force_jump <= 0.1)
+			force_jump = 1.5;
 	}
 }
 
@@ -136,7 +150,7 @@ static void		ft_transform_vec_x(t_main *m)
 	{
 		m->sky.start.x += 15;
 		m->sky.end.x += 15;
-		m->player.angle.hor += 3.0;
+		m->player.angle.hor += 5.0;
 		m->player.vec.x = VECX * ancos - VECY * ansin;
 		m->player.vec.y = VECX * ansin + VECY * ancos;
 		m->eventcall.rot_left = 0;
@@ -146,7 +160,7 @@ static void		ft_transform_vec_x(t_main *m)
 	{
 		m->sky.start.x -= 15;
 		m->sky.end.x -= 15;
-		m->player.angle.hor -= 3.0;
+		m->player.angle.hor -= 5.0;
 		m->player.vec.x = VECX * ancos - VECY * ansin;
 		m->player.vec.y = VECX * ansin + VECY * ancos;
 		m->eventcall.rot_left = 0;

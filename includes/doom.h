@@ -92,6 +92,13 @@ typedef struct	s_heigth_wall
 	double		he_wall;
 	int32_t		old_end;
 	int32_t		old_start;
+	int32_t		wall_h_map;
+	int32_t		border_t_h;
+	int32_t		border_b_h;
+	int32_t		old_border_t_h;
+	int32_t		old_border_b_h;
+	int32_t		cell_h_map;
+	int32_t		floor_h_map;
 	double		diff;
 	double		he_sect;
 }				t_heigth_wall;
@@ -111,6 +118,8 @@ typedef struct	s_ray
 	double		ancos;	//пре кос син
 	double		ansin;
 	double		addlen;
+	double		wall_len;
+	double		wall_len_ray;
 	int32_t		next_sect;
 	int32_t		old_num_sect;
 	int32_t		num_sect;	// номер стены
@@ -163,8 +172,9 @@ typedef struct	s_trplayer
 	t_vertex	pos;	// позиция игрока
 	t_vertex	vec;	// вектор направления игрока
 	int32_t		sector;	// номер сектора где находиться ирок
-	int32_t		p_he;	// высота игрока
+	double		p_he;	// высота игрока
 	float		movespeed;	//скорость
+	float		jump_h;
 	float		rotspeed;
 	int32_t		ecvator;
 
@@ -214,8 +224,6 @@ typedef	struct	s_collision
 	double		len_end;
 	int32_t		flag_x;
 	int32_t		flag_y;
-	int32_t		flag_tp_x;
-	int32_t		flag_tp_y;
 	size_t		wall_sect;
 
 }				t_collision;
@@ -330,6 +338,7 @@ void			ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_load_texture(t_main *m);
+double			ft_dist_cord(double x1, double y1, double x2, double y2);
 void			ft_ray(t_main *m, t_ray ray);
 int32_t			ft_collision(t_main *m, t_vertex pos_vec, double move);
 void			ft_gravity(t_main *m);

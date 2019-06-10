@@ -70,6 +70,11 @@ void	ft_draw_map(t_main *m)
 //	SDL_Log("-------------- %d", m->player.sector);
 }
 
+double	ft_get_len_wall(t_vertex start, t_vertex end)
+{
+	return (ft_dist_cord(start.x, start.y, end.x, end.y));
+}
+
 void	ft_ray(t_main *m, t_ray ray)
 {
 	t_save_ray	sv_ray;
@@ -87,11 +92,11 @@ void	ft_ray(t_main *m, t_ray ray)
 			if (ray.angle != 0.0)
 				ray.camdist = (ray.intersec.z + ray.addlen) * ray.len_ray * cos(ray.angle);
 			ray.next_sect = m->sector[ray.num_sect].transit[ray.wall_sect];
+			ray.wall_len = ft_get_len_wall(ray.wall_start, ray.wall_end);
+			ray.wall_len_ray = ft_get_len_wall(ray.wall_start, ray.intersec);
 			ft_drawscreen(m, ray);
 			if (ray.angle == 0.0)
-			{
 				m->debug.wall = ray.wall_sect;
-			}
 		}
 		
 		if (ray.intersec.z != -1 && m->sector[ray.num_sect].transit[ray.wall_sect] != -1 && ray.ray_deep < 32

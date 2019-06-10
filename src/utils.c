@@ -63,7 +63,7 @@ void	ft_fps_utils(t_main *m)
 	m->fps.time = SDL_GetTicks();
 	m->fps.frametime = (m->fps.time - m->fps.oldtime) / 333.0;
 	m->player.movespeed = m->fps.frametime * 1.8;
-	m->player.rotspeed = m->fps.frametime * 3.0;
+	m->player.rotspeed = m->fps.frametime * 5.0;
 	//SDL_Log("%d\n", (int) (1 / m->player.rotspeed));
 }
 

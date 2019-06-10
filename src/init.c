@@ -32,6 +32,8 @@ void	ft_init(t_main *m)
 	// углы поворота игрока
 	m->player.angle.hor = 0.0;
 	m->player.angle.ver = 0.0;
+	m->player.jump_h = 0;
+	m->eventcall.look_jump = 1;
 //	// вектора поворота игрока
 	m->player.vec.x = 1;
 	m->player.vec.y = 0;

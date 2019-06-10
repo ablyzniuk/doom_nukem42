@@ -28,7 +28,7 @@ void    ft_debug(t_main *m)
 
 		color_fg.r = 255;
 		color_fg.b = 0;
-		color_fg.g = 0;
+		color_fg.g = 255;
 		color_fg.a = 255;
 
 		str = ft_strjoin("x | y | z | p_he: ", ft_itoa(m->player.pos.x));
@@ -38,6 +38,8 @@ void    ft_debug(t_main *m)
 		str = ft_strjoin(str, ft_itoa(m->player.pos.z));
 		str = ft_strjoin(str, " ");
 		str = ft_strjoin(str, ft_itoa(m->player.p_he));
+		str = ft_strjoin(str, " ");
+			str = ft_strjoin(str, ft_itoa(m->player.jump_h));
 		m->sdl.debug = TTF_RenderText_Solid(m->sdl.font, str, color_fg);
 		SDL_BlitSurface(m->sdl.debug, NULL, m->sdl.winsurface, &rect);
 		str = ft_strjoin("sector:  ", ft_itoa(m->player.sector));

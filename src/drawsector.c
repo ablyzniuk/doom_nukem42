@@ -34,20 +34,27 @@ void	ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 	int32_t	color;
 	int32_t	x;
 	int32_t y;
+	double	dx, dy;
+	dx = ray.wall_end.x - ray.wall_start.x;
+	dy = ray.wall_end.y - ray.wall_start.y;
+	x = 0;
+	y = 0;
 
-	x = wall.start;
-	if (wall.start < buf->buffer_draw_top)
+	while (wall.start < buf->buffer_draw_top)
 	{
-		wall.start = buf->buffer_draw_top;
-		buf->buffer_draw_top = wall.start;
+		wall.start++;
+		x++;
 	}
+	y = (fabs(dx) > fabs(dy) ? (int)((ray.intersec.x - ray.wall_start.x) * 1000) :
+								(int)((ray.intersec.y - ray.wall_start.y) * 1000)) % 1000;
+	
+	
 	save = wall.start;
 	color = 0xffffff;
-	y = wall.end - x;
 	while (wall.start < wall.end && wall.start < buf->buffer_draw_bot)
 	{
-//		if (ray.num_sect == m->player.sector)
-//			color = ft_get_pixel_wall(m, ray, wall, x, y);
+		//if (ray.num_sect == m->player.sector)
+			color = ft_get_pixel_wall(m, ray, wall, x, y);
 		ft_put_pixel(m, ray.w, wall.start, color);
 		color = 0xcc18ff;
 		wall.start++;

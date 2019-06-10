@@ -62,6 +62,7 @@ void	ft_get_wall_heigth(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf
 	wall->ceil = m->sector[ray.num_sect].heigth.cell - m->player.pos.z;
 	wall->end = m->player.ecvator + wall->diff * m->player.p_he - wall->diff * wall->floor * 2;
 	wall->start = wall->end - wall->he_wall - wall->diff * wall->he_sect + wall->diff * wall->floor;
+	wall->wall_h_map = abs(wall->end - wall->start);
 }
 
 
@@ -80,6 +81,7 @@ void	ft_get_border_bot(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf)
 		wall->border_bot.end = wall->end;
 		wall->border_bot.start = wall->border_bot.end - wall->diff * diff * 2;
 		wall->border_bot.flag = 1;
+		wall->border_b_h = wall->border_bot.end - wall->border_bot.start;
 	}
 	else
 		wall->border_bot.flag = 0;
@@ -114,6 +116,7 @@ void	ft_get_border_top(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf)
 		diff = m->sector[ray.num_sect].heigth.cell - m->sector[ray.next_sect].heigth.cell;
 		wall->border_top.start = wall->start;
 		wall->border_top.end = wall->border_top.start + wall->diff * diff;
+		wall->border_t_h = wall->border_top.end - wall->border_top.start;
 		wall->border_top.flag = 1;
 		if (ray.w == HALFWIDTH)
 		{
@@ -142,13 +145,20 @@ void	ft_drawscreen(t_main *m, t_ray ray)
 {
 	t_heigth_wall		wall;
 	t_buffer			buffer;
+	static int32_t	border_b_h = 0;
+	static int32_t	border_t_h = 0;
 	static t_draw_save	sv_draw = {0, HEIGHT, 0};	
 
+
+	wall.border_b_h = 0;
+	wall.border_t_h = 0;
 	if (sv_draw.old_w != ray.w)
 	{
 		sv_draw.buffer_bot = HEIGHT;
 		sv_draw.buffer_top = 0;
 	}
+	wall.old_border_b_h = border_b_h;
+	wall.old_border_t_h = border_t_h;
 	if (ray.camdist < 0.005)
 		ray.camdist = 0.005;
 	buffer.buffer_draw_bot = sv_draw.buffer_bot;
@@ -166,7 +176,9 @@ void	ft_drawscreen(t_main *m, t_ray ray)
 		ft_draw_border(m, ray, wall, &buffer);
 	if (wall.ceil_h.flag == 1)
 		ft_draw_cell(m, ray, wall, &buffer);
-	
+	border_b_h = wall.border_b_h;
+	border_t_h = wall.border_t_h;
+
 	sv_draw.buffer_bot = wall.end < buffer.buffer_draw_bot ? wall.end : buffer.buffer_draw_bot;
 	sv_draw.buffer_top = wall.start > buffer.buffer_draw_top ? wall.start : buffer.buffer_draw_top;
 	sv_draw.old_w = ray.w;
