@@ -19,9 +19,12 @@ void    ft_load_texture(t_main *m)
 	if (m->sky.sky == NULL)
 		print_error(BAD_SKYBOX);
 	m->sdl.font = TTF_OpenFont("resourse/font/ArialBold.ttf", 18);
-//	if (m->sdl.font == NULL)
-//		exit(-10);
-	m->texture = SDL_LoadBMP("resourse/textures/2.bmp");
-//	if (m->texture == NULL)
-//		exit(-11);
+	if (m->sdl.font == NULL)
+		exit(-10);
+	m->texture[0] = SDL_LoadBMP("resourse/textures/2.bmp");
+	if (m->texture[0] == NULL)
+		exit(-11);
+	m->texture[1] = SDL_LoadBMP("resourse/textures/1.bmp");
+	if (m->texture[1] == NULL)
+		exit(-11);
 }

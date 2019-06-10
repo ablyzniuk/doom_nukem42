@@ -31,4 +31,3 @@ void		ft_lst_add_back(t_cols_wall *start, t_cols_wall *lst)
 		last  = last->next;
 	last->next = lst;
 }
-

@@ -20,32 +20,9 @@ static void		ft_key_exit(t_main *m, int *run)
 }
 
 // обработчик клавиатуры
-static void		ft_key_move(t_main *m)
+
+static void		ft_key_move2(t_main *m)
 {
-	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_w)
-		m->eventcall.move_up = 1;
-	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_s)
-		m->eventcall.move_down = 1;
-	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_a)
-		m->eventcall.strafe_left = 1;
-	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_d)
-		m->eventcall.strafe_rigth = 1;
-	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_SPACE && m->eventcall.look_jump == 1)
-		m->eventcall.jump_event = 1;
-	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_LCTRL && m->eventcall.jump_event == 0)
-		m->eventcall.geg_flag = 1;
-
-	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_w)
-		m->eventcall.move_up = 0;
-	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_s)
-		m->eventcall.move_down = 0;
-	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_a)
-		m->eventcall.strafe_left = 0;
-	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_d)
-		m->eventcall.strafe_rigth = 0;
-	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_LCTRL)
-		m->eventcall.geg_flag = 0;
-
 	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_BACKSPACE)
 	{	
 		if (m->eventcall.flag_debug == 1)
@@ -66,9 +43,37 @@ static void		ft_key_move(t_main *m)
 		m->sector[m->player.sector].heigth.floor--;
 	}
 }
+static void		ft_key_move(t_main *m)
+{
+	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_w)
+		m->eventcall.move_up = 1;
+	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_s)
+		m->eventcall.move_down = 1;
+	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_a)
+		m->eventcall.strafe_left = 1;
+	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_d)
+		m->eventcall.strafe_rigth = 1;
+	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_SPACE && m->eventcall.look_jump == 1)
+		m->eventcall.jump_event = 1;
+	if (m->sdl.event.type == SDL_KEYDOWN && m->sdl.event.key.keysym.sym == SDLK_LCTRL && m->eventcall.jump_event == 0)
+		m->eventcall.geg_flag = 1;
+	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_LCTRL)
+		m->eventcall.geg_flag = 0;
+	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_w)
+		m->eventcall.move_up = 0;
+	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_s)
+		m->eventcall.move_down = 0;
+	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_a)
+		m->eventcall.strafe_left = 0;
+	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_d)
+		m->eventcall.strafe_rigth = 0;
+	if (m->sdl.event.type == SDL_KEYUP && m->sdl.event.key.keysym.sym == SDLK_LCTRL)
+		m->eventcall.geg_flag = 0;
+}
 
 void	ft_key(t_main *m, int *run)
 {
 	ft_key_exit(m, run);
 	ft_key_move(m);
+	ft_key_move2(m);
 }

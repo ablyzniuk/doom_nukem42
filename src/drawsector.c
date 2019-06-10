@@ -33,30 +33,22 @@ void	ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 	int32_t	save;
 	int32_t	color;
 	int32_t	x;
-	int32_t y;
 	double	dx, dy;
 	dx = ray.wall_end.x - ray.wall_start.x;
 	dy = ray.wall_end.y - ray.wall_start.y;
 	x = 0;
-	y = 0;
 
 	while (wall.start < buf->buffer_draw_top)
 	{
 		wall.start++;
 		x++;
 	}
-	y = (fabs(dx) > fabs(dy) ? (int)((ray.intersec.x - ray.wall_start.x) * 1000) :
-								(int)((ray.intersec.y - ray.wall_start.y) * 1000)) % 1000;
-	
-	
 	save = wall.start;
 	color = 0xffffff;
 	while (wall.start < wall.end && wall.start < buf->buffer_draw_bot)
 	{
-		//if (ray.num_sect == m->player.sector)
-			color = ft_get_pixel_wall(m, ray, wall, x, y);
+		color = ft_get_pixel_wall(m, ray, wall, x, abs(wall.y));
 		ft_put_pixel(m, ray.w, wall.start, color);
-		color = 0xcc18ff;
 		wall.start++;
 		x++;
 	}
@@ -84,27 +76,33 @@ void	ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 {
 	int32_t		save;
 	int32_t		color;
+	int32_t		x;
 
 	color =  0xffFFFF;
 	if (wall.border_bot.flag == 1)
 	{
+		x = 0;
 		save = wall.border_bot.start;
 		while (wall.border_bot.start < wall.border_bot.end && wall.border_bot.start < buf->buffer_draw_bot)
 		{
+			color = ft_get_pixel_border(m, ray, wall, x, abs(wall.y));
 			ft_put_pixel(m, ray.w, wall.border_bot.start, color);
-			color = 0xff186c;
+			x++;
 			wall.border_bot.start++;
 		}
 		buf->buffer_draw_bot = save < buf->buffer_draw_bot ? save : buf->buffer_draw_bot;
 	}
 	if (wall.border_top.flag == 1)
 	{
+		x = 0;
 		if (wall.border_top.start < buf->buffer_draw_top)
 			wall.border_top.start = buf->buffer_draw_top;
 		save = wall.border_top.end;
 		while (wall.border_top.start < wall.border_top.end && wall.border_top.start < buf->buffer_draw_bot)
 		{
+			color = ft_get_pixel_border_top(m, ray, wall, x, abs(wall.y));
 			ft_put_pixel(m, ray.w, wall.border_top.start, color);
+			x++;
 			wall.border_top.start++;
 		}
 		buf->buffer_draw_top = save > buf->buffer_draw_top ? save : buf->buffer_draw_top;

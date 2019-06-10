@@ -66,7 +66,7 @@ typedef	struct	s_sendray
 
 typedef	struct	s_height_w
 {
-	int32_t		flag;
+	int32_t		flag;	
 	int32_t		start;
 	int32_t		end;
 }				t_height_w;
@@ -84,6 +84,9 @@ typedef struct	s_heigth_wall
 	t_height_w	floor_h;
 	t_height_w	ceil_h;
 	int32_t		w;
+	int32_t		y;
+	double		dx;
+	double		dy;
 	int32_t		start;
 	int32_t		end;
 	int32_t		color;
@@ -93,6 +96,8 @@ typedef struct	s_heigth_wall
 	int32_t		old_end;
 	int32_t		old_start;
 	int32_t		wall_h_map;
+	int32_t		diff_bord_bot;
+	int32_t		diff_bord_top;
 	int32_t		border_t_h;
 	int32_t		border_b_h;
 	int32_t		old_border_t_h;
@@ -295,7 +300,7 @@ typedef	struct	s_main
 	t_debug		debug;
 	t_trpalyer	player;	// данные о игроке
 	t_event		eventcall; // обработчик движений и т.д.
-	SDL_Surface	*texture;
+	SDL_Surface	*texture[2];
 }				t_main;
 
 void			parse_player(t_main *main, t_list *list);
@@ -334,6 +339,8 @@ t_vertex		ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex en
 void			ft_drawscreen(t_main *m, t_ray ray);
 void			ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 int32_t			ft_get_pixel_wall(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
+int32_t			ft_get_pixel_border(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
+int32_t			ft_get_pixel_border_top(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
 void			ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);

@@ -28,7 +28,7 @@ double	ft_dist_cord(double x1, double y1, double x2, double y2)
 	return (dist);
 }
 
-double	ft_get_dist_cols(t_main *m, t_cols_wall *lst, t_collision cols, t_vertex pos_vec)
+double	ft_get_dist_cols(t_cols_wall *lst, t_collision cols, t_vertex pos_vec)
 {
 	double		a;
 	double		b;
@@ -98,7 +98,7 @@ int32_t ft_collision(t_main *m, t_vertex pos_vec, double move)
 			{
 				pos.x = m->player.pos.x + pos_vec.x * move;
 				pos.y = m->player.pos.y;
-				dist = fabs(ft_get_dist_cols(m, lst, cols, pos));
+				dist = fabs(ft_get_dist_cols(lst, cols, pos));
 				res = ft_intersection(m->player.pos, pos, lst->start, lst->end);
 				if (dist <= 0.4 && lst->type == -1)
 						cols.flag_x = 1;
@@ -107,7 +107,7 @@ int32_t ft_collision(t_main *m, t_vertex pos_vec, double move)
 			{
 				pos.x = m->player.pos.x;
 				pos.y = m->player.pos.y + pos_vec.y * move;
-				dist = fabs(ft_get_dist_cols(m, lst, cols, pos));
+				dist = fabs(ft_get_dist_cols(lst, cols, pos));
 				res = ft_intersection(m->player.pos, pos, lst->start, lst->end);
 				if (dist <= 0.4 && lst->type == -1)
 					cols.flag_y = 1;
@@ -119,7 +119,7 @@ int32_t ft_collision(t_main *m, t_vertex pos_vec, double move)
 			{
 				pos.x = m->player.pos.x + pos_vec.x * move;
 				pos.y = m->player.pos.y;
-				dist = fabs(ft_get_dist_cols(m, lst, cols, pos));
+				dist = fabs(ft_get_dist_cols(lst, cols, pos));
 				res = ft_intersection(m->player.pos, pos, lst->start, lst->end);
 				if (dist <= 0.4)
 					if (m->player.pos.z + 2 + m->player.jump_h < m->sector[lst->type].heigth.floor)
@@ -129,7 +129,7 @@ int32_t ft_collision(t_main *m, t_vertex pos_vec, double move)
 			{
 				pos.x = m->player.pos.x;
 				pos.y = m->player.pos.y + pos_vec.y * move;
-				dist = fabs(ft_get_dist_cols(m, lst, cols, pos));
+				dist = fabs(ft_get_dist_cols(lst, cols, pos));
 				res = ft_intersection(m->player.pos, pos, lst->start, lst->end);
 				if (dist <= 0.4)
 					if (m->player.pos.z + 2 + m->player.jump_h < m->sector[lst->type].heigth.floor)

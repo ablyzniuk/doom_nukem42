@@ -23,31 +23,8 @@ t_main *init_main(void)
 	return (main);
 }
 
-// ebola
-void	ft_init(t_main *m)
+void	ft_init_event_var(t_main *m)
 {
-	ft_init_sky(m);
-	read_file(m);
-	ft_cr_cols_init(m);
-	// углы поворота игрока
-	m->player.angle.hor = 0.0;
-	m->player.angle.ver = 0.0;
-	m->player.jump_h = 0;
-	m->eventcall.look_jump = 1;
-//	// вектора поворота игрока
-	m->player.vec.x = 1;
-	m->player.vec.y = 0;
-	m->player.vec.z = 0;
-//	// позиция игрока
-//	m->player.pos.x = 1.2;
-//	m->player.pos.y = 5;
-//	m->player.pos.z = 0;
-//	// скоость
-	m->player.movespeed = 0;
-	m->player.rotspeed = 0;
-	m->player.p_he = 7;
-//	m->player.sector = 0;
-//	// обработкичи кнопок
 	m->eventcall.move_down = 0;
 	m->eventcall.is_ground = 1;
 	m->eventcall.move_up = 0;
@@ -59,5 +36,24 @@ void	ft_init(t_main *m)
 	m->eventcall.strafe_rigth = 0;
 	m->eventcall.jump_event = 0;
 	m->eventcall.look_jump = 1;
+}
+
+void	ft_init(t_main *m)
+{
+	ft_init_sky(m);
+	read_file(m);
+	ft_cr_cols_init(m);
+	ft_init_event_var(m);
+	// углы поворота игрока
+	m->player.angle.hor = 0.0;
+	m->player.angle.ver = 0.0;
+	m->player.jump_h = 0;
+	m->eventcall.look_jump = 1;
+	m->player.vec.x = 1;
+	m->player.vec.y = 0;
+	m->player.vec.z = 0;
+	m->player.movespeed = 0;
+	m->player.rotspeed = 0;
+	m->player.p_he = 7;
 	m->player.ecvator = HEIGHT / 2;
 }

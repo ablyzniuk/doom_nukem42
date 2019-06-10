@@ -12,10 +12,6 @@
 
 #include "doom.h"
 
-//обработчик мыши
-
-
-// лево право
 static void		ft_rot_horizontal(t_main *m)
 {
 	if (m->sdl.event.motion.xrel > 0 && m->sdl.event.type == SDL_MOUSEMOTION)
@@ -30,8 +26,6 @@ static void		ft_rot_horizontal(t_main *m)
 	}
 }
 
-
-// верх низ
 static void		ft_rot_vertical(t_main *m)
 {
 	if (m->sdl.event.motion.yrel < 0 && m->sdl.event.type == SDL_MOUSEMOTION)

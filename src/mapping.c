@@ -23,15 +23,45 @@ int		ft_get_pixel(SDL_Surface *texture, int32_t x, int32_t y)
 
 int32_t		ft_get_pixel_wall(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
 {
-	int32_t	color = 0;
-	int32_t	i, j;
-	int32_t	k;
+	int32_t	*color;
+	int32_t	i;
 	double	diff_x, diff_y;
 
+	ray.camdist = ray.camdist;
 	diff_y = wall.wall_h_map;
-	diff_x = 65.0 / diff_y;
-	i = (int)((x * diff_x) * 100.0) % 1000;
+	diff_x = 64 / diff_y;
+	i = (int)((x * diff_x) * 100) % m->texture[0]->w;
+	color = m->texture[0]->pixels + i * m->texture[0]->pitch +
+	y * m->texture[0]->format->BytesPerPixel;
+	return (*color);
+}
 
-	color = ft_get_pixel(m->texture, y, i);
-	return (color);
+int32_t		ft_get_pixel_border(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
+{
+	int32_t	*color;
+	int32_t	i;
+	double	diff_x, diff_y;
+
+	ray.camdist = ray.camdist;
+	diff_y = wall.border_b_h / (wall.diff_bord_bot > 0 ? wall.diff_bord_bot : 1) * 4;
+	diff_x = 10 / diff_y;
+	i = (int)((x * diff_x) * 64) % m->texture[1]->w;
+	color = m->texture[1]->pixels + i * m->texture[1]->pitch +
+	y * m->texture[1]->format->BytesPerPixel;
+	return (*color);
+}
+
+int32_t		ft_get_pixel_border_top(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
+{
+	int32_t	*color;
+	int32_t	i;
+	double	diff_x, diff_y;
+
+	ray.camdist = ray.camdist;
+	diff_y = wall.border_t_h / (wall.diff_bord_top > 0 ? wall.diff_bord_top : 1) * 4;
+	diff_x = 10 / diff_y;
+	i = (int)((x * diff_x) * 64) % m->texture[1]->w;
+	color = m->texture[1]->pixels + i * m->texture[1]->pitch +
+	y * m->texture[1]->format->BytesPerPixel;
+	return (*color);
 }

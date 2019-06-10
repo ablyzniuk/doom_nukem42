@@ -47,9 +47,6 @@ void	ft_get_array_wall(t_main *m, t_ray *ray)
 	ray->wall_start.y = m->sector[ray->num_sect].vertex[k][0];
 	ray->wall_end.x = m->sector[ray->num_sect].vertex[ray->wall_sect][1];
 	ray->wall_end.y = m->sector[ray->num_sect].vertex[ray->wall_sect][0];
-	if (ray->angle == 0 && ray->num_sect != 0)
-			drawline(m, ray->ray_start.x, ray->ray_start.y, ray->ray_end.x, ray->ray_end.y);
-	drawline(m, ray->wall_start.x, ray->wall_start.y, ray->wall_end.x, ray->wall_end.y);
 }
 
 void	ft_draw_map(t_main *m)
@@ -81,7 +78,6 @@ void	ft_ray(t_main *m, t_ray ray)
 
 	ray.ray_deep++;
 	ray.wall_sect = 0;
-	ft_put_pixel(m, m->player.pos.x,m->player.pos.y, 0xff00ff);
 	while (ray.wall_sect < m->sector[ray.num_sect].vertex_arr_len)
 	{
 		ft_get_array_wall(m, &ray);
@@ -98,7 +94,6 @@ void	ft_ray(t_main *m, t_ray ray)
 			if (ray.angle == 0.0)
 				m->debug.wall = ray.wall_sect;
 		}
-		
 		if (ray.intersec.z != -1 && m->sector[ray.num_sect].transit[ray.wall_sect] != -1 && ray.ray_deep < 32
 		&& m->sector[ray.num_sect].transit[ray.wall_sect] != ray.old_num_sect)
 		{
@@ -122,72 +117,6 @@ void	ft_ray(t_main *m, t_ray ray)
 			ray.ray_start.x = sv_ray.sv_pos.x;
 			ray.ray_start.y = sv_ray.sv_pos.y;
 		}
-	
 		ray.wall_sect++;
 	}
 }
-//		int		k;
-//		int		buff;
-//		double		posx;
-//		double		posy;
-//		t_vertex	buffray;
-//
-//		k = 0;
-//		ray.wall_sect = 0;
-//
-//		//if (ray.angle == 0.0)
-//	//	if (ray.w >= 300 && ray.w <= 310)
-//		while (ray.wall_sect < 4)
-//		{
-//			// последняя точка сзязана с первой
-//			k = ray.wall_sect + 1;
-//			if (k == 4)
-//				k = 0;
-//			//ищем пересечение луча и стенки
-//		//	SDL_Log("%d \n", ray.num_sect);
-//			ray.intersec = ft_intersection(ray.raystart, ray.ray, m->vertex[m->sector[ray.num_sect]->vertex[ray.wall_sect]], m->vertex[m->sector[ray.num_sect]->vertex[k]]);
-//				if (ray.intersec.z != -1)
-//				{
-//					// как далеко попаданиеs
-//					ray.camdist = (ray.intersec.z + ray.addlen) * ray.len_ray;
-//					//фикс рыбьего глаза
-//					if (ray.angle != 0.0)
-//						ray.camdist = (ray.intersec.z + ray.addlen) * ray.len_ray * cos(ray.angle);
-//
-//					if (m->sector[ray.num_sect]->typewall[ray.wall_sect] == -1)
-//						drawscreen(m, ray.w,
-//						ray.camdist,
-//						m->sector[ray.num_sect]->heigth.cell - m->sector[ray.num_sect]->heigth.floor,
-//						ray.num_sect);
-//					else if (m->sector[m->sector[ray.num_sect]->typewall[ray.wall_sect]]->heigth.floor != m->sector[ray.num_sect]->heigth.floor)
-//						drawscreen(m, ray.w,
-//						ray.camdist,
-//						abs(m->sector[m->sector[ray.num_sect]->typewall[ray.wall_sect]]->heigth.floor - m->sector[ray.num_sect]->heigth.floor),
-//						ray.num_sect);
-//				}
-//				if (ray.intersec.z != -1 && m->sector[ray.num_sect]->typewall[ray.wall_sect] != -1)
-//				{
-//					//SDL_Log("Check\n");
-//					buffray.x = ray.ray.x;
-//					buffray.y = ray.ray.y;
-//
-//					ray.ray.x = ray.intersec.x + ray.len_ray * ray.vx;
-//					ray.ray.y = ray.intersec.y + ray.len_ray * ray.vy;
-//					buff = ray.num_sect;
-//					ray.num_sect = m->sector[ray.num_sect]->typewall[ray.wall_sect];
-//					ray.addlen += ray.intersec.z;
-//
-//					posx = ray.raystart.x;
-//					posy = ray.raystart.y;
-//					ray.raystart.x = ray.intersec.x + 0.00001 * ray.vx;
-//					ray.raystart.y = ray.intersec.y + 0.00001 * ray.vy;
-//					ft_ray(m, ray);
-//					ray.ray.x = buffray.x;
-//					ray.ray.y = buffray.y;
-//					ray.num_sect = buff;
-//					ray.raystart.x = posx;
-//					ray.raystart.y = posy;
-//				}
-//			ray.wall_sect++;
-//		}
-//		ft_draw_cam(m, 10);

@@ -29,7 +29,6 @@ void    ft_sdlinit(t_main *m)
 	ft_load_texture(m);
 }
 
-//игровой цыкл
 void    ft_sdlloop(t_main *m)
 {
 	int	run;
@@ -37,10 +36,9 @@ void    ft_sdlloop(t_main *m)
 	run = 1;
 	while (run)
 	{
-		SDL_FillRect(m->sdl.winsurface, NULL, 0x000000);
 		ft_gravity(m);
 		ft_de_gravity(m);
-		ft_draw_sky(m);
+	//	ft_draw_sky(m);
 		ft_draw_map(m);
 		ft_transform(m);
 		while (SDL_PollEvent(&m->sdl.event))
@@ -50,7 +48,7 @@ void    ft_sdlloop(t_main *m)
 		}
 		ft_debug(m);
 		SDL_UpdateWindowSurface(m->sdl.window);
-	//	ft_fps_look(m);
+		ft_fps_look(m);
 		ft_fps_utils(m);
 	}
 }
