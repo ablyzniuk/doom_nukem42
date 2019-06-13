@@ -65,6 +65,7 @@ void	ft_fps_utils(t_main *m)
 //	SDL_Log("%d\n", (int) (1 / m->fps.frametime));
 }
 
+
 int		ft_cmp_vertex(t_vertex one, t_vertex two)
 {
 	if (one.x != two.x || one.y != two.y || one.z != two.z)

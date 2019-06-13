@@ -12,7 +12,7 @@
 
 #include "doom.h"
 
-void	ft_put_pixel(t_main *m, int x, int y, int pixel)
+void	ft_put_pixel(t_main *m, int x, int y, int32_t pixel)
 {
 	int		*target_pixel;
 
@@ -23,6 +23,19 @@ void	ft_put_pixel(t_main *m, int x, int y, int pixel)
 	*target_pixel = pixel;
 }
 
+void	ft_put_pixel_rgb(t_main *m, int x, int y, t_rgb col)
+{
+	int32_t	*target_pixel;
+	int32_t	color;
+
+	if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT - 1)
+		return ;
+	target_pixel = m->sdl.winsurface->pixels + y * m->sdl.winsurface->pitch + x *
+	m->sdl.winsurface->format->BytesPerPixel;
+	color = SDL_MapRGB(m->texture[0]->format, col.r, col.g, col.b);
+	*target_pixel = color;
+	//*target_pixel = pixel;
+}
 //берем пиксель с текстуры / потом
 
 
@@ -159,7 +172,7 @@ inline void	ft_drawscreen(t_main *m, t_ray ray)
 	wall.dx = ray.wall_end.x - ray.wall_start.x;
 	wall.dy = ray.wall_end.y - ray.wall_start.y;
 	wall.y = (fabs(wall.dx) > fabs(wall.dy) ? (int)((ray.intersec.x - ray.wall_start.x) * 1000) :
-							(int)((ray.intersec.y - ray.wall_start.y) * 1000)) % m->texture[0]->h;
+							(int)((ray.intersec.y - ray.wall_start.y) * 1000)) % m->texture[0]->w;
 	wall.old_border_b_h = border_b_h;
 	wall.old_border_t_h = border_t_h;
 	if (ray.camdist < 0.005)

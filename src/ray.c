@@ -33,6 +33,7 @@ void	ft_get_data_ray(t_main *m, t_ray *ray)
 	ray->ray_start.y = m->player.pos.y;
 	ray->addlen = 0.0;
 	ray->ray_deep = 0;
+	ray->camdist_old = 0;
 }
 
 void	ft_get_array_wall(t_main *m, t_ray *ray)
@@ -54,7 +55,7 @@ void	ft_draw_map(t_main *m)
 	t_ray	ray; // разные нужные переменные
 
 	ray.w = 0;
-	ray.len_ray = 50; //    добавить функию просчета длинны луча 
+	ray.len_ray = 1000; //    добавить функию просчета длинны луча 
 	
 	while (ray.w < WIDTH)
 	{
@@ -105,6 +106,7 @@ void	ft_ray(t_main *m, t_ray ray)
 			ray.old_num_sect = ray.num_sect;
 			ray.num_sect = m->sector[ray.old_num_sect].transit[ray.wall_sect];
 			ray.addlen += ray.intersec.z;
+			ray.camdist_old = ray.camdist;
 			sv_ray.sv_pos.x = ray.ray_start.x;
 			sv_ray.sv_pos.y = ray.ray_start.y;
 			ray.ray_start.x = ray.intersec.x - 0.01 * ray.vx;

@@ -23,6 +23,11 @@ t_main *init_main(void)
 	return (main);
 }
 
+void	ft_init_setting(t_main *m)
+{
+	m->setting.fog = 1;
+}
+
 void	ft_init_event_var(t_main *m)
 {
 	m->eventcall.move_down = 0;
@@ -44,6 +49,7 @@ void	ft_init(t_main *m)
 	read_file(m);
 	ft_cr_cols_init(m);
 	ft_init_event_var(m);
+	ft_init_setting(m);
 	// углы поворота игрока
 	m->player.angle.hor = 0.0;
 	m->player.angle.ver = 0.0;

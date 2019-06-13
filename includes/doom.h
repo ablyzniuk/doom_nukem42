@@ -21,8 +21,8 @@
 #include "libft.h"
 
 
-#define WIDTH 800
-#define HEIGHT 600
+#define WIDTH 900
+#define HEIGHT 700
 #define	HALFWIDTH (double)WIDTH / 2.0
 #define	HALFHEIGTH HEIGHT / 2
 #define	FPS 60
@@ -32,6 +32,10 @@
 #define DIST (double)WIDTH * 1.3	// рассчет дальности плоскости проекци. для фова 60
 #define	ANG 180
 #define	COLS 5
+#define FOG 60
+#define SET_FOG(x, y, z, a) (x = y - (double)y / a * z * FOG)
+#define GET_COLOR(c, p, i, pi, y, b) (c = p + i * pi + y * b)
+#define SET_I(i, x, d, h) (i = (int)(x * d * 100.0) % h)
 
 #define DELIMITER '\t'
 
@@ -46,6 +50,13 @@ typedef	struct	s_angle
 	double		hor;
 	double		ver;
 }				t_angle;
+
+typedef struct	s_rgb
+{
+	Uint8		r;
+	Uint8		g;
+	Uint8		b;
+}				t_rgb;
 
 typedef struct s_vertex
 {
@@ -127,6 +138,7 @@ typedef struct	s_ray
 	double		wall_len;
 	double		wall_len_ray;
 	int32_t		next_sect;
+	int32_t		camdist_old;
 	int32_t		old_num_sect;
 	int32_t		num_sect;	// номер стены
 	size_t		wall_sect;
@@ -286,6 +298,10 @@ typedef	struct	s_debug
 	int32_t	wall;
 }				t_debug;
 
+typedef struct	s_setting
+{
+	Uint8	fog;
+}				t_setting;
 
 typedef	struct	s_main
 {
@@ -294,6 +310,7 @@ typedef	struct	s_main
 	size_t		sum_sect;	// количество секторов
 	size_t		sum_vert;	// количество вертексов
 	size_t		sum_vert_pair;	// количество вертексов
+	t_setting	setting;
 	t_ray		ray;	// немного переменных
 	t_sky		sky;
 	t_fps		fps;	// фпс
@@ -332,6 +349,7 @@ void			ft_key(t_main *m, int32_t *run);
 void			ft_mouse(t_main *m);
 void			ft_transform(t_main	*m);
 void			ft_put_pixel(t_main *m, int32_t x, int32_t y, int32_t pixel);
+void			ft_put_pixel_rgb(t_main *m, int32_t x, int32_t y, t_rgb pixel);
 int				ft_get_pixel(SDL_Surface *texture, int32_t x, int32_t y);
 void			ft_fps_utils(t_main *m);
 void			ft_fps_look(t_main *m);
@@ -340,9 +358,11 @@ void			drawline(t_main *m, int32_t x1, int32_t y1, int32_t x2, int32_t y2);
 t_vertex		ft_intersection(t_vertex st1, t_vertex end1, t_vertex st2, t_vertex end2);
 void			ft_drawscreen(t_main *m, t_ray ray);
 void			ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
-int32_t			ft_get_pixel_wall(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
-int32_t			ft_get_pixel_border(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
-int32_t			ft_get_pixel_border_top(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
+t_rgb			ft_get_pixel_wall(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
+t_rgb			ft_get_pixel_border(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
+t_rgb			ft_get_pixel_border_top(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
+t_rgb			ft_set_fog_ceil(t_rgb rgb, t_ray ray, t_heigth_wall wall, int32_t x);
+t_rgb			ft_set_fog_floor(t_rgb rgb, t_ray ray, t_heigth_wall wall, int32_t x);
 int32_t			ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
 void			ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
@@ -351,6 +371,7 @@ void			ft_load_texture(t_main *m);
 double			ft_dist_cord(double x1, double y1, double x2, double y2);
 void			ft_ray(t_main *m, t_ray ray);
 int32_t			ft_collision(t_main *m, t_vertex pos_vec, double move);
+t_rgb			ft_set_fog(t_rgb rgb, t_ray ray);
 void			ft_gravity(t_main *m);
 void			ft_de_gravity(t_main *m);
 int				ft_cmp_vertex(t_vertex one, t_vertex two);
