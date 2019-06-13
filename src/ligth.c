@@ -28,11 +28,11 @@ t_rgb	ft_set_fog(t_rgb rgb, t_ray ray)
 		rgb.r = r;
 	else
 		rgb.r = 0;
-	if (g > 0 && g < rgb.r)
-		rgb.g =g;
+	if (g > 0 && g < rgb.g)
+		rgb.g = g;
 	else
 		rgb.g = 0;
-	if (g > 0 && g < rgb.r)
+	if (b > 0 && b < rgb.b)
 		rgb.b = b;
 	else
 		rgb.b = 0;
@@ -41,22 +41,18 @@ t_rgb	ft_set_fog(t_rgb rgb, t_ray ray)
 
 t_rgb	ft_set_fog_floor(t_rgb rgb, t_ray ray, t_heigth_wall wall, int32_t x)
 {
-	int		r;
-	static int32_t	x_old = 0;
-	int		g;
-	int		b;
-	double	dist;
-	double	diff;
+	static int32_t	x_old = -1;
+	int				r;
+	int				g;
+	int				b;
+	double			dist;
 
 	if (x == wall.floor_h.floor_h - 1)
 		x += x_old;
-	dist = ray.camdist - ray.camdist_old;
-	diff = ray.camdist / wall.floor_h.floor_h;
-	dist = ray.camdist - diff * x;
-	//diff = 
-	SET_FOG(r, rgb.r, ray.camdist, ray.len_ray);
-	SET_FOG(g, rgb.g, ray.camdist, ray.len_ray);
-	SET_FOG(b, rgb.b, ray.camdist, ray.len_ray);
+	dist = x * ray.len_ray / 1000;
+	SET_FOG(r, rgb.r, dist, ray.len_ray);
+	SET_FOG(g, rgb.g, dist, ray.len_ray);
+	SET_FOG(b, rgb.b, dist, ray.len_ray);
 	if (r > 0 && r < rgb.r)
 		rgb.r = r;
 	else
@@ -75,19 +71,15 @@ t_rgb	ft_set_fog_floor(t_rgb rgb, t_ray ray, t_heigth_wall wall, int32_t x)
 
 t_rgb	ft_set_fog_ceil(t_rgb rgb, t_ray ray, t_heigth_wall wall, int32_t x)
 {
-	int		r;
-	static int32_t	x_old = 0;
-	int		g;
-	int		b;
-	double	dist;
-	double	diff;
+	static int32_t	x_old = -1;
+	int				r;
+	int				g;
+	int				b;
+	double			dist;
 
-	if (x == wall.floor_h.floor_h - 1)
+	if (x == wall.ceil_h.ceil_h - 1)
 		x += x_old;
-	dist = ray.camdist - ray.camdist_old;
-	diff = ray.camdist / wall.ceil_h.ceil_h;
-	dist = ray.camdist - diff * x;
-	//diff = 
+	dist = x * ray.len_ray / 1000;
 	SET_FOG(r, rgb.r, dist, ray.len_ray);
 	SET_FOG(g, rgb.g, dist, ray.len_ray);
 	SET_FOG(b, rgb.b, dist, ray.len_ray);

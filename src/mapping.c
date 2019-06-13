@@ -21,20 +21,22 @@ int		ft_get_pixel(SDL_Surface *texture, int32_t x, int32_t y)
 	return (*get_pixel);
 }
 
-inline int32_t		ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
+t_rgb		ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, double dd, int32_t y)
 {
 	int32_t	*color;
 	int32_t	i;
 	double	diff_x, diff_y;
+		double	dx, dy, dist, diff;
+	t_vertex	k;
+	t_rgb		rgb;
 
-	ray.camdist = ray.camdist;
-	diff_y = wall.floor_h.floor_h;
-	diff_x = 64 / diff_y;
-	i = (int)((x * diff_x) * 100) % m->texture[2]->w;
+
+	//x = (int)((x * diff_x) * 1000) % m->texture[3]->h;
 	//color = m->texture[2]->pixels + i * m->texture[2]->pitch +
 	//y * m->texture[2]->format->BytesPerPixel;
-	GET_COLOR(color, m->texture[0]->pixels, i, m->texture[0]->pitch, y, m->texture[0]->format->BytesPerPixel);
-	return (*color);
+	GET_COLOR(color, m->texture[3]->pixels, i, m->texture[3]->pitch, wall.y, m->texture[3]->format->BytesPerPixel);
+	SDL_GetRGB(*color, m->texture[3]->format, &rgb.r, &rgb.g, &rgb.b);
+	return (rgb);
 }
 
 t_rgb		ft_get_pixel_wall(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)

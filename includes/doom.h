@@ -21,8 +21,8 @@
 #include "libft.h"
 
 
-#define WIDTH 900
-#define HEIGHT 700
+#define WIDTH 1280
+#define HEIGHT 900
 #define	HALFWIDTH (double)WIDTH / 2.0
 #define	HALFHEIGTH HEIGHT / 2
 #define	FPS 60
@@ -318,7 +318,7 @@ typedef	struct	s_main
 	t_debug		debug;
 	t_trpalyer	player;	// данные о игроке
 	t_event		eventcall; // обработчик движений и т.д.
-	SDL_Surface	*texture[3];
+	SDL_Surface	*texture[4];
 	int32_t		**tex;
 }				t_main;
 
@@ -363,7 +363,7 @@ t_rgb			ft_get_pixel_border(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x,
 t_rgb			ft_get_pixel_border_top(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
 t_rgb			ft_set_fog_ceil(t_rgb rgb, t_ray ray, t_heigth_wall wall, int32_t x);
 t_rgb			ft_set_fog_floor(t_rgb rgb, t_ray ray, t_heigth_wall wall, int32_t x);
-int32_t			ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
+t_rgb			ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, double dx, int32_t y);
 void			ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);

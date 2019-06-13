@@ -15,23 +15,30 @@
 void	ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 {
 	int32_t	save;
-	int32_t	x;
+	int32_t x, y;
 	t_rgb	col;
+	t_vertex k;
+	double	dx, dy, dist, diff;
+	static	int32_t w = -1;
+	
+	save = wall.floor_h.start;
 
 	x = 0;
-	save = wall.floor_h.start;
+	y = 0;
 	while (wall.floor_h.start < wall.floor_h.end && wall.floor_h.start < buf->buffer_draw_bot)
 	{
-	//	color = ft_get_pixel_floor(m, ray, wall, x, abs(wall.y));
-		col.r = 90;
-		col.g = 153;
-		col.b = 163;
-		if (m->setting.fog == 1)
+		//col = ft_get_pixel_floor(m, ray, wall, x, dx, abs(y));
+		 col.r = 91;
+		 col.g = 26;
+		 col.b = 26;
+		if (m->setting.fog == 1 && 0)
 			col = ft_set_fog_floor(col, ray, wall, x);
 		ft_put_pixel_rgb(m, ray.w, wall.floor_h.start, col);
 		wall.floor_h.start++;
+		y++;
 		x++;
 	}
+	w = ray.w;
 	buf->buffer_draw_bot = save < buf->buffer_draw_bot ? save : buf->buffer_draw_bot;
 }
 
