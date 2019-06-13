@@ -12,6 +12,8 @@
 
 NAME	= doom
 
+NAMEDB	= doon_db
+
 SRC		=	src/*.c
 
 SDL2_HEADER =	-I frameworks/SDL2.framework/Headers/ \
@@ -19,6 +21,9 @@ SDL2_HEADER =	-I frameworks/SDL2.framework/Headers/ \
 				-I frameworks/SDL2_ttf.framework/Headers/
 
 SDLFLAGS = -framework SDL2 -framework SDL2_mixer -framework SDL2_ttf -F ./frameworks
+
+OPT = -O3 -flto -pipe -Ofast -march=native -mtune=native
+DB = -g
 
 SDL2_P = -rpath @loader_path/frameworks/
 
@@ -30,12 +35,23 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft/
-	gcc -Wall -Wextra -g -L libft/ -lft -L/usr/local/lib -Iincludes -Ilibft/includes $(SDL2_HEADER) $(SDL2_P) $(SDLFLAGS) $(SRC)  -o $(NAME) 
+	gcc -Wall -Wextra $(OPT) -flto -pipe -Ofast -march=native -mtune=native -L libft/ -lft -L/usr/local/lib -Iincludes -Ilibft/includes $(SDL2_HEADER) $(SDL2_P) $(SDLFLAGS) $(SRC)  -o $(NAME) 
 	printf '\033[32m[ ✔ ] %s\n\033[0m' "Create Dooms"
 
 obj/%.o: src/%.c
 	mkdir -p obj
-	gcc  -Wall -Wextra -c -g -Iincludes -Ilibft/includes $(SDL2_HEADER) $< -o $@
+	gcc  -Wall -Wextra -c $(OPT) -Iincludes -Ilibft/includes $(SDL2_HEADER) $< -o $@
+	printf '\033[0m[ ✔ ] %s\n\033[0m' "$<"
+
+db: $(NAMEDB)
+$(NAMEDB): $(OBJ)
+	make -C libft/
+	gcc -Wall -Wextra $(DB) -L libft/ -lft -L/usr/local/lib -Iincludes -Ilibft/includes $(SDL2_HEADER) $(SDL2_P) $(SDLFLAGS) $(SRC)  -o $(NAME) 
+	printf '\033[32m[ ✔ ] %s\n\033[0m' "Create Dooms_db"
+
+obj/%.o: src/%.c
+	mkdir -p obj
+	gcc  -Wall -Wextra -c $(DB) -Iincludes -Ilibft/includes $(SDL2_HEADER) $< -o $@
 	printf '\033[0m[ ✔ ] %s\n\033[0m' "$<"
 
 clean:
