@@ -25,7 +25,7 @@ t_main *init_main(void)
 
 void	ft_init_setting(t_main *m)
 {
-	m->setting.fog = 1;
+	m->setting.fog = 0;
 }
 
 void	ft_init_event_var(t_main *m)

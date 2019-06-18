@@ -363,7 +363,7 @@ t_rgb			ft_get_pixel_border(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x,
 t_rgb			ft_get_pixel_border_top(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
 t_rgb			ft_set_fog_ceil(t_rgb rgb, t_ray ray, t_heigth_wall wall, int32_t x);
 t_rgb			ft_set_fog_floor(t_rgb rgb, t_ray ray, t_heigth_wall wall, int32_t x);
-t_rgb			ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, double dx, int32_t y);
+t_rgb			ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
 void			ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);

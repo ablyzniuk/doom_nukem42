@@ -23,20 +23,21 @@ void	ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 	
 	save = wall.floor_h.start;
 
-	x = 0;
+	x = wall.floor_h.floor_h;
+	//x = 0;
+	col.r = 91;
+		col.g = 26;
+		col.b = 26;
 	y = 0;
 	while (wall.floor_h.start < wall.floor_h.end && wall.floor_h.start < buf->buffer_draw_bot)
 	{
-		//col = ft_get_pixel_floor(m, ray, wall, x, dx, abs(y));
-		 col.r = 91;
-		 col.g = 26;
-		 col.b = 26;
+		col = ft_get_pixel_floor(m, ray, wall, x, y);
 		if (m->setting.fog == 1 && 0)
 			col = ft_set_fog_floor(col, ray, wall, x);
 		ft_put_pixel_rgb(m, ray.w, wall.floor_h.start, col);
 		wall.floor_h.start++;
 		y++;
-		x++;
+		x--;
 	}
 	w = ray.w;
 	buf->buffer_draw_bot = save < buf->buffer_draw_bot ? save : buf->buffer_draw_bot;

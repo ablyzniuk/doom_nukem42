@@ -21,20 +21,29 @@ int		ft_get_pixel(SDL_Surface *texture, int32_t x, int32_t y)
 	return (*get_pixel);
 }
 
-t_rgb		ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, double dd, int32_t y)
+t_rgb		ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y)
 {
 	int32_t	*color;
 	int32_t	i;
 	double	diff_x, diff_y;
-		double	dx, dy, dist, diff;
+	double	dx, dy, dist, diff, dd;
+	double	xx, yy, distc, wq;
 	t_vertex	k;
 	t_rgb		rgb;
 
+//	xx = (m->sector[ray.num_sect].heigth.floor - );
 
-	//x = (int)((x * diff_x) * 1000) % m->texture[3]->h;
-	//color = m->texture[2]->pixels + i * m->texture[2]->pitch +
-	//y * m->texture[2]->format->BytesPerPixel;
-	GET_COLOR(color, m->texture[3]->pixels, i, m->texture[3]->pitch, wall.y, m->texture[3]->format->BytesPerPixel);
+	wq = (1.0) / (ray.camdist);
+	dx = (ray.intersec.x - m->player.pos.x);
+	dy = (ray.intersec.y - m->player.pos.y);
+
+	diff_y = dy	/ ray.camdist;
+	diff_x = dx / ray.camdist;
+	xx = fabs(m->player.pos.x + (y * diff_x));
+	yy = fabs(m->player.pos.y + (x * diff_y));
+
+
+	GET_COLOR(color, m->texture[3]->pixels, (int)(xx * 10) % m->texture[3]->w, m->texture[3]->pitch, (int)(yy * 10) % m->texture[3]->h, m->texture[3]->format->BytesPerPixel);
 	SDL_GetRGB(*color, m->texture[3]->format, &rgb.r, &rgb.g, &rgb.b);
 	return (rgb);
 }
@@ -80,7 +89,7 @@ t_rgb		ft_get_pixel_border(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, 
 	diff_x = 10 / diff_y;
 	i = (int)((x * diff_x) * 64) % m->texture[1]->w;
 	//color = m->texture[1]->pixels + i * m->texture[1]->pitch +
-	//y * m->texture[1]->format->BytesPerPixel;
+	//y * m->texture[1]->format->Byt esPerPixel;
 	GET_COLOR(color, m->texture[1]->pixels, i, m->texture[1]->pitch, y, m->texture[1]->format->BytesPerPixel);
 	SDL_GetRGB(*color, m->texture[1]->format, &rgb.r, &rgb.g, &rgb.b);
 	return (rgb);

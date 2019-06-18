@@ -48,6 +48,13 @@ void	ft_get_array_wall(t_main *m, t_ray *ray)
 	ray->wall_start.y = m->sector[ray->num_sect].vertex[k][0];
 	ray->wall_end.x = m->sector[ray->num_sect].vertex[ray->wall_sect][1];
 	ray->wall_end.y = m->sector[ray->num_sect].vertex[ray->wall_sect][0];
+	if (ray->angle == 0 && ray->num_sect != 0)
+	{
+			drawline(m, ray->ray_start.x, ray->ray_start.y, ray->ray_end.x, ray->ray_end.y);
+			ft_put_pixel(m, m->player.pos.x, m->player.pos.y, 0xff00ff);
+	}
+	drawline(m, ray->wall_start.x, ray->wall_start.y, ray->wall_end.x, ray->wall_end.y);
+	
 }
 
 void	ft_draw_map(t_main *m)
