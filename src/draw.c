@@ -53,7 +53,7 @@ void	drawline(t_main *m, int x1, int y1, int x2, int y2)
    {
 	   ft_put_pixel(m, x1, y1, 0xff00ff);
 		const int error2 = error * 2;
-		if(error2 > -deltaY) 
+		if(error2 > -deltaY)
 		{
 			error -= deltaY;
 			x1 += signX;
@@ -106,7 +106,7 @@ void	ft_get_floor(t_main *m, t_ray ray, t_heigth_wall *wall, t_buffer *buf)
 		wall->floor_h.start = wall->end;
 	else
 		wall->floor_h.start = wall->border_bot.end;
-	wall->floor_h.end = buf->buffer_draw_bot;
+	wall->floor_h.end = HEIGHT;
 	if (wall->floor_h.start < wall->floor_h.end)
 		wall->floor_h.flag = 1;
 	else
@@ -190,7 +190,7 @@ inline void	ft_drawscreen(t_main *m, t_ray ray)
 		ft_draw_wall(m, ray, wall, &buffer);
 	if (wall.border_bot.flag == 1 || wall.border_top.flag == 1)
 		ft_draw_border(m, ray, wall, &buffer);
-	if (wall.ceil_h.flag == 1)
+	if (wall.ceil_h.flag == 1 && 0)
 		ft_draw_cell(m, ray, wall, &buffer);
 	border_b_h = wall.border_b_h;
 	border_t_h = wall.border_t_h;

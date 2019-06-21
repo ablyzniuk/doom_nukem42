@@ -33,4 +33,7 @@ void    ft_load_texture(t_main *m)
 	m->texture[3] = SDL_LoadBMP("resourse/textures/4.bmp");
 	if (m->texture[3] == NULL)
 		exit(-11);
+	m->sprite.ch = SDL_LoadBMP("resourse/ch/chr.bmp");
+	if (m->sprite.ch == NULL)
+		exit(-11);
 }

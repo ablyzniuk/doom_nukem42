@@ -101,7 +101,9 @@ int32_t ft_collision(t_main *m, t_vertex pos_vec, double move)
 				dist = fabs(ft_get_dist_cols(lst, cols, pos));
 				res = ft_intersection(m->player.pos, pos, lst->start, lst->end);
 				if (dist <= 0.4 && lst->type == -1)
+				{			printf("!! %d\n", lst->type);
 						cols.flag_x = 1;
+				}
 			}
 			if (cols.flag_y == 0)
 			{
@@ -115,6 +117,7 @@ int32_t ft_collision(t_main *m, t_vertex pos_vec, double move)
 		}
 		else if (lst->type != -1)
 		{
+		
 			if (cols.flag_x == 0)
 			{
 				pos.x = m->player.pos.x + pos_vec.x * move;
@@ -136,9 +139,9 @@ int32_t ft_collision(t_main *m, t_vertex pos_vec, double move)
 						cols.flag_y = 1;
 			}
 		}
-		
 		lst = lst->next;
 	}
+	printf("%d %d \n", cols.flag_x, cols.flag_y);
 	if (cols.flag_x != 1)
 		pos.x = m->player.pos.x + pos_vec.x * move;
 	else

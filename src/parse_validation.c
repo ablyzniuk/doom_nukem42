@@ -252,7 +252,7 @@ void		read_file(t_main *main)
 	t_list	*list;
 
 	list = NULL;
-	if (!(fd = open("resourse/map.txt", O_RDONLY)))
+	if (!(fd = open("resourse/map2.txt", O_RDONLY)))
 		print_error(BAD_FILE);
 	while (get_next_line(fd, &line))
 	{

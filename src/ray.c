@@ -63,14 +63,25 @@ void	ft_draw_map(t_main *m)
 
 	ray.w = 0;
 	ray.len_ray = 1000; //    добавить функию просчета длинны луча 
-	
+	ray.ancos = cos((m->player.angle.hor) * M_PI / ANG);
+	ray.ansin = sin((m->player.angle.hor) * M_PI / ANG);
+	ray.vx = VECX * ray.ancos - VECY * ray.ansin;
+	ray.vy = VECX * ray.ansin + VECY * ray.ancos;
+	m->spr_data.pos.x = m->player.pos.x + ray.len_ray * ray.vx;
+	m->spr_data.pos.y = m->player.pos.y + ray.len_ray * ray.vy;
+
 	while (ray.w < WIDTH)
 	{
+	
 		ft_get_data_ray(m, &ray);
+		m->spr_data.w[ray.w] = ray.w;
+		m->spr_data.angle[ray.w] = ray.angle;
 		ray.addlen = 0.0;
 		ft_ray(m, ray);
+		m->spr_data.dist[ray.w] = ray.camdist;
 		ray.w++;
 	}
+	ft_sprite(m);
 	//ft_draw_cam(m, len);
 //	SDL_Log("-------------- %d", m->player.sector);
 }

@@ -15,28 +15,28 @@
 void	ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 {
 	int32_t	save;
-	int32_t x, y;
+	int32_t  y;
 	t_rgb	col;
 	t_vertex k;
-	double	dx, dy, dist, diff;
+	double	x, dx, dy, dist, diff;
 	static	int32_t w = -1;
 	
 	save = wall.floor_h.start;
-
-	x = wall.floor_h.floor_h;
+	x = ray.camdist - ray.addlen;
 	//x = 0;
 	col.r = 91;
-		col.g = 26;
-		col.b = 26;
-	y = 0;
+	col.g = 26;
+	col.b = 26;
+	y = wall.floor_h.floor_h;
+	diff = (ray.camdist  - ray.addlen) / wall.floor_h.floor_h;
 	while (wall.floor_h.start < wall.floor_h.end && wall.floor_h.start < buf->buffer_draw_bot)
 	{
-		col = ft_get_pixel_floor(m, ray, wall, x, y);
+		col = ft_get_pixel_floor(m, ray, wall, x * diff, y);
 		if (m->setting.fog == 1 && 0)
 			col = ft_set_fog_floor(col, ray, wall, x);
 		ft_put_pixel_rgb(m, ray.w, wall.floor_h.start, col);
 		wall.floor_h.start++;
-		y++;
+		y--;
 		x--;
 	}
 	w = ray.w;
@@ -81,14 +81,13 @@ void	ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf)
 	int32_t	save;
 	t_rgb	col;
 	int32_t	x;
+	int32_t y = 0;
 
 	x = 0;
 	save = wall.ceil_h.start;
 	while (wall.ceil_h.start < wall.ceil_h.end && wall.ceil_h.start <  buf->buffer_draw_bot)
 	{
-		col.r = 124;
-		col.g = 75;
-		col.b = 22;
+	//	col = ft_get_pixel_ceil(m, ray, wall, x, y);
 		if (m->setting.fog == 1)
 			col = ft_set_fog_ceil(col, ray, wall, x);
 		ft_put_pixel_rgb(m, ray.w, wall.ceil_h.start, col);

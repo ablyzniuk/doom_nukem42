@@ -25,6 +25,7 @@
 #define HEIGHT 900
 #define	HALFWIDTH (double)WIDTH / 2.0
 #define	HALFHEIGTH HEIGHT / 2
+#define	VFOV .2f
 #define	FPS 60
 #define	TICKS_FRAME 333 / FPS
 #define	VECX (double)1
@@ -81,6 +82,30 @@ typedef	struct	s_height_w
 	int32_t		floor_h;
 	int32_t		ceil_h;
 }				t_height_w;
+
+typedef	struct	s_spr_tex
+{
+	SDL_Surface	*ch; // [num_spr]
+	int32_t		num_spr;
+}				t_spr_tex;
+
+typedef	struct	s_spr
+{
+	size_t		spr_num;
+	Uint8		is_enemy;
+	t_vertex	pos;
+	size_t		sect;
+	Uint8		hp;
+}				t_spr;
+
+typedef	struct	s_spr_data
+{
+	double		w[WIDTH];
+	double		dist[WIDTH];
+	double		angle[WIDTH];
+	t_vertex	pos;
+	
+}				t_spr_data;
 
 typedef	struct	s_buffer
 {
@@ -270,6 +295,7 @@ typedef	struct	s_sector
 	double		**vertex;
 	size_t		vertex_arr_len;
 	t_heigth	heigth;
+	t_spr		*spr;
 	t_cols_wall	*cols;
 	int32_t		*transit;		// массив точек сектора
 }				t_sector;
@@ -313,8 +339,10 @@ typedef	struct	s_main
 	t_setting	setting;
 	t_ray		ray;	// немного переменных
 	t_sky		sky;
+	t_spr_data	spr_data;
 	t_fps		fps;	// фпс
 	t_sdl		sdl;	// все сдл переменные
+	t_spr_tex	sprite;
 	t_debug		debug;
 	t_trpalyer	player;	// данные о игроке
 	t_event		eventcall; // обработчик движений и т.д.
@@ -361,9 +389,10 @@ void			ft_draw_floor(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 t_rgb			ft_get_pixel_wall(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
 t_rgb			ft_get_pixel_border(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
 t_rgb			ft_get_pixel_border_top(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
+t_rgb			ft_get_pixel_ceil(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
 t_rgb			ft_set_fog_ceil(t_rgb rgb, t_ray ray, t_heigth_wall wall, int32_t x);
 t_rgb			ft_set_fog_floor(t_rgb rgb, t_ray ray, t_heigth_wall wall, int32_t x);
-t_rgb			ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, int32_t x, int32_t y);
+t_rgb			ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, double x, int32_t y);
 void			ft_draw_wall(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_cell(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
 void			ft_draw_border(t_main *m, t_ray ray, t_heigth_wall wall, t_buffer *buf);
@@ -378,6 +407,7 @@ int				ft_cmp_vertex(t_vertex one, t_vertex two);
 void			ft_lst_add_back(t_cols_wall *start, t_cols_wall *lst);
 int32_t			**ft_init_texx(t_main *m);
 void			ft_init_sky(t_main *m);
+void			ft_sprite(t_main *m);
 void			ft_draw_sky(t_main *m);
 void			ft_cr_cols_init(t_main *m);
 
