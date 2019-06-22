@@ -103,6 +103,8 @@ typedef	struct	s_spr_data
 	double		w[WIDTH];
 	double		dist[WIDTH];
 	double		angle[WIDTH];
+	double		vecx;
+	double		vecy;
 	t_vertex	pos;
 	
 }				t_spr_data;

@@ -108,6 +108,8 @@ void	ft_ray(t_main *m, t_ray ray)
 			{
 				m->spr_data.pos.x = ray.intersec.x;
 				m->spr_data.pos.y = ray.intersec.y;
+				m->spr_data.vecx = ray.vx;
+				m->spr_data.vecy = ray.vy;
 			}
 			ray.camdist = (ray.intersec.z + ray.addlen) * ray.len_ray;
 			if (ray.angle != 0.0)

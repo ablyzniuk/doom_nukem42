@@ -75,10 +75,9 @@ void	ft_sprite(t_main *m)
 	pos.y = 1.0;
 	int w = 0;
 	y = HALFHEIGTH;
-	x = 200;
-	
+	x = 200;	
 	angle = ft_calc_angle(pos.x - m->player.pos.x, pos.y  - m->player.pos.y, m->spr_data.pos.x - m->player.pos.x, m->spr_data.pos.y  - m->player.pos.y);
-	//printf("%f \n", angle);
+	printf("%f %f\n", m->spr_data.vecx, m->spr_data.vecy);
 	if (angle < 33.0)
 	{
 		while (w < WIDTH)
