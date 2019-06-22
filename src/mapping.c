@@ -73,40 +73,39 @@ t_rgb		ft_get_pixel_floor(t_main *m, t_ray ray, t_heigth_wall wall, double x, in
 
 //	xx = (m->sector[ray.num_sect].heigth.floor - );
 
+	dx = fabs(ray.intersec.x - m->player.pos.x);
+	dy = fabs(ray.intersec.y - m->player.pos.y);
 
 
-
-	dx = (ray.intersec.x  - m->player.pos.x);
-	dy = (ray.intersec.y - m->player.pos.y);
 //	printf("%f %f %f", dy, dx, ray.camdist);
 	diff_y = dy / (ray.camdist - ray.addlen);
 	diff_x = dx / (ray.camdist - ray.addlen);
+
+
 	xx = fabs((x * diff_x));
 	yy = fabs((x * diff_y));
-	yy = ((dx) > (dy) ? ((ray.intersec.x - ray.wall_start.x) * 100) :
-							((ray.intersec.y - ray.wall_start.y) * 100));
+	// yy = ((dx) > (dy) ? ((ray.intersec.x - ray.wall_start.x) * 100) :
+	// 						((ray.intersec.y - ray.wall_start.y) * 100));
+       
+	dx = (xx - ray.intersec.x);
+	dy = (yy - ray.intersec.y);
 
-	dx = (ray.intersec.x - xx);
-	dy = (ray.intersec.y - yy);
 
-	diff_y = dy / wall.floor_h.floor_h;
-	diff_x = dx / wall.floor_h.floor_h;
+	dd = fabs(sqrt(pow(dx, 2) + pow(dy, 2)));
 
-	xx = fabs((y * diff_x));
-	yy = fabs((y * diff_y));
 
-	// wq = (50.0 * DIST) / fabs(dd);
+	xx = fabs(dd * ray.vx);
+	yy = fabs(dd * ray.vy);
+
 	//printf("%f %f \n", xx, dd);
 	// k = (float)(wall.floor - wall.ceil) * (float)(1.0 - wall.floor);
 	// wq = ray.camdist / k;
 	// rx = 1000.0;
-	// xx = (int)(wq * rx + (1.0f - wq) * m->player.pos.x);
-	// yy = (int)(wq * rx + (1.0f - wq) * m->player.pos.y);
 //	printf("%f %f \n", xx, yy);
 
 
-	GET_COLOR(color, m->texture[3]->pixels, (int)(xx * 100) % m->texture[3]->w,
-	m->texture[3]->pitch, (int)(yy * 100) % m->texture[3]->h, m->texture[3]->format->BytesPerPixel);
+	GET_COLOR(color, m->texture[3]->pixels, (int)(xx * 100.0) % m->texture[3]->w,
+	m->texture[3]->pitch, (int)(yy * 100.0) % m->texture[3]->h, m->texture[3]->format->BytesPerPixel);
 	SDL_GetRGB(*color, m->texture[3]->format, &rgb.r, &rgb.g, &rgb.b);
 	return (rgb);
 }

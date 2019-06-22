@@ -16,9 +16,10 @@ static	double	ft_calc_angle(double x1, double y1, double x2, double y2)
 {
 	double	result;
 
-	result = (x1 * y1 + x2 * y2) / ((fabs(x1) + fabs(x2)) *
-	(fabs(y1) + fabs(y2)));
-//	printf("%f %f %f \n", result, x2, y2);
+	result = (x1 * y1 + x2 * y2) / (sqrt(pow(x1, 2) + pow(x2, 2)) *
+	sqrt(pow(y1, 2) + pow(y2, 2)));
+	
+	//printf("%f %f %f \n", result, x2, y2);
 	return (acos(result) * ANG / M_PI);
 }
 
@@ -70,13 +71,28 @@ void	ft_sprite(t_main *m)
 	double	angle;
 	t_vertex	pos;
 
-	pos.x =	5.0;
-	pos.y = 10.0;
+	pos.x =	1.0;
+	pos.y = 1.0;
+	int w = 0;
 	y = HALFHEIGTH;
 	x = 200;
 	
-	angle = ft_calc_angle(pos.x, pos.y, m->spr_data.pos.x, m->spr_data.pos.y);
-	printf("%f \n", angle);
-	ft_draw_sprite(m, x, y);
+	angle = ft_calc_angle(pos.x - m->player.pos.x, pos.y  - m->player.pos.y, m->spr_data.pos.x - m->player.pos.x, m->spr_data.pos.y  - m->player.pos.y);
+	//printf("%f \n", angle);
+	if (angle < 33.0)
+	{
+		while (w < WIDTH)
+		{
+		//	printf("%f \n", (m->spr_data.angle[w]));
+			if (floor(angle) == floor(m->spr_data.angle[w]))
+			{
+				ft_draw_sprite(m, w, y);
+				break ;
+			}
+			w++;
+		}
+	}
+	
+	
 }
 
