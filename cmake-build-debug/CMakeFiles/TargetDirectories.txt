@@ -1,0 +1,4 @@
+/Users/ablizniu/Documents/last_ver/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/ablizniu/Documents/last_ver/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/ablizniu/Documents/last_ver/cmake-build-debug/CMakeFiles/doom.dir
+/Users/ablizniu/Documents/last_ver/cmake-build-debug/CMakeFiles/ft.dir
