@@ -55,8 +55,8 @@ void				parse_vertex(t_main *main, t_list *list)
 		main->vertex = allocate_vertex(vertex_num);
 		while (elem && iterator < vertex_num)
 		{
-			if (validate_vertex((char *) elem->content))
-				fill_vertex(main, (char *) elem->content, iterator);
+			if (validate_vertex((char *)elem->content))
+				fill_vertex(main, (char *)elem->content, iterator);
 			else
 				print_error(BAD_VERTEX_VALIDATION);
 			elem = elem->next;

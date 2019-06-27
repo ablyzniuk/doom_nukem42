@@ -12,7 +12,7 @@
 
 #include "doom.h"
 
-void			ft_draw_floor(t_main *m, t_ray ray,
+void				ft_draw_floor(t_main *m, t_ray ray,
 					t_heigth_wall wall, t_buffer *buf)
 {
 	static int32_t	w = -1;
@@ -38,7 +38,7 @@ void			ft_draw_floor(t_main *m, t_ray ray,
 }
 
 static int32_t		ft_draw_wall_iterator(t_iter *iter,
-				t_buffer *buf, t_heigth_wall wall)
+					t_buffer *buf, t_heigth_wall wall)
 {
 	iter->x = 0;
 	iter->start = wall.start;
@@ -50,13 +50,13 @@ static int32_t		ft_draw_wall_iterator(t_iter *iter,
 	return (wall.start);
 }
 
-void			ft_draw_wall(t_main *m, t_ray ray,
+void				ft_draw_wall(t_main *m, t_ray ray,
 						t_heigth_wall wall, t_buffer *buf)
 {
-	t_iter		iter;
-	int32_t		save;
-	t_rgb		col;
-	int32_t		data_arr[2];
+	t_iter			iter;
+	int32_t			save;
+	t_rgb			col;
+	int32_t			data_arr[2];
 
 	col.r = 255;
 	col.g = 255;
@@ -78,12 +78,12 @@ void			ft_draw_wall(t_main *m, t_ray ray,
 							save : buf->buffer_draw_bot;
 }
 
-void			ft_draw_cell(t_main *m, t_ray ray,
-						t_heigth_wall wall, t_buffer *buf)
+void				ft_draw_cell(t_main *m, t_ray ray,
+					t_heigth_wall wall, t_buffer *buf)
 {
-	int32_t		save;
-	t_rgb		col;
-	int32_t		x;
+	int32_t			save;
+	t_rgb			col;
+	int32_t			x;
 
 	x = 0;
 	save = wall.ceil_h.start;

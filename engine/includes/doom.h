@@ -22,6 +22,7 @@
 # include "libft.h"
 # include <time.h>
 
+# define MAX_TEX_NUM	7
 # define FIELD_OF_VIEW	66
 # define WIDTH			1080
 # define HEIGHT			700
@@ -370,7 +371,7 @@ typedef struct		s_anim
 {
 	SDL_Surface		*bullet;
 	SDL_Surface		*(r)[40];
-	SDL_Surface		*(s)[3];
+	SDL_Surface		*(s)[4];
 	int				curr;
 }					t_anim;
 
@@ -440,7 +441,7 @@ typedef	struct		s_main
 	t_enemy			*enemies;
 	t_decor			*decor;
 	t_event			eventcall;
-	SDL_Surface		*texture[7];
+	SDL_Surface		*texture[MAX_TEX_NUM];
 }					t_main;
 
 void final_scene(t_main *main);

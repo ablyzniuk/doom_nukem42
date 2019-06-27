@@ -46,7 +46,8 @@ void			ft_load_shoot(t_main *m, int i)
 	m->anim.s[0] = SDL_LoadBMP("./resources/en/hud/gun/s1.bmp");
 	m->anim.s[1] = SDL_LoadBMP("./resources/en/hud/gun/s2.bmp");
 	m->anim.s[2] = SDL_LoadBMP("./resources/en/hud/gun/s3.bmp");
-	while (++i < 3)
+	m->anim.s[3] = SDL_LoadBMP("./resources/en/hud/stats/bar.bmp");
+	while (++i < 4)
 		if (m->anim.s[i] == NULL)
 			exit(-11);
 }

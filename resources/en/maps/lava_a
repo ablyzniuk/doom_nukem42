@@ -1,0 +1,30 @@
+vertex	84	16
+vertex	108	16 44
+vertex	84	52
+vertex	76	68
+vertex	120	68
+vertex	108	44
+vertex	120	80
+vertex	76	80 92
+vertex	120	92 104
+vertex	76	104
+vertex	128	132
+vertex	112	140
+vertex	148	132
+vertex	136	152
+vertex	176	116
+vertex	192	136 32
+vertex	184	32
+
+sector	0 20	0 1 2 3	-1 -1 -1 1	0 -2 3
+sector	0 20	3 4 5 2	0 -1 2 -1	0 -2 3
+sector	-4 20	4 5 7 8	-1 1 -1 3	0 -2 6
+sector	0 20	7 8 9 10	-1 2 -1 4	0 -2 3
+sector	-4 20	9 10 11 12	-1 3 -1 5	0 1 6
+sector	0 20	12 11 13 14	-1 4 -1 6	0 -2 3
+sector	0 20	14 13 15 16	-1 5 -1 7	0 -2 3
+sector	0 20	16 15 17 18	-1 6 -1 8	0 -2 3
+sector	0 20	17 18 19 20	-1 7 -1 -1	0 -2 3
+
+player	23 96 0	0
+

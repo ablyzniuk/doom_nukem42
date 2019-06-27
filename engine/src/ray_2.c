@@ -46,6 +46,8 @@ void			ft_get_data_ray(t_main *m, t_ray *ray)
 void			ft_get_array_wall(t_main *m, t_ray *ray)
 {
 	size_t		k;
+	t_vertex	start;
+	t_vertex	end;
 
 	if (ray->wall_sect == 0)
 		k = m->sector[ray->num_sect].vertex_arr_len - 1;
@@ -55,12 +57,11 @@ void			ft_get_array_wall(t_main *m, t_ray *ray)
 	ray->wall_start.y = m->sector[ray->num_sect].vertex[k][0];
 	ray->wall_end.x = m->sector[ray->num_sect].vertex[ray->wall_sect][1];
 	ray->wall_end.y = m->sector[ray->num_sect].vertex[ray->wall_sect][0];
-	if (ray->angle == 0 && ray->num_sect != 0)
-	{
-		drawline(m, ray->ray_start, ray->ray_end);
-		ft_put_pixel(m, m->player.pos.x, m->player.pos.y, 0xff00ff);
-	}
-	drawline(m, ray->wall_start, ray->wall_end);
+	start.x = ray->wall_start.x + 100;
+	start.y = ray->wall_start.y + 400;
+	end.x = ray->wall_end.x + 100;
+	end.y = ray->wall_end.y + 400;
+	drawline(m, start, end);
 }
 
 void			ft_draw_map(t_main *m)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_5.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vrudyka <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 15:18:38 by vrudyka           #+#    #+#             */
-/*   Updated: 2019/06/23 15:18:40 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/27 16:32:34 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,12 @@ t_textures		parse_textures(char *data)
 			textures.wall = ft_atoi(tmp[INDEX(1)]);
 			textures.celling = ft_atoi(tmp[INDEX(2)]);
 			textures.floor = ft_atoi(tmp[INDEX(3)]);
+			if (textures.wall < 0 || textures.wall >= MAX_TEX_NUM - 1)
+				print_error(BAD_VALIDATION);
+			if (textures.celling < 0 || textures.celling >= MAX_TEX_NUM - 1)
+				print_error(BAD_VALIDATION);
+			if (textures.floor < 0 || textures.floor >= MAX_TEX_NUM - 1)
+				print_error(BAD_VALIDATION);
 		}
 		else
 			print_error(BAD_VALIDATION);

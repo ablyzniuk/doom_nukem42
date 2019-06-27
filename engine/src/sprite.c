@@ -6,7 +6,7 @@
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/22 03:35:07 by ablizniu          #+#    #+#             */
-/*   Updated: 2019/06/23 15:19:18 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/27 17:06:43 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static double	ft_calc_angle(double x1, double y1, double x2, double y2)
 	double		result;
 
 	result = (x1 * y1 + x2 * y2) / (sqrt(pow(x1, 2) + pow(x2, 2)) *
-	sqrt(pow(y1, 2) + pow(y2, 2)));
+									sqrt(pow(y1, 2) + pow(y2, 2)));
 	return (acos(result) * ANG / M_PI);
 }
 
@@ -39,9 +39,9 @@ void			ft_draw_sprite(t_main *m, int32_t x, int32_t y, double cam)
 		while (iter.x * iter.dx < m->sprite.ch->h)
 		{
 			GET_COLOR(col, m->sprite.ch->pixels, (int32_t)(iter.x * iter.dx),
-					m->sprite.ch->pitch, (int32_t)(iter.y * iter.dy),
-					m->sprite.ch->format->BytesPerPixel);
-			if (*col != 0x008080)
+					  m->sprite.ch->pitch, (int32_t)(iter.y * iter.dy),
+					  m->sprite.ch->format->BytesPerPixel);
+			if (*col > 0x000000)
 				ft_put_pixel(m, x, y, *col);
 			iter.x++;
 			y++;
@@ -60,11 +60,11 @@ void			ft_sprite(t_main *m)
 	iter.y = HALFHEIGTH;
 	iter.x = 200;
 	angle = ft_calc_angle(pos.x - m->player.pos.x, pos.y - m->player.pos.y,
-			m->spr_data.pos.x - m->player.pos.x,
-			m->spr_data.pos.y - m->player.pos.y);
+						  m->spr_data.pos.x - m->player.pos.x,
+						  m->spr_data.pos.y - m->player.pos.y);
 	m->spr_data.anglee = angle;
-	pos.x = 1.0;
-	pos.y = 1.0;
+	pos.x = 1;
+	pos.y = 1;
 	if (angle < 33.0 && m->eventcall.eee == 0)
 	{
 		while (iter.w < WIDTH)

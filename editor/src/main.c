@@ -33,25 +33,32 @@ void				init_edit(t_edit **edit)
 	clear_binder(edit);
 }
 
-int					main(void)
+int					main(int ac, char **av)
 {
 	t_edit			*edit;
 	int				mode;
 	int				fd;
+	char			*path;
 
-	if (!(edit = (t_edit *)ft_memalloc(sizeof(t_edit))))
-		terminate("Error", edit->sdl);
-	init_edit(&edit);
-	load_img_pass(edit);
-	load_img_active(edit);
-	load_img_obj(edit);
-	set_poss(&edit);
-	load_text(edit);
-	update(&edit);
-	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-	fd = open("./resources/en/maps/map.txt", O_WRONLY | O_CREAT | O_TRUNC, mode);
-	write_map(edit, fd);
-	terminate("doomMapEditor closed successfully", edit->sdl);
+	if (ac == 2)
+	{
+		if (!(edit = (t_edit *)ft_memalloc(sizeof(t_edit))))
+			terminate("Error", edit->sdl);
+		init_edit(&edit);
+		load_img_pass(edit);
+		load_img_active(edit);
+		load_img_obj(edit);
+		set_poss(&edit);
+		load_text(edit);
+		update(&edit);
+		path = ft_strjoin("./resources/en/maps/", av[1]);
+		mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+		fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, mode);
+		write_map(edit, fd);
+		terminate("doomMapEditor closed successfully", edit->sdl);
+	}
+	else
+		ft_putendl("usage:\nnew map: ./map_editor\npick map: ./doom [*.txt]\n");
 	return (0);
 }
 

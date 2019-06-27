@@ -20,7 +20,7 @@ void				bullet_manage(t_main *m)
 	i = 0;
 	to_display = m->player.ammo;
 	while (++i <= to_display)
-		draw_bmp(m, m->anim.bullet, 84, 44 * i);
+		draw_bmp(m, m->anim.bullet, PADD, 44 * i);
 }
 
 void				h_draw_gun(t_main *m, int *tick, int *time, int *i)
