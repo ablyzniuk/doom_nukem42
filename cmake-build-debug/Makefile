@@ -433,6 +433,33 @@ engine/src/key_2.c.s:
 	$(MAKE) -f CMakeFiles/doom.dir/build.make CMakeFiles/doom.dir/engine/src/key_2.c.s
 .PHONY : engine/src/key_2.c.s
 
+engine/src/lava_and_health_bar.o: engine/src/lava_and_health_bar.c.o
+
+.PHONY : engine/src/lava_and_health_bar.o
+
+# target to build an object file
+engine/src/lava_and_health_bar.c.o:
+	$(MAKE) -f CMakeFiles/doom.dir/build.make CMakeFiles/doom.dir/engine/src/lava_and_health_bar.c.o
+.PHONY : engine/src/lava_and_health_bar.c.o
+
+engine/src/lava_and_health_bar.i: engine/src/lava_and_health_bar.c.i
+
+.PHONY : engine/src/lava_and_health_bar.i
+
+# target to preprocess a source file
+engine/src/lava_and_health_bar.c.i:
+	$(MAKE) -f CMakeFiles/doom.dir/build.make CMakeFiles/doom.dir/engine/src/lava_and_health_bar.c.i
+.PHONY : engine/src/lava_and_health_bar.c.i
+
+engine/src/lava_and_health_bar.s: engine/src/lava_and_health_bar.c.s
+
+.PHONY : engine/src/lava_and_health_bar.s
+
+# target to generate assembly for a file
+engine/src/lava_and_health_bar.c.s:
+	$(MAKE) -f CMakeFiles/doom.dir/build.make CMakeFiles/doom.dir/engine/src/lava_and_health_bar.c.s
+.PHONY : engine/src/lava_and_health_bar.c.s
+
 engine/src/ligth.o: engine/src/ligth.c.o
 
 .PHONY : engine/src/ligth.o
@@ -3041,6 +3068,9 @@ help:
 	@echo "... engine/src/key_2.o"
 	@echo "... engine/src/key_2.i"
 	@echo "... engine/src/key_2.s"
+	@echo "... engine/src/lava_and_health_bar.o"
+	@echo "... engine/src/lava_and_health_bar.i"
+	@echo "... engine/src/lava_and_health_bar.s"
 	@echo "... engine/src/ligth.o"
 	@echo "... engine/src/ligth.i"
 	@echo "... engine/src/ligth.s"

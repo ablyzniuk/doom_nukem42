@@ -6,7 +6,7 @@
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:38:35 by yalytvyn          #+#    #+#             */
-/*   Updated: 2019/06/23 15:17:58 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/26 18:33:09 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,16 @@ void			ft_init(t_main *m, char *way)
 	ft_cr_cols_init(m);
 	ft_init_event_var(m);
 	ft_init_setting(m);
+	m->time = 0;
+	m->music.switcher = false;
+	m->eventcall.look_jump = 1;
 	m->player.angle.hor = 0.0;
 	m->player.angle.ver = 0.0;
 	m->player.jump_h = 0;
-	m->eventcall.look_jump = 1;
 	m->player.vec.x = 1;
 	m->player.vec.y = 0;
 	m->player.vec.z = 0;
+	m->player.hp = 100;
 	m->player.movespeed = 0;
 	m->player.rotspeed = 0;
 	m->player.p_he = 7;

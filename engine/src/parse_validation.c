@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vrudyka <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 15:18:42 by vrudyka           #+#    #+#             */
-/*   Updated: 2019/06/23 15:18:45 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/26 16:17:52 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,25 @@ void				parse_vertex(t_main *main, t_list *list)
 {
 	size_t			vertex_num;
 	size_t			iterator;
-	size_t			size_arr;
 	t_list			*elem;
 
 	iterator = 0;
-	size_arr = 0;
 	elem = find_elem(list, "vertex");
-	vertex_num = content_len(elem, "vertex");
-	main->vertex = allocate_vertex(vertex_num);
-	while (elem && iterator < vertex_num)
+	if (elem)
 	{
-		if (validate_vertex((char *)elem->content))
-			fill_vertex(main, (char *)elem->content, iterator);
-		else
-			print_error(BAD_VERTEX_VALIDATION);
-		elem = elem->next;
-		iterator++;
+		vertex_num = content_len(elem, "vertex");
+		main->vertex = allocate_vertex(vertex_num);
+		while (elem && iterator < vertex_num)
+		{
+			if (validate_vertex((char *)elem->content))
+				fill_vertex(main, (char *)elem->content, iterator);
+			else
+				print_error(BAD_VERTEX_VALIDATION);
+			elem = elem->next;
+			iterator++;
+		}
+		main->sum_vert = vertex_num;
 	}
-	main->sum_vert = vertex_num;
 }
 
 static void			free_tmp_list(t_list **head)
@@ -86,9 +87,8 @@ void				read_file(t_main *main, char *str)
 	t_list			*list;
 	char			*path;
 
-	fd = 0;
 	list = NULL;
-	path = ft_strjoin("../resources/en/maps/", str);
+	path = ft_strjoin("resources/en/maps/", str);
 	if (0 >= (fd = open(path, O_RDONLY)))
 		print_error(BAD_FILE);
 	while (get_next_line(fd, &line) > 0)

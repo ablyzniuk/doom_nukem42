@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_4.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vrudyka <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 15:18:36 by vrudyka           #+#    #+#             */
-/*   Updated: 2019/06/23 15:18:37 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/26 16:19:19 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,18 @@ void			parse_sector(t_main *main, t_list *list)
 
 	i = 0;
 	elem = find_elem(list, "sector");
-	len = content_len(elem, "sector");
-	main->sector = allocate_sector(len);
-	while (elem && i < len)
+	if (elem)
 	{
-		main->sector[i] = processing(main, i, (char *)elem->content);
-		elem = elem->next;
-		i++;
+		len = content_len(elem, "sector");
+		main->sector = allocate_sector(len);
+		while (elem && i < len)
+		{
+			main->sector[i] = processing(main, i, (char *)elem->content);
+			elem = elem->next;
+			i++;
+		}
+		main->sum_sect = len;
 	}
-	main->sum_sect = len;
 }
 
 t_vertex		define_player_pos(char *data)
@@ -107,5 +110,6 @@ void			parse_player(t_main *main, t_list *list)
 	t_list		*elem;
 
 	elem = find_elem(list, "player");
-	main->player = parse_player_parameters((char *)elem->content);
+	if (elem)
+		main->player = parse_player_parameters((char *)elem->content);
 }

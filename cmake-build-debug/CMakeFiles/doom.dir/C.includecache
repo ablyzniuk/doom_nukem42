@@ -21,6 +21,8 @@ unistd.h
 -
 libft.h
 ../engine/includes/libft.h
+time.h
+-
 
 ../engine/includes/errors.h
 
@@ -699,6 +701,10 @@ doom.h
 /Users/ablizniu/Documents/last_ver/engine/src/doom.h
 
 /Users/ablizniu/Documents/last_ver/engine/src/key_2.c
+doom.h
+/Users/ablizniu/Documents/last_ver/engine/src/doom.h
+
+/Users/ablizniu/Documents/last_ver/engine/src/lava_and_health_bar.c
 doom.h
 /Users/ablizniu/Documents/last_ver/engine/src/doom.h
 

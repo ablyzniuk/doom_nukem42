@@ -6,5 +6,5 @@ C_FLAGS = -g   -std=gnu11
 
 C_DEFINES = 
 
-C_INCLUDES = -I/Users/ablizniu/Documents/last_ver/libft/includes -I/Users/ablizniu/Documents/last_ver/engine/includes -I/Users/ablizniu/.brew/Cellar/sdl2_image/2.0.4/include/SDL2 -I/Users/ablizniu/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2 -I/Users/ablizniu/.brew/Cellar/sdl2/2.0.9_1/include/SDL2 -I/Users/ablizniu/.brew/Cellar/sdl2_mixer/2.0.4/include/SDL2 
+C_INCLUDES = -I/Users/ablizniu/Documents/last_ver/libft/includes -I/Users/ablizniu/Documents/last_ver/engine/includes -I/Users/ablizniu/Documents/last_ver/editor/includes -I/Users/ablizniu/.brew/Cellar/sdl2_image/2.0.4/include/SDL2 -I/Users/ablizniu/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2 -I/Users/ablizniu/.brew/Cellar/sdl2/2.0.9_1/include/SDL2 -I/Users/ablizniu/.brew/Cellar/sdl2_mixer/2.0.4/include/SDL2 
 

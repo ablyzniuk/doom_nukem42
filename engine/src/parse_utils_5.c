@@ -99,8 +99,8 @@ t_textures		parse_textures(char *data)
 		if (two_dim_len(tmp) == 3 && !integer_overload_error(tmp))
 		{
 			textures.wall = ft_atoi(tmp[INDEX(1)]);
-			textures.floor = ft_atoi(tmp[INDEX(2)]);
-			textures.celling = ft_atoi(tmp[INDEX(3)]);
+			textures.celling = ft_atoi(tmp[INDEX(2)]);
+			textures.floor = ft_atoi(tmp[INDEX(3)]);
 		}
 		else
 			print_error(BAD_VALIDATION);

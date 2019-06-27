@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yalytvyn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 15:36:20 by yalytvyn          #+#    #+#             */
-/*   Updated: 2019/06/23 15:17:54 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/26 17:54:44 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void					ft_get_border_bot(t_main *m, t_ray ray,
 
 void					ft_get_floor(t_main *m, t_ray ray, t_heigth_wall *wall)
 {
-	ray.camdist = ray.camdist;
 	m->player.sector = m->player.sector;
 	if (wall->border_bot.flag == 0)
 		wall->floor_h.start = wall->end;
@@ -83,7 +82,6 @@ void					ft_get_ceil(t_main *m, t_ray ray,
 						t_heigth_wall *wall, t_buffer *buf)
 {
 	m->player.sector = m->player.sector;
-	ray.camdist = ray.camdist;
 	if (wall->border_top.flag == 0)
 		wall->ceil_h.end = wall->start;
 	else
@@ -114,7 +112,7 @@ inline void				ft_drawscreen(t_main *m, t_ray ray)
 	wall.y = (fabs(wall.dx) > fabs(wall.dy) ?
 			(int)((ray.intersec.x - ray.wall_start.x) * 1000) :
 			(int)((ray.intersec.y - ray.wall_start.y) * 1000)) %
-			m->texture[0]->w;
+			m->texture[m->sector[ray.num_sect].textures.wall]->w;
 	wall.old_border_b_h = border_b_h;
 	wall.old_border_t_h = border_t_h;
 	buffer.buffer_draw_bot = sv_draw.buffer_bot;

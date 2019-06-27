@@ -6,7 +6,7 @@
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 16:25:29 by ablizniu          #+#    #+#             */
-/*   Updated: 2019/06/25 16:25:30 by ablizniu         ###   ########.fr       */
+/*   Updated: 2019/06/26 17:50:53 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ inline t_draw_save		ft_drawscreen_1(t_main *m, t_ray ray,
 	ft_get_border_top(m, ray, wall);
 	ft_get_floor(m, ray, wall);
 	ft_get_ceil(m, ray, wall, buffer);
-	if (wall->floor_h.flag == 1)
+	if (wall->floor_h.flag == 1 && m->sector[ray.num_sect].textures.floor != 5)
 		ft_draw_floor(m, ray, *wall, buffer);
 	if (m->sector[ray.num_sect].transit[ray.wall_sect] == -1)
 		ft_draw_wall(m, ray, *wall, buffer);
 	if (wall->border_bot.flag == 1 || wall->border_top.flag == 1)
 		ft_draw_border(m, ray, *wall, buffer);
-	if (wall->ceil_h.flag == 1)
+	if (wall->ceil_h.flag == 1 && m->sector[ray.num_sect].textures.celling >= 0)
 		ft_draw_cell(m, ray, *wall, buffer);
 	sv_draw.buffer_bot = wall->end < buffer->buffer_draw_bot ?
 	wall->end : buffer->buffer_draw_bot;

@@ -6,7 +6,7 @@
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:16:46 by yalytvyn          #+#    #+#             */
-/*   Updated: 2019/06/23 13:52:14 by ablizniu         ###   ########.fr       */
+/*   Updated: 2019/06/26 22:25:23 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <math.h>
 # include <unistd.h>
 # include "libft.h"
+# include <time.h>
 
 # define FIELD_OF_VIEW	66
 # define WIDTH			1080
@@ -358,7 +359,7 @@ typedef struct		s_setting
 
 typedef struct		s_pict
 {
-	SDL_Surface		*end;
+	SDL_Surface		*end[2];
 	SDL_Surface		*start;
 	SDL_Surface		*(butt)[4];
 	int				sstart[4][2];
@@ -377,6 +378,8 @@ typedef struct		s_music
 {
 	Mix_Music		*audio;
 	Mix_Chunk		*gunshot;
+	int8_t			chanel;
+	t_bool			switcher;
 }					t_music;
 
 typedef struct		s_iter
@@ -411,6 +414,7 @@ typedef struct		s_line
 
 typedef	struct		s_main
 {
+	clock_t			time;
 	t_rgb			col;
 	int8_t			difficulty;
 	t_anim			anim;
@@ -436,9 +440,13 @@ typedef	struct		s_main
 	t_enemy			*enemies;
 	t_decor			*decor;
 	t_event			eventcall;
-	SDL_Surface		*texture[6];
+	SDL_Surface		*texture[7];
 	int32_t			**tex;
 }					t_main;
+
+void final_scene(t_main *main);
+
+void				decreaze_hp(t_main *main);
 
 void				fill_vertex(t_main *main, char *content, size_t iterator);
 
@@ -569,12 +577,10 @@ t_vertex			ft_intersection(t_vertex st1, t_vertex end1,
 void				ft_drawscreen(t_main *m, t_ray ray);
 void				ft_draw_floor(t_main *m, t_ray ray,
 							t_heigth_wall wall, t_buffer *buf);
-t_rgb				ft_get_pixel_wall(t_main *m,
-							t_heigth_wall wall, int32_t x, int32_t y);
-t_rgb				ft_get_pixel_border(t_main *m, t_ray ray,
-							t_heigth_wall wall, int32_t *iter_arr);
-t_rgb				ft_get_pixel_border_top(t_main *m, t_ray ray,
-							t_heigth_wall wall, int32_t *iter_arr);
+t_rgb
+ft_get_pixel_wall(t_main *m, t_heigth_wall wall, t_ray ray, int32_t *data_arr);
+t_rgb ft_get_pixel_border(t_main *m, t_heigth_wall wall, int32_t *iter_arr, t_ray ray);
+t_rgb ft_get_pixel_border_top(t_main *m, t_heigth_wall wall, int32_t *iter_arr, t_ray ray);
 t_rgb				ft_set_fog_ceil(t_rgb rgb, t_ray ray,
 							t_heigth_wall wall, int32_t x);
 t_rgb				ft_set_fog_floor(t_rgb rgb, t_ray ray,

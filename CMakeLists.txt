@@ -9,6 +9,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
 include_directories(libft/includes)
 include_directories(engine/includes)
+include_directories(editor/includes)
 
 include_directories(/Users/${current_user}/.brew/Cellar/sdl2_image/2.0.4/include/SDL2)
 include_directories(/Users/${current_user}/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2)
@@ -58,7 +59,26 @@ add_executable(doom
         engine/src/sprite.c
         engine/src/start_menu.c
         engine/src/utils.c
-        )
+        engine/src/lava_and_health_bar.c)
+#        editor/src/bind_portals.c
+#        editor/src/bind_portals_utils.c
+#        editor/src/data_record_sect.c
+#        editor/src/data_record_vertex.c
+#        editor/src/declare_portal.c
+#        editor/src/declare_portal_utils.c
+#        editor/src/display_icons.c
+#        editor/src/display_sects.c
+#        editor/src/display_utils.c
+#        editor/src/edit_vertex.c
+#        editor/src/img_load.c
+#        editor/src/img_set_poss.c
+#        editor/src/is_inside_sect.c
+#        editor/src/main.c
+#        editor/src/pick_texture.c
+#        editor/src/set_points.c
+#        editor/src/update.c
+#        editor/src/write_map.c
+#        editor/src/write_map_utils.c)
 
 
 target_link_libraries(doom ${CMAKE_SOURCE_DIR} -L/Users/${current_user}/.brew/Cellar/sdl2/2.0.9_1/lib -lSDL2 -L/Users/${current_user}/.brew/Cellar/sdl2_image/2.0.4/lib -lSDL2_image -L/Users/${current_user}/.brew/Cellar/sdl2_ttf/2.0.15/lib -lSDL2_ttf -L/Users/${current_user}/.brew/Cellar/sdl2_mixer/2.0.4/lib -lSDL2_mixer ft)

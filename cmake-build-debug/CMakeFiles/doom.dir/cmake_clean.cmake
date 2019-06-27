@@ -37,6 +37,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/doom.dir/engine/src/sprite.c.o"
   "CMakeFiles/doom.dir/engine/src/start_menu.c.o"
   "CMakeFiles/doom.dir/engine/src/utils.c.o"
+  "CMakeFiles/doom.dir/engine/src/lava_and_health_bar.c.o"
   "../doom.pdb"
   "../doom"
 )

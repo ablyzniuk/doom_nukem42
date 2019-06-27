@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yalytvyn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:34:53 by yalytvyn          #+#    #+#             */
-/*   Updated: 2019/06/23 15:18:02 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/26 19:56:39 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ static void		ft_key_move_2(t_main *m)
 		m->sector[m->player.sector].heigth.cell--;
 		m->sector[m->player.sector].heigth.floor--;
 	}
+	if (m->sdl.event.type == SDL_KEYDOWN &&
+		m->sdl.event.key.keysym.sym == SDLK_m)
+		(Mix_PausedMusic()) ? (Mix_ResumeMusic()) : (Mix_PauseMusic());
 }
 
 static void		ft_key_move_1(t_main *m)

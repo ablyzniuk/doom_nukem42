@@ -15,6 +15,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/Users/ablizniu/Documents/last_ver/engine/src/init.c" "/Users/ablizniu/Documents/last_ver/cmake-build-debug/CMakeFiles/doom.dir/engine/src/init.c.o"
   "/Users/ablizniu/Documents/last_ver/engine/src/key.c" "/Users/ablizniu/Documents/last_ver/cmake-build-debug/CMakeFiles/doom.dir/engine/src/key.c.o"
   "/Users/ablizniu/Documents/last_ver/engine/src/key_2.c" "/Users/ablizniu/Documents/last_ver/cmake-build-debug/CMakeFiles/doom.dir/engine/src/key_2.c.o"
+  "/Users/ablizniu/Documents/last_ver/engine/src/lava_and_health_bar.c" "/Users/ablizniu/Documents/last_ver/cmake-build-debug/CMakeFiles/doom.dir/engine/src/lava_and_health_bar.c.o"
   "/Users/ablizniu/Documents/last_ver/engine/src/ligth.c" "/Users/ablizniu/Documents/last_ver/cmake-build-debug/CMakeFiles/doom.dir/engine/src/ligth.c.o"
   "/Users/ablizniu/Documents/last_ver/engine/src/lst_utils.c" "/Users/ablizniu/Documents/last_ver/cmake-build-debug/CMakeFiles/doom.dir/engine/src/lst_utils.c.o"
   "/Users/ablizniu/Documents/last_ver/engine/src/main.c" "/Users/ablizniu/Documents/last_ver/cmake-build-debug/CMakeFiles/doom.dir/engine/src/main.c.o"
@@ -49,6 +50,7 @@ set(CMAKE_C_COMPILER_ID "AppleClang")
 set(CMAKE_C_TARGET_INCLUDE_PATH
   "../libft/includes"
   "../engine/includes"
+  "../editor/includes"
   "/Users/ablizniu/.brew/Cellar/sdl2_image/2.0.4/include/SDL2"
   "/Users/ablizniu/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2"
   "/Users/ablizniu/.brew/Cellar/sdl2/2.0.9_1/include/SDL2"

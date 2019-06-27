@@ -6,7 +6,7 @@
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:19:31 by ablizniu          #+#    #+#             */
-/*   Updated: 2019/06/25 17:19:34 by ablizniu         ###   ########.fr       */
+/*   Updated: 2019/06/26 18:02:40 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ void			ft_draw_border_border_bot_start(t_main *m, t_ray ray,
 	while (wall->border_bot.start < wall->border_bot.end &&
 			wall->border_bot.start < buf->buffer_draw_bot)
 	{
-		col = ft_get_pixel_border(m, ray, *wall, iter_arr);
+		col = ft_get_pixel_border(m, *wall, iter_arr, ray);
 		if (m->setting.fog == 1)
 			col = ft_set_fog(col, ray);
-		ft_put_pixel_rgb(m, ray.w, wall->border_bot.start, col);
+		if (col.r != 0x00 && col.g != 0xF0 && col.b != 0xFF)
+			ft_put_pixel_rgb(m, ray.w, wall->border_bot.start, col);
 		iter_arr[0]++;
 		wall->border_bot.start++;
 	}
@@ -54,10 +55,11 @@ void			ft_draw_border_border_top_start(t_main *m, t_ray ray,
 	while (wall->border_top.start < wall->border_top.end &&
 			wall->border_top.start < buf->buffer_draw_bot)
 	{
-		col = ft_get_pixel_border_top(m, ray, *wall, iter_arr);
+		col = ft_get_pixel_border_top(m, *wall, iter_arr, ray);
 		if (m->setting.fog == 1)
 			col = ft_set_fog(col, ray);
-		ft_put_pixel_rgb(m, ray.w, wall->border_top.start, col);
+		if (col.r != 0x00 && col.g != 0xF0 && col.b != 0xFF)
+			ft_put_pixel_rgb(m, ray.w, wall->border_top.start, col);
 		iter_arr[0]++;
 		wall->border_top.start++;
 	}

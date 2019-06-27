@@ -17,20 +17,26 @@ void			ft_gravity(t_main *m)
 	float		force_jump;
 
 	force_jump = 1.0;
-	if (m->player.jump_h > 0)
-		m->player.jump_h -= force_jump;
-	else
-		m->player.jump_h = 0;
-	if (m->player.pos.z >= m->sector[m->player.sector].heigth.floor)
+	if (m->eventcall.jump_event == 0)
 	{
-		m->eventcall.is_ground = 0;
-		if (m->player.pos.z - force_jump <
-				m->sector[m->player.sector].heigth.floor)
-			m->player.pos.z = m->sector[m->player.sector].heigth.floor;
+		if (m->player.jump_h > 0)
+			m->player.jump_h -= force_jump;
 		else
-			m->player.pos.z -= force_jump;
-		if (m->player.pos.z == m->sector[m->player.sector].heigth.floor)
-			m->eventcall.is_ground = 1;
+			m->player.jump_h = 0;
+		if (m->player.pos.z > m->sector[m->player.sector].heigth.floor
+		|| m->player.p_he > 7.0)
+		{
+			m->eventcall.is_ground = 0;
+			if (m->player.pos.z - force_jump <
+					m->sector[m->player.sector].heigth.floor)
+				m->player.pos.z = m->sector[m->player.sector].heigth.floor;
+			else
+				m->player.pos.z -= force_jump;
+			if (m->player.p_he > 7.0)
+				m->player.p_he -= force_jump;
+			else
+				m->player.p_he = 7.0;
+		}
 	}
 }
 
@@ -39,7 +45,7 @@ void			ft_de_gravity(t_main *m)
 	float		force_jump;
 
 	force_jump = 0.4;
-	if (m->player.pos.z <= m->sector[m->player.sector].heigth.floor)
+	if (m->player.pos.z < m->sector[m->player.sector].heigth.floor)
 	{
 		m->eventcall.is_ground = 0;
 		if (m->player.pos.z + force_jump >
@@ -112,9 +118,11 @@ static void		ft_transform_vec_y(t_main *m)
 void			ft_transform(t_main *m)
 {
 	ft_transform_pos(m);
+	ft_geg(m);
 	ft_transform_jump(m);
+	ft_gravity(m);
+	ft_de_gravity(m);
 	ft_transform_vec_x(m);
 	ft_transform_vec_y(m);
 	ft_transform_strafe(m);
-	ft_geg(m);
 }

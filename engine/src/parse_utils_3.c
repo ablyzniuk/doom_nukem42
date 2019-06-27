@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vrudyka <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 15:18:32 by vrudyka           #+#    #+#             */
-/*   Updated: 2019/06/23 15:18:34 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/26 16:17:23 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,17 @@ void			parse_enemy(t_main *main, t_list *list)
 
 	i = 0;
 	elem = find_elem(list, "enemy");
-	enemy_num = content_len(elem, "enemy");
-	main->enemies = allocate_enemy(enemy_num);
-	while (elem && i < enemy_num)
+	if (elem)
 	{
-		main->enemies[i] = parse_enemy_parameters((char *)elem->content);
-		main->enemies[i].health *= main->difficulty;
-		elem = elem->next;
-		i++;
+		enemy_num = content_len(elem, "enemy");
+		main->enemies = allocate_enemy(enemy_num);
+		while (elem && i < enemy_num)
+		{
+			main->enemies[i] = parse_enemy_parameters((char *)elem->content);
+			main->enemies[i].health *= main->difficulty;
+			elem = elem->next;
+			i++;
+		}
 	}
 }
 
@@ -104,12 +107,15 @@ void			parse_decor(t_main *main, t_list *list)
 
 	i = 0;
 	elem = find_elem(list, "decor");
-	decor_num = content_len(elem, "decor");
-	main->decor = allocate_decor(decor_num);
-	while (elem && i < decor_num)
+	if (elem)
 	{
-		main->decor[i] = parse_decor_parameters((char *)elem->content);
-		elem = elem->next;
-		i++;
+		decor_num = content_len(elem, "decor");
+		main->decor = allocate_decor(decor_num);
+		while (elem && i < decor_num)
+		{
+			main->decor[i] = parse_decor_parameters((char *)elem->content);
+			elem = elem->next;
+			i++;
+		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vrudyka <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 15:09:22 by vrudyka           #+#    #+#             */
-/*   Updated: 2019/06/22 10:42:37 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/27 12:01:23 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int					main(void)
 	int				mode;
 	int				fd;
 
-	edit = (t_edit *)ft_memalloc(sizeof(t_edit));
+	if (!(edit = (t_edit *)ft_memalloc(sizeof(t_edit))))
+		terminate("Error", edit->sdl);
 	init_edit(&edit);
 	load_img_pass(edit);
 	load_img_active(edit);
@@ -48,7 +49,7 @@ int					main(void)
 	load_text(edit);
 	update(&edit);
 	mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-	fd = open("../resources/map.txt", O_WRONLY | O_CREAT | O_TRUNC, mode);
+	fd = open("./resources/en/maps/map.txt", O_WRONLY | O_CREAT | O_TRUNC, mode);
 	write_map(edit, fd);
 	terminate("doomMapEditor closed successfully", edit->sdl);
 	return (0);
@@ -57,7 +58,7 @@ int					main(void)
 void				terminate(char *str, t_sdl *sdl)
 {
 	ft_putendl(str);
-	if (sdl != NULL)
+	if (sdl)
 		SDL_DestroyWindow(sdl->win);
 	SDL_Quit();
 	exit(0);

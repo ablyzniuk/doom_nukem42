@@ -46,6 +46,7 @@
 				<Compiler>
 					<Add directory="/Users/ablizniu/Documents/last_ver/libft/includes"/>
 					<Add directory="/Users/ablizniu/Documents/last_ver/engine/includes"/>
+					<Add directory="/Users/ablizniu/Documents/last_ver/editor/includes"/>
 					<Add directory="/Users/ablizniu/.brew/Cellar/sdl2_image/2.0.4/include/SDL2"/>
 					<Add directory="/Users/ablizniu/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2"/>
 					<Add directory="/Users/ablizniu/.brew/Cellar/sdl2/2.0.9_1/include/SDL2"/>
@@ -73,6 +74,7 @@
 				<Compiler>
 					<Add directory="/Users/ablizniu/Documents/last_ver/libft/includes"/>
 					<Add directory="/Users/ablizniu/Documents/last_ver/engine/includes"/>
+					<Add directory="/Users/ablizniu/Documents/last_ver/editor/includes"/>
 					<Add directory="/Users/ablizniu/.brew/Cellar/sdl2_image/2.0.4/include/SDL2"/>
 					<Add directory="/Users/ablizniu/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2"/>
 					<Add directory="/Users/ablizniu/.brew/Cellar/sdl2/2.0.9_1/include/SDL2"/>
@@ -100,6 +102,7 @@
 				<Compiler>
 					<Add directory="/Users/ablizniu/Documents/last_ver/libft/includes"/>
 					<Add directory="/Users/ablizniu/Documents/last_ver/engine/includes"/>
+					<Add directory="/Users/ablizniu/Documents/last_ver/editor/includes"/>
 					<Add directory="/Users/ablizniu/.brew/Cellar/sdl2_image/2.0.4/include/SDL2"/>
 					<Add directory="/Users/ablizniu/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2"/>
 					<Add directory="/Users/ablizniu/.brew/Cellar/sdl2/2.0.9_1/include/SDL2"/>
@@ -127,6 +130,7 @@
 				<Compiler>
 					<Add directory="/Users/ablizniu/Documents/last_ver/libft/includes"/>
 					<Add directory="/Users/ablizniu/Documents/last_ver/engine/includes"/>
+					<Add directory="/Users/ablizniu/Documents/last_ver/editor/includes"/>
 					<Add directory="/Users/ablizniu/.brew/Cellar/sdl2_image/2.0.4/include/SDL2"/>
 					<Add directory="/Users/ablizniu/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2"/>
 					<Add directory="/Users/ablizniu/.brew/Cellar/sdl2/2.0.9_1/include/SDL2"/>
@@ -177,6 +181,9 @@
 			<Option target="doom"/>
 		</Unit>
 		<Unit filename="/Users/ablizniu/Documents/last_ver/engine/src/key_2.c">
+			<Option target="doom"/>
+		</Unit>
+		<Unit filename="/Users/ablizniu/Documents/last_ver/engine/src/lava_and_health_bar.c">
 			<Option target="doom"/>
 		</Unit>
 		<Unit filename="/Users/ablizniu/Documents/last_ver/engine/src/ligth.c">

@@ -6,7 +6,7 @@
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 12:19:09 by yalytvyn          #+#    #+#             */
-/*   Updated: 2019/06/23 15:17:56 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/27 11:52:16 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void			ft_draw_wall(t_main *m, t_ray ray,
 	t_iter		iter;
 	int32_t		save;
 	t_rgb		col;
+	int32_t 	data_arr[2];
 
 	col.r = 255;
 	col.g = 255;
@@ -63,10 +64,12 @@ void			ft_draw_wall(t_main *m, t_ray ray,
 	save = ft_draw_wall_iterator(&iter, buf, wall);
 	while (iter.start < wall.end && iter.start < buf->buffer_draw_bot)
 	{
-		col = ft_get_pixel_wall(m, wall, iter.x, abs(wall.y));
+		data_arr[0] = iter.x;
+		data_arr[1] = abs(wall.y);
+		col = ft_get_pixel_wall(m, wall, ray, data_arr);
 		if (m->setting.fog == 1)
 			col = ft_set_fog(col, ray);
-		if (col.r >= 0)
+		if (col.r != 0x00 && col.g != 0xF0 && col.b != 0xFF)
 			ft_put_pixel_rgb(m, ray.w, iter.start, col);
 		iter.start++;
 		iter.x++;

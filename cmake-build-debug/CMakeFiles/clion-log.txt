@@ -1,5 +1,7 @@
 /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/ablizniu/Documents/last_ver
--- Configuring done
-WARNING: Target "doom" requests linking to directory "/Users/ablizniu/Documents/last_ver".  Targets may link only to libraries.  CMake is dropping the item.
--- Generating done
--- Build files have been written to: /Users/ablizniu/Documents/last_ver/cmake-build-debug
+CMake Error at CMakeLists.txt:85:
+  Parse error.  Function missing ending ")".  End of file reached.
+
+
+-- Configuring incomplete, errors occurred!
+See also "/Users/ablizniu/Documents/last_ver/cmake-build-debug/CMakeFiles/CMakeOutput.log".

@@ -14,7 +14,7 @@
 
 t_list			*find_elem(t_list *list, char *elem)
 {
-	while (!ft_strstr((char *)list->content, elem))
+	while (list && !ft_strstr((char *)list->content, elem))
 		list = list->next;
 	return (list);
 }

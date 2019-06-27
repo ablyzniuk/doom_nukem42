@@ -6,7 +6,7 @@
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/22 03:23:51 by ablizniu          #+#    #+#             */
-/*   Updated: 2019/06/23 15:19:20 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/26 19:53:42 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,11 @@ void			init_pos(t_main *main)
 	int			i;
 	int			y_start;
 	int			x_start;
-	int			y_move;
 
 	i = -1;
 	main->difficulty = -1;
 	y_start = HALFHEIGTH - (main->pict.butt[0]->h * 2) - PADD * 2;
-	x_start = HALFWIDTH - main->pict.butt[0]->w / 2;
-	y_move = main->pict.butt[0]->h + PADD;
+	x_start = HALFWIDTH - (main->pict.butt[0]->w / 2);
 	while (++i < 4)
 	{
 		main->pict.sstart[i][0] = x_start;
@@ -69,10 +67,10 @@ void			init_buttons(t_main *main)
 	int			i;
 
 	i = -1;
-	main->pict.butt[0] = SDL_LoadBMP("../resources/en/butt/easy.bmp");
-	main->pict.butt[1] = SDL_LoadBMP("../resources/en/butt/med.bmp");
-	main->pict.butt[2] = SDL_LoadBMP("../resources/en/butt/hard.bmp");
-	main->pict.butt[3] = SDL_LoadBMP("../resources/en/butt/death.bmp");
+	main->pict.butt[0] = SDL_LoadBMP("./resources/en/butt/easy.bmp");
+	main->pict.butt[1] = SDL_LoadBMP("./resources/en/butt/med.bmp");
+	main->pict.butt[2] = SDL_LoadBMP("./resources/en/butt/hard.bmp");
+	main->pict.butt[3] = SDL_LoadBMP("./resources/en/butt/death.bmp");
 	while (++i < 4)
 		if (main->pict.butt[i] == NULL)
 			print_error("Missing button texture");
@@ -100,6 +98,9 @@ void			start_menu(t_main *main)
 				gui_buttondown(main, sdl.event);
 			if (main->difficulty != -1)
 				running = 0;
+			if (main->sdl.event.type == SDL_KEYDOWN &&
+				main->sdl.event.key.keysym.sym == SDLK_m)
+				(Mix_PlayingMusic()) ? (Mix_PauseMusic()) : (Mix_ResumeMusic());
 			SDL_UpdateWindowSurface(main->sdl.window);
 		}
 	}

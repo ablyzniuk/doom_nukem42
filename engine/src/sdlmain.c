@@ -6,7 +6,7 @@
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:23:29 by yalytvyn          #+#    #+#             */
-/*   Updated: 2019/06/23 15:19:09 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/26 22:40:38 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ void			ft_sdlloop(t_main *m)
 			ft_key(m, &run);
 			ft_mouse(m);
 		}
+		final_scene(m);
 		bullet_manage(m);
 		draw_gun(m);
+		decreaze_hp(m);
 		SDL_UpdateWindowSurface(m->sdl.window);
 		ft_fps_utils(m);
 	}

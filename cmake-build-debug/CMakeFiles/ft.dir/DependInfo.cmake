@@ -79,6 +79,7 @@ set(CMAKE_C_COMPILER_ID "AppleClang")
 set(CMAKE_C_TARGET_INCLUDE_PATH
   "../libft/includes"
   "../engine/includes"
+  "../editor/includes"
   "/Users/ablizniu/.brew/Cellar/sdl2_image/2.0.4/include/SDL2"
   "/Users/ablizniu/.brew/Cellar/sdl2_ttf/2.0.15/include/SDL2"
   "/Users/ablizniu/.brew/Cellar/sdl2/2.0.9_1/include/SDL2"

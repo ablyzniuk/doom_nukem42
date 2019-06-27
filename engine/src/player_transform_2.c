@@ -14,7 +14,7 @@
 
 void		ft_geg(t_main *m)
 {
-	if (m->eventcall.is_ground == 1)
+	if (m->eventcall.is_ground == 1 && m->eventcall.look_jump == 1)
 	{
 		if (m->eventcall.geg_flag == 1)
 			m->player.p_he = 3.0;
@@ -25,19 +25,28 @@ void		ft_geg(t_main *m)
 
 void		ft_transform_jump(t_main *m)
 {
-	static double	force_jump = 1.5;
+	static double	force_jump = 2.5;
 
-	if (0)
+	if (m->eventcall.jump_event == 1)
 	{
+		m->eventcall.is_ground = 0;
+		m->eventcall.look_jump = 0;
 		if (force_jump >= 0.1)
 			force_jump -= 0.1;
-		m->player.p_he += force_jump;
-		m->player.jump_h += force_jump;
+		if ((int)m->player.p_he + 5 < m->sector[m->player.sector].heigth.cell)
+		{
+			m->player.p_he += force_jump;
+			m->player.jump_h += force_jump;
+		}
 		if (m->player.p_he >= 14.0)
+		{
 			m->eventcall.jump_event = 0;
+			m->eventcall.look_jump = 1;
+		}
 		if (force_jump <= 0.1)
-			force_jump = 1.5;
+			force_jump = 2.5;
 	}
+	printf("%f %d \n", m->player.p_he, m->eventcall.look_jump);
 }
 
 void		ft_transform_strafe(t_main *m)
