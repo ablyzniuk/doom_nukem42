@@ -6,7 +6,7 @@
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 12:19:09 by yalytvyn          #+#    #+#             */
-/*   Updated: 2019/06/27 11:52:16 by ablizniu         ###   ########.fr       */
+/*   Updated: 2019/06/27 11:52:25 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void			ft_draw_floor(t_main *m, t_ray ray,
 								save : buf->buffer_draw_bot;
 }
 
-int32_t			ft_draw_wall_iterator(t_iter *iter,
+static int32_t		ft_draw_wall_iterator(t_iter *iter,
 				t_buffer *buf, t_heigth_wall wall)
 {
 	iter->x = 0;
@@ -56,7 +56,7 @@ void			ft_draw_wall(t_main *m, t_ray ray,
 	t_iter		iter;
 	int32_t		save;
 	t_rgb		col;
-	int32_t 	data_arr[2];
+	int32_t		data_arr[2];
 
 	col.r = 255;
 	col.g = 255;

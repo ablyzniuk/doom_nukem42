@@ -25,6 +25,8 @@
 
 # define BAD_SECTOR_VALIDATION_BAD_VERTEX_PAIR "No such vertex pair."
 
+# define BAD_SECTOR "Sector validation error."
+
 # define BAD_SECTOR_VALIDATION_NUM "Wrong parameters number."
 
 # define BAD_SECTOR_VALIDATION_HEIGHT "Wrong height parameters."

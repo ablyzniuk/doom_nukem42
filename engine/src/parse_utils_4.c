@@ -6,7 +6,7 @@
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 15:18:36 by vrudyka           #+#    #+#             */
-/*   Updated: 2019/06/26 16:19:19 by ablizniu         ###   ########.fr       */
+/*   Updated: 2019/06/27 13:32:23 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void			parse_sector(t_main *main, t_list *list)
 		}
 		main->sum_sect = len;
 	}
+	else
+		print_error(BAD_SECTOR);
 }
 
 t_vertex		define_player_pos(char *data)
@@ -96,7 +98,8 @@ t_trpalyer		parse_player_parameters(char *data)
 		{
 			player.pos = define_player_pos(tmp[INDEX(1)]);
 			if (!integer_overload_error(&tmp[INDEX(2)]))
-				player.sector = ft_atoi(tmp[INDEX(2)]);
+				if ((player.sector = ft_atoi(tmp[INDEX(2)])) < 0)
+					print_error(BAD_PLAYER_VALIDATION_SECTOR_POS);
 		}
 		else
 			print_error(BAD_PLAYER_VALIDATION_SECTOR_POS);
@@ -112,4 +115,6 @@ void			parse_player(t_main *main, t_list *list)
 	elem = find_elem(list, "player");
 	if (elem)
 		main->player = parse_player_parameters((char *)elem->content);
+	else
+		print_error(BAD_PLAYER_VALIDATION);
 }

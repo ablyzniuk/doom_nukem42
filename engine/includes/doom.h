@@ -6,7 +6,7 @@
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 13:16:46 by yalytvyn          #+#    #+#             */
-/*   Updated: 2019/06/26 22:25:23 by ablizniu         ###   ########.fr       */
+/*   Updated: 2019/06/27 13:13:42 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -441,7 +441,6 @@ typedef	struct		s_main
 	t_decor			*decor;
 	t_event			eventcall;
 	SDL_Surface		*texture[7];
-	int32_t			**tex;
 }					t_main;
 
 void final_scene(t_main *main);
@@ -471,7 +470,6 @@ void				ft_draw_border_border_bot_start(t_main *m, t_ray ray,
 void				ft_draw_border_border_top_start(t_main *m, t_ray ray,
 					t_heigth_wall *wall, t_buffer *buf);
 
-int32_t				ft_draw_wall_iterator(t_iter *t_iter, t_buffer *buf, t_heigth_wall wall);
 void				ft_drawscreen_0(int32_t *border_b_h, int32_t *border_t_h, t_heigth_wall wall);
 t_draw_save			ft_drawscreen_1(t_main *m, t_ray ray,  t_heigth_wall *wall, t_buffer *buffer);
 t_vertex			*allocate_vertex(size_t size);
@@ -479,7 +477,6 @@ double				ft_get_len_wall(t_vertex start, t_vertex end);
 void				ft_draw_map(t_main *m);
 void				ft_get_array_wall(t_main *m, t_ray *ray);
 void				ft_get_data_ray(t_main *m, t_ray *ray);
-void				ft_draw_cam(t_main *m);
 void				read_file(t_main *main, char *str);
 void				parse_vertex(t_main *main, t_list *list);
 t_bool				validate_vertex(char *vertex_data);
@@ -570,7 +567,6 @@ void				ft_put_pixel_rgb(t_main *m, int32_t x,
 							int32_t y, t_rgb pixel);
 int					ft_get_pixel(SDL_Surface *texture, int32_t x, int32_t y);
 void				ft_fps_utils(t_main *m);
-void				ft_fps_look(t_main *m);
 void				ft_draw_map(t_main *m);
 t_vertex			ft_intersection(t_vertex st1, t_vertex end1,
 							t_vertex st2, t_vertex end2);
@@ -581,10 +577,6 @@ t_rgb
 ft_get_pixel_wall(t_main *m, t_heigth_wall wall, t_ray ray, int32_t *data_arr);
 t_rgb ft_get_pixel_border(t_main *m, t_heigth_wall wall, int32_t *iter_arr, t_ray ray);
 t_rgb ft_get_pixel_border_top(t_main *m, t_heigth_wall wall, int32_t *iter_arr, t_ray ray);
-t_rgb				ft_set_fog_ceil(t_rgb rgb, t_ray ray,
-							t_heigth_wall wall, int32_t x);
-t_rgb				ft_set_fog_floor(t_rgb rgb, t_ray ray,
-							t_heigth_wall wall, int32_t x);
 t_rgb				ft_get_pixel_floor(t_main *m, t_ray ray,
 							t_heigth_wall wall);
 void				ft_draw_wall(t_main *m, t_ray ray,
@@ -600,9 +592,7 @@ int32_t				ft_collision(t_main *m, t_vertex pos_vec, double move);
 t_rgb				ft_set_fog(t_rgb rgb, t_ray ray);
 void				ft_gravity(t_main *m);
 void				ft_de_gravity(t_main *m);
-int					ft_cmp_vertex(t_vertex one, t_vertex two);
 void				ft_lst_add_back(t_cols_wall *start, t_cols_wall *lst);
-int32_t				**ft_init_texx(t_main *m);
 void				ft_init_sky(t_main *m);
 void				ft_sprite(t_main *m);
 void				ft_draw_sky(t_main *m);

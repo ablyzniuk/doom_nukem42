@@ -46,7 +46,6 @@ void		ft_transform_jump(t_main *m)
 		if (force_jump <= 0.1)
 			force_jump = 2.5;
 	}
-	printf("%f %d \n", m->player.p_he, m->eventcall.look_jump);
 }
 
 void		ft_transform_strafe(t_main *m)
