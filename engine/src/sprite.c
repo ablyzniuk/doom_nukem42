@@ -6,7 +6,7 @@
 /*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/22 03:35:07 by ablizniu          #+#    #+#             */
-/*   Updated: 2019/06/27 17:06:43 by ablizniu         ###   ########.fr       */
+/*   Updated: 2019/06/27 17:07:11 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void			ft_draw_sprite(t_main *m, int32_t x, int32_t y, double cam)
 		while (iter.x * iter.dx < m->sprite.ch->h)
 		{
 			GET_COLOR(col, m->sprite.ch->pixels, (int32_t)(iter.x * iter.dx),
-					  m->sprite.ch->pitch, (int32_t)(iter.y * iter.dy),
-					  m->sprite.ch->format->BytesPerPixel);
+					m->sprite.ch->pitch, (int32_t)(iter.y * iter.dy),
+					m->sprite.ch->format->BytesPerPixel);
 			if (*col > 0x000000)
 				ft_put_pixel(m, x, y, *col);
 			iter.x++;
@@ -60,8 +60,8 @@ void			ft_sprite(t_main *m)
 	iter.y = HALFHEIGTH;
 	iter.x = 200;
 	angle = ft_calc_angle(pos.x - m->player.pos.x, pos.y - m->player.pos.y,
-						  m->spr_data.pos.x - m->player.pos.x,
-						  m->spr_data.pos.y - m->player.pos.y);
+			m->spr_data.pos.x - m->player.pos.x,
+			m->spr_data.pos.y - m->player.pos.y);
 	m->spr_data.anglee = angle;
 	pos.x = 1;
 	pos.y = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_record_sect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vrudyka <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ablizniu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 15:07:58 by vrudyka           #+#    #+#             */
-/*   Updated: 2019/06/22 10:42:16 by vrudyka          ###   ########.fr       */
+/*   Updated: 2019/06/27 17:41:00 by ablizniu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,20 @@ t_sect				*new_sect(void)
 	static int		number_of_sect = 0;
 	t_sect			*sect;
 
-	sect = (t_sect *)ft_memalloc(sizeof(t_sect));
-	sect->number = number_of_sect;
-	sect->is_child = -1;
-	sect->hceil = 20;
-	sect->hfloor = 0;
-	sect->texture[0] = 0;
-	sect->texture[1] = -2;
-	sect->texture[2] = 5;
-	number_of_sect++;
+	sect = NULL;
+	if (!(sect = (t_sect *)ft_memalloc(sizeof(t_sect))))
+		exti(0);
+	if (sect)
+	{
+		sect->number = number_of_sect;
+		sect->is_child = -1;
+		sect->hceil = 20;
+		sect->hfloor = 0;
+		sect->texture[0] = 0;
+		sect->texture[1] = -2;
+		sect->texture[2] = 6;
+		number_of_sect++;
+	}
 	return (sect);
 }
 
